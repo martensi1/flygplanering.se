@@ -1,0 +1,109 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Flygplanering";
+}
+
+<div class="text-center">
+    <div id="flight-info-report">
+        <!-- Last update timestamp -->
+        <p id="last-update">
+            Data retrieved:
+            @Model.LastGet.ToUniversalTime().ToString("HH:mm:ss dd-MM-yyyy UTC")
+        </p>
+
+        <!-- METAR -->
+        <div class="block">
+            <h2>METAR</h2>
+            <hr />
+
+            @if (Model.CurrentMetar?.Count > 0)
+            {
+                foreach (var kvp in Model.CurrentMetar)
+                {
+                    <div class="report-line">
+                        <b>@kvp.Key</b>
+                        <span>@kvp.Value</span>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No data available</p>
+            }
+        </div>
+
+        <!-- TAF -->
+        <div class="block">
+            <h2>TAF</h2>
+            <hr />
+
+            @if (Model.CurrentTaf?.Count > 0)
+            {
+                foreach (var kvp in Model.CurrentTaf)
+                {
+                    <div class="report-line">
+                        <b>@kvp.Key</b>
+                        <span>@kvp.Value</span>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No data available</p>
+            }
+        </div>
+
+        <!-- NOTAM -->
+        <div class="block">
+            <h2>NOTAM</h2>
+            <hr />
+
+            @if (Model.CurrentNotam?.Count > 0)
+            {
+                foreach (var kvp in Model.CurrentNotam)
+                {
+                    <div class="report-line">
+                        <b>@kvp.Key</b>
+                        <span>
+                            @foreach (var line in kvp.Value.Split(Environment.NewLine))
+                            {
+                                @line
+                                <br />
+                            }
+                        </span>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No data available</p>
+            }
+        </div>
+
+        <!-- Low Level Forecast -->
+        <div class="block no-print">
+            <h2>Low Level Forecast</h2>
+            <hr />
+
+            <a href="https://www.northavimet.com/low-level-forecast/denmarksweden" target="_blank">Click to open forecast</a>
+        </div>
+
+        <!-- Page break -->
+        <br />
+        <p style="page-break-after: always;">&nbsp;</p>
+
+        <!-- NSWC -->
+        <div class="block">
+            <h2>NSWC</h2>
+            <hr />
+
+            <img class="nswc-image" alt="Significant Weather Chart" src="https://aro.lfv.se/tor/nswc2aro.gif?
+                 @Guid.NewGuid().ToString()" />
+        </div>
+    </div>
+
+    <div class="block">
+        <input id="print-report" class="no-print" type="button" value="Print Report" />
+    </div>
+</div>

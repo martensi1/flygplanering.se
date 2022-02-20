@@ -1,0 +1,14 @@
+[Oo]bj/
+[Bb]in/
+.nuget/
+.vs/*
+artifacts/
+packages/
+*DS_Store
+*.sln.ide
+*.suo
+*.user
+*.userprefs
+**/Properties/PublishProfiles/
+**/Properties/ServiceDependencies/
+_ReSharper.*
