@@ -3,8 +3,6 @@ ASP.NET Core web application for easy preflight preperations. Intended to be use
 
 Visit the live website: http://flygplanering.se
 
-<br/>
-
 ## Data sources
 
 The information presented on the page is taken from two different data sources:
@@ -16,13 +14,9 @@ The information presented on the page is taken from two different data sources:
   [NOTAM Search (FAA)](https://notams.aim.faa.gov/notamSearch)  
   *The Federal Aviation Administration (FAA) provides a web interface for accessing digital airport NOTAMs. This system also includes an simple REST API that can be used to retrieve NOTAMs with a simple HTTP POST request; no authentication or API key is needed.*
 
-<br/>
-
 ## Limitations
 
 This web app is currently only intended for pilots operating in and out of Jönköping Airport (ESGJ). Future plans for this project is to add a feature where each client can configure which airports should be included in their report.
-
-<br/>
 
 ## Author
 
