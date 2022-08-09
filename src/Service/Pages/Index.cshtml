@@ -1,0 +1,151 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Flygplanering";
+}
+
+<script src="~/js/summary-print.js" asp-append-version="true"></script>
+<script src="~/js/weight-balance.js" asp-append-version="true"></script>
+
+
+<div class="text-center">
+    <p id="last-update-time">
+        Data from MET Norway and FAA NOTAM Search
+        <br />Retrieved @Model.LastGetUtc.ToString("HH:mm:ss dd-MM-yyyy UTC")
+    </p>
+
+    <div id="section-weather">
+        <div class="info-block">
+            <h2>METAR</h2>
+            <hr />
+
+            @if (Model.CurrentMetar?.Count > 0)
+            {
+                foreach (var kvp in Model.CurrentMetar)
+                {
+                    <div class="report-line">
+                        <b>@kvp.Key</b>
+                        <span>@kvp.Value</span>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No data available</p>
+            }
+        </div>
+
+        <div class="info-block">
+            <h2>TAF</h2>
+            <hr />
+
+            @if (Model.CurrentTaf?.Count > 0)
+            {
+                foreach (var kvp in Model.CurrentTaf)
+                {
+                    <div class="report-line">
+                        <b>@kvp.Key</b>
+                        <span>@kvp.Value</span>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No data available</p>
+            }
+        </div>
+
+        <div class="info-block">
+            <h2>NOTAM</h2>
+            <hr />
+
+            @if (Model.CurrentNotam?.Count > 0)
+            {
+                foreach (var kvp in Model.CurrentNotam)
+                {
+                    <div class="report-line">
+                        <b>@kvp.Key</b>
+                        <span>
+                            @foreach (var line in kvp.Value.Split("\n"))
+                            {
+                                @line
+                                <br />
+                            }
+                        </span>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No data available</p>
+            }
+        </div>
+
+        <br/>
+        <div class="block no-print">
+            <h2>Low Level Forecast</h2>
+            <hr />
+
+            <a href="https://www.northavimet.com/low-level-forecast/denmarksweden" target="_blank">Click to open forecast</a>
+        </div>
+
+        <!-- Page break -->
+        <br />
+        <p style="page-break-after: always;">&nbsp;</p>
+
+        <div class="info-block">
+            <h2>NSWC</h2>
+            <hr />
+
+            <img id="nswc-image" alt="Significant Weather Chart" src="https://aro.lfv.se/tor/nswc2aro.gif?
+                 @Guid.NewGuid().ToString()" />
+        </div>
+    </div>
+
+    <div id="section-weight-balance" style="display: none">
+        <!-- Page break -->
+        <br />
+        <p style="page-break-after: always;">&nbsp;</p>
+
+        <div class="info-block">
+            <h2>Weight and Balance</h2>
+            <hr />
+
+
+            <div class="no-print">
+                <select id="select-weight-balance" onchange="create_weight_balance_table()">
+                    <option value="SE-KIK">SE-KIK</option>
+                    <option value="SE-KAV">SE-KAV</option>
+                    <option value="SE-IDG">SE-IDG</option>
+                    <option value="SE-VPO">SE-VPO</option>
+                </select>
+            </div>
+
+            <div class="auto-overflow-x">
+                <table style="margin-top: 30px">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Weight (kg)</th>
+                            <th>Arm (cm)</th>
+                            <th>Moment (kgcm)</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-weight-balance" />
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-block" style="margin-top: 25px">
+        <a id="button-weight-balance" class="nice-button no-print" onclick="show_weight_balance_section()">
+            <i class="material-icons">balance</i>
+            <span>Add Weight & Balance</span>
+        </a>
+        <a id="button-print-summary" class="nice-button no-print" onclick="print_summary()">
+            <i class="material-icons">print</i>
+            <span>Print Summary</span>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,328 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+
+
+/**************************************
+    Standard Style
+**************************************/
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+
+
+/**************************************
+    Custom Style
+**************************************/
+
+h2 {
+    font-size: 2.0rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+input {
+    border: none;
+    background: hsl(0 0% 93%);
+    border-color: darkgray;
+    border-radius: .25rem;
+    padding: .5rem 1rem;
+    text-align: center;
+}
+
+/*
+    Author: Alex (fabriceleven)
+    Link: https://fabriceleven.com/design/clever-way-to-change-the-drop-down-selector-arrow-icon/
+    Free to use
+*/
+select {
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    color: #333;
+    font-size: 16px;
+    height: 50px;
+    line-height: 1.75;
+    max-width: 140px;
+    margin-top: 5px;
+    padding: 0px 24px;
+    width: 100%;
+    word-break: normal;
+    -ms-word-break: normal;
+}
+
+table, th, td {
+    border: 1px solid;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    min-width: 129px;
+    height: 71px;
+}
+
+th {
+    background-color: lightgray;
+    color: white;
+    border-color: black;
+}
+
+
+/* Disable number input spinner */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+
+.info-block {
+    margin-top: 60px;
+}
+
+.report-line {
+    display: table;
+    margin-bottom: 1rem
+}
+
+.report-line b {
+    display: table-cell;
+    text-align: left;
+    width: 70px;
+}
+
+.report-line span {
+    display: table-cell;
+    text-align: left;
+    vertical-align: top;
+}
+
+.auto-overflow-x {
+    width: 100%;
+    overflow-x: auto;
+}
+
+
+#last-update-time {
+    color: gray;
+    margin-top: 20px;
+}
+
+#nswc-image {
+    border: 3px solid #555;
+    height: auto;
+    max-width: 90%;
+    width: 800px;
+}
+
+
+
+.nice-button {
+    appearance: none;
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292E;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    height: 34px;
+    line-height: 20px;
+    list-style: none;
+    margin: 30px 30px 0px 30px;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: break-word;
+}
+
+.nice-button:hover {
+    background-color: #F3F4F6;
+    text-decoration: none;
+    transition-duration: 0.1s;
+}
+
+.nice-button:disabled {
+    background-color: #FAFBFC;
+    border-color: rgba(27, 31, 35, 0.15);
+    color: #959DA5;
+    cursor: default;
+}
+
+.nice-button:active {
+    background-color: #EDEFF2;
+    box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+    transition: none 0s;
+}
+
+.nice-button:focus {
+    outline: 1px transparent;
+}
+
+.nice-button:before {
+    display: none;
+}
+
+.nice-button:-webkit-details-marker {
+    display: none;
+}
+
+.nice-button span {
+    margin-left: 10px;
+    vertical-align: top;
+}
+
+.nice-button i {
+    line-height: 20px !important;
+}
+
+
+/* Add style to Google's material-icons class */
+.material-icons {
+    color: gray;
+}
+
+
+
+@media screen {
+    .section-content {
+        display: none;
+    }
+}
+
+@media print {
+    body {
+        color: rgb(0, 0, 0) !important;
+        font-family: Helvetica, sans-serif !important;
+        font-size: 0.55cm !important;
+    }
+
+    h2 {
+        font-weight: bold !important;
+        text-align: left !important;
+    }
+
+    hr {
+        border-top: 1.5px solid rgba(0,0,0) !important;
+    }
+
+    th {
+        color: black;
+    }
+
+    table td:last-child {
+        display: none
+    }
+
+    table th:last-child {
+        display: none
+    }
+
+    inpit {
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    .no-print, .no-.no-print * {
+        display: none !important;
+    }
+
+    .section-content {
+        display: block;
+    }
+
+    .info-block {
+        margin-top: 35px !important;
+    }
+
+    #nswc-image {
+        max-width: 95% !important;
+        width: 95% !important;
+    }
+}
