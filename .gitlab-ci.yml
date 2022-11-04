@@ -1,19 +1,23 @@
 ########################################
 # FDC24 CI/CD configuration
 ########################################
-
-#Globals
 variables:
   SOLUTION_NAME: 'FlightPlanner.sln'
 
-# Stage list
+
 stages:
   - build
 
 
+default:
+  image: mcr.microsoft.com/dotnet/core/sdk:3.1
+  before_script:
+    - dotnet nuget add source "https://gitlab.com/api/v4/projects/38057324/packages/nuget/index.json" --name gitlab --username gitlab-ci-token --password $CI_JOB_TOKEN --store-password-in-clear-text || true
+
+
+
 # Build job
 build:
-  image: mcr.microsoft.com/dotnet/core/sdk:3.1
   stage: build
   script:
     - dotnet restore
