@@ -1,0 +1,20 @@
+########################################
+# FDC24 CI/CD configuration
+########################################
+
+#Globals
+variables:
+  SOLUTION_NAME: 'FlightPlanner.sln'
+
+# Stage list
+stages:
+  - build
+
+
+# Build job
+build:
+  image: mcr.microsoft.com/dotnet/core/sdk:3.1
+  stage: build
+  script:
+    - dotnet restore
+    - dotnet build $SOLUTION_NAME
