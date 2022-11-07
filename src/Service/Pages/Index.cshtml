@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Flygplanering";
+    ViewData["Title"] = "Flygplanering.se - Briefingtjänst";
 }
 
 <script src="~/js/summary-print.js" asp-append-version="true"></script>
@@ -10,64 +10,49 @@
 
 
 <div class="text-center">
-    <p id="last-update-time">
-        Data from LFV, MET Norway and FAA NOTAM Search
-        <br />Retrieved @Model.LastGetUtc.ToString("HH:mm:ss dd-MM-yyyy UTC")
-    </p>
+    <div id="last-update-time">
+       <p>
+            Data from <a href="https://aro.lfv.se/" target="_blank">LFV</a>, <a href="https://www.met.no/" target="_blank">MET Norway</a> and <a href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank">FAA Notam Search</a>
+            <br />Retrieved @Model.LastGetUtc.ToString("HH:mm (UTC), dd-MM-yyyy")
+        </p>     
+    </div>
 
     <div id="section-weather">
-        <div class="info-block">
-            <h2>METAR</h2>
-            <hr />
-
-            @if (Model.CurrentMetar?.Count > 0)
-            {
-                foreach (var kvp in Model.CurrentMetar)
-                {
-                    if (Model.MetarCookie.Airports.Contains(kvp.Key.ToString()))
-                    {
-                        <div class="report-line">
-                            <b>@kvp.Key</b>
-                            <span>@kvp.Value</span>
-                        </div>
-                    }
-                }
-            }
-            else
-            {
-                <p>No data available</p>
-            }
-
-            <button onclick="add_airport('METAR')" class="nice-button no-print">Lägg till</button>
-        </div>
-
-        <div class="info-block">
-            <h2>TAF</h2>
-            <hr />
-
-            @if (Model.CurrentTaf?.Count > 0)
-            {
-                foreach (var kvp in Model.CurrentTaf)
-                {
+        @if (Model.Metar?.Count > 0) {
+            <div class="info-block">
+                <h2>METAR</h2>
+                <hr />
+            
+                @foreach (var kvp in Model.Metar) {
                     <div class="report-line">
-                        <b>@kvp.Key</b>
-                        <span>@kvp.Value</span>
+                        <b>@kvp.Key</b><span>@kvp.Value</span>
                     </div>
                 }
-            }
-            else
-            {
-                <p>No data available</p>
-            }
-        </div>
 
-        <div class="info-block">
-            <h2>NOTAM</h2>
-            <hr />
+                <button onclick="add_airport('METAR')" class="main-button no-print">Lägg till</button>
+            </div>
+        }
 
-            @if (Model.CurrentNotam?.Count > 0)
-            {
-                foreach (var kvp in Model.CurrentNotam)
+        @if (Model.Taf?.Count > 0) {
+            <div class="info-block">
+                <h2>TAF</h2>
+                <hr />
+            
+                @foreach (var kvp in Model.Taf) {
+                    <div class="report-line">
+                        <b>@kvp.Key</b><span>@kvp.Value</span>
+                    </div>
+                }
+            </div>
+        }
+
+        @if (Model.Notam?.Count > 0)
+        {
+            <div class="info-block">
+                <h2>NOTAM</h2>
+                <hr />
+
+                @foreach (var kvp in Model.Notam)
                 {
                     <div class="report-line">
                         <b>@kvp.Key</b>
@@ -80,17 +65,14 @@
                         </span>
                     </div>
                 }
-            }
-            else
-            {
-                <p>No data available</p>
-            }
-        </div>
+            </div>
+        }
 
         <br/>
-        <div class="block no-print">
+        <div class="info-block no-print">
             <h2>Low Level Forecast</h2>
             <hr />
+            Click on the link below to open the NortAviMet low level forecast for the Nordic Region.
 
             <a href="https://www.northavimet.com/low-level-forecast/denmarksweden" target="_blank">Click to open forecast</a>
         </div>
@@ -108,7 +90,7 @@
         </div>
     </div>
 
-    <div id="section-weight-balance">
+    <div id="section-weight-balance" style="display: none">
         <!-- Page break -->
         <br />
         <p style="page-break-after: always;">&nbsp;</p>
@@ -117,9 +99,7 @@
             <h2>Weight and Balance</h2>
             <hr />
 
-            <a id="button-weight-balance" class="no-print" href="#" onclick="show_weight_balance_section()">Lägg till</a>
-
-            <div class="section-weight-balance" style="display: none">
+            <div>
                 <div class="no-print">
                     <select id="select-weight-balance" onchange="create_weight_balance_table()">
                         <option value="SE-KIK">SE-KIK</option>
@@ -137,7 +117,7 @@
                                 <th>Weight (kg)</th>
                                 <th>Arm (cm)</th>
                                 <th>Moment (kgcm)</th>
-                                <th>Notes</th>
+                                <!--<th>Notes</th>-->
                             </tr>
                         </thead>
                         <tbody id="table-weight-balance" />
@@ -148,11 +128,11 @@
     </div>
 
     <div class="info-block" style="margin-top: 25px">
-        <a id="button-settings" class="nice-button no-print" onclick="show_weight_balance_section()">
-            <i class="material-icons">settings</i>
-            <span>Inställningar</span>
+        <a id="button-weight-balance" class="main-button no-print" onclick="show_weight_balance_section()">
+            <i class="material-icons">balance</i>
+            <span>Vikt och Balans</span>
         </a>
-        <a id="button-print-summary" class="nice-button no-print" onclick="print_summary()">
+        <a id="button-print-summary" class="main-button no-print" onclick="print_summary()">
             <i class="material-icons">print</i>
             <span>Skriv ut</span>
         </a>

@@ -1,0 +1,25 @@
+﻿@page "/settings"
+@model SettingsModel
+@{
+    ViewData["Title"] = "Dina inställningar";
+}
+
+
+<script>
+    function save_settings()
+    {
+        window.location.href = '/';
+    }
+</script>
+
+
+<div class="text-center">
+    <h2>Inställningar</h2>
+    
+    <div>
+        <a id="button-save-settings" class="main-button" onclick="save_settings">
+            <i class="material-icons">save</i>
+            <span>Spara</span>
+        </a>
+    </div>
+</div>

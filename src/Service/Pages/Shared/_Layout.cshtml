@@ -3,14 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="author" content="Simon Mårtensson">
-    <meta name="description" content="Flygplaneringsverktyg för PPL-flygare">
+    <meta name="description" content="Verktyg för pilot briefing av väder och vikt/balans">
     <meta name="format-detection" content="telephone=no">
-    <meta name="keywords" content="NOTAM, Sweden, LFV, METAR, TAF, SWC, NSWC, Digital NOTAM, LHP, LLF, Tool">
+    <meta name="keywords" content="Briefing, flygplanering, NOTAM, Sweden, LFV, METAR, TAF, SWC, NSWC, Digital NOTAM, LHP, LLF, Tool">
     <meta name="robots" content="index, nofollow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <title>@ViewData["Title"]</title>
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css?version=@DateTime.Now.ToString("yyyyMMddhhmmss")" />
+    <link rel="stylesheet" href="~/css/default.css?version=@DateTime.Now.ToString("yyyyMMddhhmmss")" />
+    <link rel="stylesheet" href="~/css/custom.css?version=@DateTime.Now.ToString("yyyyMMddhhmmss")" />
+    <link rel="stylesheet" href="~/css/buttons.css?version=@DateTime.Now.ToString("yyyyMMddhhmmss")" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
     <body>
@@ -25,4 +29,14 @@
 
         @RenderSection("Scripts", required: false)
     </body>
+    <!--
+        Attribution:
+        Favicon from IconScout (https://iconscout.com/icon/windsock-1671449)
+    -->
+    <div style="z-index: 999; position: fixed; bottom: 20px; right: 0px; background-color: rgba(100, 100, 100, 0.1)">
+        <a>
+            <i class="material-icons" onclick="alert()">settings</i>
+        </a>
+        <a style="vertical-align: top; line-height: 20px" href="/settings">Dina inställningar</a>
+    </div>
 </html>

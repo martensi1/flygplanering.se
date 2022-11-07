@@ -21,12 +21,12 @@ namespace FlightPlanner.Core.Tasks
 
         protected sealed override object Run()
         {
-            var result = new AirportReportMap();
+            var result = new Dictionary<IcaoCode, string> ();
             var icaos = _airports.Select(i => i.ToString()).ToArray();
 
             using (var client = new NotamSearchClient())
             {
-                var notams = client.FetchNotam(icaos);
+                var notams = new Dictionary<string, string>();//client.FetchNotam(icaos);
 
                 foreach (var notam in notams)
                 {

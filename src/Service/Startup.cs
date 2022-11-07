@@ -47,21 +47,25 @@ namespace FlightPlanner.Service
             app.UseRouting();
             app.UseAuthorization();
 
-            // Add no cache headers to responses
-            app.Use(async (context, next) =>
-                {
-                    context.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
-                    context.Response.Headers[HeaderNames.Expires] = "0";
-                    context.Response.Headers[HeaderNames.Pragma] = "no-cache";
-
-                    await next.Invoke();
-                }
-            );
+            AddNoCacheHeaders(app);
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
             });
+        }
+
+        private void AddNoCacheHeaders(IApplicationBuilder app)
+        {
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
+                context.Response.Headers[HeaderNames.Expires] = "0";
+                context.Response.Headers[HeaderNames.Pragma] = "no-cache";
+
+                await next.Invoke();
+            }
+            );
         }
     }
 }

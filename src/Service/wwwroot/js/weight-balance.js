@@ -70,6 +70,10 @@ function update_weight_balance_table() {
             var weight = Number(weightCell.firstChild?.value || weightCell.innerHTML)
             var arm = Number(armCell.innerHTML)
 
+            if (isNaN(weight)) {
+                weight = 0;
+            }
+
             var moment = Math.round(weight * arm)
             momentCell.innerHTML = moment
 
@@ -89,13 +93,13 @@ function insert_weight_balance_row(type, position, name, modifiable, value, arm,
     row.dataset.rowtype = type
 
     var valueHtml = modifiable ?
-            `<input type="number" min="0" placeholder="Enter value..." value="${value}" onchange="update_weight_balance_table()" />` : value
+            `<input type="number" min="0" placeholder="Enter value..." value="${value}" oninput="update_weight_balance_table()" />` : value
 
     row.insertCell(0).innerHTML = name
     row.insertCell(1).innerHTML = valueHtml
     row.insertCell(2).innerHTML = arm
     row.insertCell(3).innerHTML = 0
-    row.insertCell(4).innerHTML = note || ''
+    //row.insertCell(4).innerHTML = note || ''
 
     if (type == 'summarize') {
         row.style.border = '2px solid'

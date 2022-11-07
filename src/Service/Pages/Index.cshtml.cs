@@ -1,41 +1,38 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Threading;
-using FlightPlanner.Core;
+﻿using FlightPlanner.Core;
 using FlightPlanner.Core.Types;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FlightPlanner.Service.Pages
 {
+    [ResponseCache(Duration = 120, Location = ResponseCacheLocation.None)]
     public class IndexModel : PageModel
     {
-        private readonly IFlightDataCollector _dataCollector;
+        private readonly IFlightDataSource _dataSource;
 
 
-        public AirportReportMap CurrentMetar;
-        public AirportReportMap CurrentTaf;
-        public AirportReportMap CurrentNotam;
+        public IndexModel(IFlightDataSource dataSource)
+        {
+            _dataSource = dataSource;
+        }
 
-        public AirportsCookie MetarCookie;
-        public AirportsCookie TafCookie;
-        public AirportsCookie NotamCookie;
+        
+        public Dictionary<IcaoCode, string> Metar { get; private set; }
+        public Dictionary<IcaoCode, string> Taf { get; private set; }
+        public Dictionary<IcaoCode, string> Notam { get; private set; }
 
         public DateTime LastGetUtc { get; private set; }
 
 
-        public IndexModel(IFlightDataCollector dataCollector)
-        {
-            _dataCollector = dataCollector;
-        }
-
-
         public IActionResult OnGet()
         {
-            if (!WaitForData(10000, 50)) 
+            if (!_dataSource.WaitForData(10000, 50)) 
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status503ServiceUnavailable);
             }
 
             UpdateCookies();
@@ -46,32 +43,24 @@ namespace FlightPlanner.Service.Pages
 
         private void UpdateCookies()
         {
-            MetarCookie = new AirportsCookie(Request.Cookies["metar-airports"], new List<string>() { "ESGJ", "ESGG" });
-            TafCookie = new AirportsCookie(Request.Cookies["taf-airports"], new List<string>() { "ESGJ", "ESGG" });
-            NotamCookie = new AirportsCookie(Request.Cookies["notam-airports"], new List<string>() { "ESGJ", "ESGG" });
+            var metarAirports = CookieParsing.ToAirportList(Request.Cookies["metar-airports"], new List<IcaoCode>() { "ESGJ", "ESGG" });
+            var tafAirports = CookieParsing.ToAirportList(Request.Cookies["taf-airports"], new List<IcaoCode>() { "ESGJ", "ESGG" });
+            var notamAirports = CookieParsing.ToAirportList(Request.Cookies["notam-airports"], new List<IcaoCode>() { "ESGJ" });
 
-            Response.Cookies.Append("metar-airports", MetarCookie.ToCookie());
-            Response.Cookies.Append("taf-airports", TafCookie.ToCookie());
-            Response.Cookies.Append("notam-airports", NotamCookie.ToCookie());
+            Metar = SortOutUnwantedAirports(_dataSource.CurrentMetar, metarAirports);
+            Taf = SortOutUnwantedAirports(_dataSource.CurrentTaf, tafAirports);
+            Notam = SortOutUnwantedAirports(_dataSource.CurrentNotam, notamAirports);
+
+            Response.Cookies.Append("metar-airports", CookieParsing.FromAirportList(metarAirports));
+            Response.Cookies.Append("taf-airports", CookieParsing.FromAirportList(tafAirports));
+            Response.Cookies.Append("notam-airports", CookieParsing.FromAirportList(notamAirports));
         }
 
-        private bool WaitForData(short timeoutMs, short retryTimeMs)
+        private Dictionary<IcaoCode, string> SortOutUnwantedAirports(
+            Dictionary<IcaoCode, string> reportMap, IReadOnlyList<IcaoCode> wantedAirports)
         {
-            for (int i = 0; i < (timeoutMs / retryTimeMs); i++)
-            {
-                if (_dataCollector.IsDataAvailable())
-                {
-                    CurrentMetar = _dataCollector.GetCurrentMetar();
-                    CurrentTaf = _dataCollector.GetCurrentTaf();
-                    CurrentNotam = _dataCollector.GetCurrentNotam();
-
-                    return true;
-                }
-
-                Thread.Sleep(retryTimeMs);
-            }
-
-            return false;
+            return reportMap.Where(r => wantedAirports.Contains(r.Key))
+                .ToDictionary(dict => dict.Key, dict => dict.Value);
         }
 
         private void SetDataRetrievedTime()

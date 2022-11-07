@@ -6,7 +6,7 @@ namespace FlightPlanner.Core.Types
 {
     public sealed class IcaoCode
     {
-        private string _code;
+        private readonly string _code;
 
 
         public IcaoCode(string code)
@@ -55,9 +55,14 @@ namespace FlightPlanner.Core.Types
         }
 
 
+        public static bool IsStringValid(string code)
+        {
+            return Regex.IsMatch(code, "^[A-Z]{4}$");
+        }
+
         private static void CheckIfValidCodeOrThrow(string input)
         {
-            if (!Regex.IsMatch(input, "^[A-Z]{4}$"))
+            if (!IsStringValid(input))
                 throw new ArgumentException("Invalid ICAO code");
         }
     }

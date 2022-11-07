@@ -16,7 +16,7 @@ namespace FlightPlanner.Service
         private readonly ILogger<WebAppInit> _logger;
 
         private readonly ITaskScheduler _taskScheduler;
-        private readonly IFlightDataCollector _dataCollector;
+        private readonly IFlightDataSource _dataSource;
 
         private IReadOnlyList<IcaoCode> _weatherAirports;
         private IReadOnlyList<IcaoCode> _notamAirports;
@@ -25,12 +25,12 @@ namespace FlightPlanner.Service
         public WebAppInit(
             ILogger<WebAppInit> logger,
             ITaskScheduler taskScheduler,
-            IFlightDataCollector dataCollector
+            IFlightDataSource dataSource
             )
         {
             _logger = logger;
             _taskScheduler = taskScheduler;
-            _dataCollector = dataCollector;
+            _dataSource = dataSource;
 
             _weatherAirports = new List<IcaoCode> {
                 "ESGJ",
@@ -50,19 +50,16 @@ namespace FlightPlanner.Service
 
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
-            ScheduleDownloads();
-            StartDataCollection();
-
+            ScheduleTasks();
+            
+            _dataSource.Start();
+            _logger.LogInformation("Data collection started");
+            
             return next;
         }
 
 
-        private void StartDataCollection()
-        {
-            _dataCollector.Start();
-        }
-
-        private void ScheduleDownloads()
+        private void ScheduleTasks()
         {
             _taskScheduler.Schedule(
                 new FetchMetar(_weatherAirports),

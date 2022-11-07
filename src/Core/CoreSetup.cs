@@ -8,7 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddFlightDataCollection(this IServiceCollection services)
         {
             services.AddSingleton<ITaskScheduler, TaskScheduler>();
-            services.AddSingleton<IFlightDataCollector, FlightDataCollector>();
+            services.AddSingleton<IFlightDataSource, FlightDataSource>();
 
             return services;
         }
