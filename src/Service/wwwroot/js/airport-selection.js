@@ -73,3 +73,46 @@ function is_airport_in_cookie(target, icao) {
 function is_valid_icao(icao) {
     return icao.match(/^[A-Z]{4}$/g);
 }
+
+
+
+var airportsData = {}
+var tableElement = null
+
+function initialize_airports() {
+    tableElement = document.getElementById('table-airport-selection')
+    fetch_airports_data()
+}
+
+window.onload = initialize_airports
+
+function create_settings_table() {
+    for (var i = 0; i < airportsData.airports.length; i++) {
+        var airportData = airportsData.airports[i]
+        console.log(airportData.icao)
+
+        var row = tableElement.insertRow(i)
+        row.insertCell(0).innerHTML = airportData.name + "<br/ >(" + airportData.icao + ")"
+        row.insertCell(1).innerHTML = ""
+        row.insertCell(2).innerHTML = ""
+        row.insertCell(3).innerHTML = ""
+    }
+}
+
+
+function fetch_airports_data() {
+    var dataUrl = '/airports.json'
+    var fetchPromise = fetch(dataUrl)
+
+    fetchPromise
+        .then(response => response.json())
+        .then(json => {
+            airportsData = json
+            console.log(airportsData)
+            create_settings_table()
+        })
+        .catch(function (error) {
+            console.log(error)
+            alert('Error!')
+        })
+}

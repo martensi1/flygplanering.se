@@ -5,6 +5,9 @@
 }
 
 
+<script src="~/js/airport-selection.js" asp-append-version="true"></script>
+
+
 <script>
     function save_settings()
     {
@@ -13,9 +16,23 @@
 </script>
 
 
-<div class="text-center">
-    <h2>Inställningar</h2>
-    
+<div class="text-center" style="margin-top: 20px;">
+    <h2>Dina inställningar</h2>
+
+    <div class="auto-overflow-x">
+        <table style="margin-top: 30px">
+            <thead>
+                <tr>
+                    <th>Flygplats</th>
+                    <th>METAR</th>
+                    <th>TAF</th>
+                    <th>NOTAM</th>
+                </tr>
+            </thead>
+            <tbody id="table-airport-selection" />
+        </table>
+    </div>
+
     <div>
         <a id="button-save-settings" class="main-button" onclick="save_settings">
             <i class="material-icons">save</i>
