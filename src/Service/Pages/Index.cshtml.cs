@@ -25,7 +25,8 @@ namespace FlightPlanner.Service.Pages
         public Dictionary<IcaoCode, string> Taf { get; private set; }
         public Dictionary<IcaoCode, string> Notam { get; private set; }
 
-        public DateTime LastGetUtc { get; private set; }
+        public string RetrievedTimeUtc { get; private set; }
+        public string NswcUrl { get; private set; }
 
 
         public IActionResult OnGet()
@@ -35,13 +36,14 @@ namespace FlightPlanner.Service.Pages
                 return StatusCode(StatusCodes.Status503ServiceUnavailable);
             }
 
-            UpdateCookies();
+            GetAndFilterData();
             SetDataRetrievedTime();
+            CreateNonCacheableNswcUrl();
 
             return Page();
         }
 
-        private void UpdateCookies()
+        private void GetAndFilterData()
         {
             var metarAirports = CookieParsing.ToAirportList(Request.Cookies["metar-airports"], new List<IcaoCode>() { "ESGJ", "ESGG" });
             var tafAirports = CookieParsing.ToAirportList(Request.Cookies["taf-airports"], new List<IcaoCode>() { "ESGJ", "ESGG" });
@@ -65,7 +67,14 @@ namespace FlightPlanner.Service.Pages
 
         private void SetDataRetrievedTime()
         {
-            LastGetUtc = DateTime.Now.ToUniversalTime();
+            RetrievedTimeUtc = DateTime.Now.ToUniversalTime()
+                .ToString("HH:mm (UTC), dd-MM-yyyy");
+        }
+
+        private void CreateNonCacheableNswcUrl()
+        {
+            var guid = Guid.NewGuid();
+            NswcUrl = "https://aro.lfv.se/tor/nswc2aro.gif?" + guid.ToString();
         }
     }
 }

@@ -4,20 +4,27 @@
     ViewData["Title"] = "Flygplanering.se - Briefingtjänst";
 }
 
+
 <script src="~/js/summary-print.js" asp-append-version="true"></script>
 <script src="~/js/weight-balance.js" asp-append-version="true"></script>
 <script src="~/js/airport-selection.js" asp-append-version="true"></script>
 
 
 <div class="text-center">
+
     <div id="last-update-time">
        <p>
-            Data from <a href="https://aro.lfv.se/" target="_blank">LFV</a>, <a href="https://www.met.no/" target="_blank">MET Norway</a> and <a href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank">FAA Notam Search</a>
-            <br />Retrieved @Model.LastGetUtc.ToString("HH:mm (UTC), dd-MM-yyyy")
+           Data from 
+           <a href="https://aro.lfv.se/" target="_blank">LFV</a>, 
+           <a href="https://www.met.no/" target="_blank">MET Norway</a> and 
+           <a href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank">FAA Notam Search</a>
+           <br />Retrieved @Model.RetrievedTimeUtc
         </p>     
     </div>
 
+
     <div id="section-weather">
+
         @if (Model.Metar?.Count > 0) {
             <div class="info-block">
                 <h2>METAR</h2>
@@ -28,10 +35,9 @@
                         <b>@kvp.Key</b><span>@kvp.Value</span>
                     </div>
                 }
-
-                <button onclick="add_airport('METAR')" class="main-button no-print">Lägg till</button>
             </div>
         }
+
 
         @if (Model.Taf?.Count > 0) {
             <div class="info-block">
@@ -45,6 +51,7 @@
                 }
             </div>
         }
+
 
         @if (Model.Notam?.Count > 0)
         {
@@ -68,32 +75,33 @@
             </div>
         }
 
-        <br/>
+
         <div class="info-block no-print">
             <h2>Low Level Forecast</h2>
             <hr />
-            Click on the link below to open the NortAviMet low level forecast for the Nordic Region.
+            Click on the link below to open the NortAviMet low level forecast for the Nordic Region
 
+            <br />
             <a href="https://www.northavimet.com/low-level-forecast/denmarksweden" target="_blank">Click to open forecast</a>
         </div>
 
-        <!-- Page break -->
-        <br />
-        <p style="page-break-after: always;">&nbsp;</p>
+
+        <br /><p style="page-break-after: always;">&nbsp;</p>
+
 
         <div class="info-block">
             <h2>NSWC</h2>
             <hr />
 
-            <img id="nswc-image" alt="Significant Weather Chart" src="https://aro.lfv.se/tor/nswc2aro.gif?
-                 @Guid.NewGuid().ToString()" />
+            <img id="nswc-image" alt="Significant Weather Chart" src="@Model.NswcUrl" />
         </div>
     </div>
 
+
     <div id="section-weight-balance" style="display: none">
-        <!-- Page break -->
-        <br />
-        <p style="page-break-after: always;">&nbsp;</p>
+
+        <br /><p style="page-break-after: always;">&nbsp;</p>
+
 
         <div class="info-block">
             <h2>Weight and Balance</h2>
@@ -127,14 +135,18 @@
         </div>
     </div>
 
+
     <div class="info-block" style="margin-top: 25px">
+
         <a id="button-weight-balance" class="main-button no-print" onclick="show_weight_balance_section()">
             <i class="material-icons">balance</i>
             <span>Vikt och Balans</span>
         </a>
+
         <a id="button-print-summary" class="main-button no-print" onclick="print_summary()">
             <i class="material-icons">print</i>
             <span>Skriv ut</span>
         </a>
     </div>
+
 </div>
