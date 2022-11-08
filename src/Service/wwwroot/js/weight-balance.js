@@ -47,7 +47,7 @@ function create_weight_balance_table() {
         var weightPoint = weightPoints[i]
 
         insert_weight_balance_row('weight-point', i, weightPoint.name, weightPoint.modifiable,
-            weightPoint.value, weightPoint.arm, weightPoint.note || "")
+            weightPoint.value, weightPoint.arm.toFixed(1), weightPoint.note || "")
     }
 
     insert_weight_balance_row('summarize', weightPoints.length - 1, 'Torrvikt', false, 0, 0, ``)

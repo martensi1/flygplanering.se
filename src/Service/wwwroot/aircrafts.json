@@ -3,21 +3,9 @@
     "maxWeight": 450,
     "weightPoints": [
       {
-        "name": "Vänster",
-        "arm": 67.8,
-        "value": 93.7,
-        "modifiable": false
-      },
-      {
-        "name": "Höger",
-        "arm": 67.8,
-        "value": 95.2,
-        "modifiable": false
-      },
-      {
-        "name": "Fram",
-        "arm": -72.2,
-        "value": 86.1,
+        "name": "Grundtomvikt",
+        "arm": 24.0,
+        "value": 275,
         "modifiable": false
       },
       {
