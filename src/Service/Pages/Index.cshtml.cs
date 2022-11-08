@@ -45,17 +45,13 @@ namespace FlightPlanner.Service.Pages
 
         private void GetAndFilterData()
         {
-            var metarAirports = CookieParsing.ToAirportList(Request.Cookies["metar-airports"], new List<IcaoCode>() { "ESGJ", "ESGG" });
-            var tafAirports = CookieParsing.ToAirportList(Request.Cookies["taf-airports"], new List<IcaoCode>() { "ESGJ", "ESGG" });
-            var notamAirports = CookieParsing.ToAirportList(Request.Cookies["notam-airports"], new List<IcaoCode>() { "ESGJ" });
+            var settingsCookie = SettingsCookie.CreateFrom(Request);
 
-            Metar = SortOutUnwantedAirports(_dataSource.CurrentMetar, metarAirports);
-            Taf = SortOutUnwantedAirports(_dataSource.CurrentTaf, tafAirports);
-            Notam = SortOutUnwantedAirports(_dataSource.CurrentNotam, notamAirports);
+            Metar = SortOutUnwantedAirports(_dataSource.CurrentMetar, settingsCookie.MetarAirports);
+            Taf = SortOutUnwantedAirports(_dataSource.CurrentTaf, settingsCookie.TafAirports);
+            Notam = SortOutUnwantedAirports(_dataSource.CurrentNotam, settingsCookie.NotamAirports);
 
-            Response.Cookies.Append("metar-airports", CookieParsing.FromAirportList(metarAirports));
-            Response.Cookies.Append("taf-airports", CookieParsing.FromAirportList(tafAirports));
-            Response.Cookies.Append("notam-airports", CookieParsing.FromAirportList(notamAirports));
+            settingsCookie.WriteTo(Response);
         }
 
         private Dictionary<IcaoCode, string> SortOutUnwantedAirports(

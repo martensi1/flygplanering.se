@@ -113,6 +113,11 @@ input[type=number] {
 }
 
 
+input[type=checkbox] {
+    
+}
+
+
 /* Add style to Google's material-icons class */
 .material-icons {
     color: gray;

@@ -1,36 +1,108 @@
 ﻿/************************************************
  * Flight Planner
  ***********************************************/
-var cookie_names = {
-    "METAR": "metar-airports",
-    "TAF": "taf-airports",
-    "NOTAM": "notam-airports"
+var settings = {}
+
+
+window.onload = function () {
+    loadSettings();
+    fetchAirportsData();
 }
 
 
-function add_airport(target) {
-    icao = prompt("Enter airport icao: ");
-
-    if (!is_valid_icao(icao)) {
-        alert("Invalid airport format!");
-    }
-
-    if (is_airport_in_cookie(icao)) {
-        alert("Airport already added!");
-    }
-
-
-    var cookie_name = cookie_names[target];
-
-    cookie_value = get_cookie(cookie_name);
-    new_value = cookie_value + "%2C" + icao;
-
-    set_cookie(cookie_name, new_value);
-    location.reload();
+function fetchAirportsData() {
+    fetch('/airports.json')
+        .then(response => response.json())
+        .then(json => {
+            createSettingsTable(json);
+        })
+        .catch(function (error) {
+            console.log(error);
+            alert('Error!');
+        })
 }
 
-function get_cookie(cookie_name) {
-    let name = cookie_name + "=";
+function createSettingsTable(airportsData) {
+    var airportList = airportsData.airports;
+    airportList.sort(function (a, b) {
+        return a.name.localeCompare(b.name);
+    })
+
+
+    for (var i = 0; i < airportList.length; i++) {
+        var name = airportList[i].name;
+        var icao = airportList[i].icao;
+
+        var tableElement = document.getElementById('table-airport-selection');
+        var row = tableElement.insertRow(i);
+
+        row.insertCell(0).innerHTML = name + "<br/ >(" + icao + ")";
+        row.insertCell(1).innerHTML = createCheckboxHtml(icao, "METAR");
+        row.insertCell(2).innerHTML = createCheckboxHtml(icao, "TAF");
+        row.insertCell(3).innerHTML = createCheckboxHtml(icao, "NOTAM");
+    }
+}
+
+function createCheckboxHtml(icao, type) {
+    return '<div><input type="checkbox" class="form-check-input" aria-label="..." checked="checked" value="" onclick="onChange(this, \'' + type + '\', \'' + icao + '\')" /></div>'
+}
+
+function onChange(element, type, icao) {
+    if (element.checked) {
+        settings[type].push(icao);
+    }
+    else {
+        settings[type] = settings[type].filter(i => i != icao);
+    }
+
+    console.log(settings)
+}
+
+function removeAirport(type, icao) {
+    settings[type] = settings[type].filter(i => i != icao);
+    console.log(settings)
+}
+
+
+
+function loadSettings() {
+    var cookieValue = getCookie("fpl-settings");
+    
+    if (cookieValue == null) {
+        alert('Något gick fel! Kontakta sidans administratör')
+    }
+
+    decodedCookieValue = decodeURIComponent(cookieValue)
+    settings = JSON.parse(decodedCookieValue);
+
+    console.log(settings)
+}
+
+function saveSettings() {
+    if (settings == null) {
+        return;
+    }
+
+    var jsonString = JSON.stringify(settings);
+    console.log(jsonString);
+
+    cookieValue = encodeURIComponent(jsonString);
+    setCookie("fpl-settings", cookieValue, 10)
+
+    location.href = "/"
+}
+
+
+function setCookie(cookieName, cookieValue, expirationYears) {
+    let date = new Date();
+    date.setTime(date.getTime() + (expirationYears * 24 * 60 * 60 * 1000 * 365));
+
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = cookieName + "=" + cookieValue + "; " + expires + "; path=/";
+}
+
+function getCookie(cookieName) {
+    let name = cookieName + "=";
     let cookies = document.cookie.split(';');
 
     for (let i = 0; i < cookies.length; i++) {
@@ -46,73 +118,4 @@ function get_cookie(cookie_name) {
     }
 
     return "";
-}
-
-function set_cookie(cookie_name, cookie_value, expiration_days) {
-    let date = new Date();
-    date.setTime(date.getTime() + (expiration_days * 24 * 60 * 60 * 1000));
-
-    const expires = "expires=" + date.toUTCString();
-    document.cookie = cookie_name + "=" + cookie_value + "; " + expires + "; path=/";
-}
-
-function is_airport_in_cookie(target, icao) {
-    var cookie_name = cookie_names[target];
-    if (cookie_name == null) {
-        return false;
-    }
-
-    var cookie_value = get_cookie(cookie_name);
-    if (cookie_value == null) {
-        return false;
-    }
-
-    return cookie_value.includes(icao);
-}
-
-function is_valid_icao(icao) {
-    return icao.match(/^[A-Z]{4}$/g);
-}
-
-
-
-var airportsData = {}
-var tableElement = null
-
-function initialize_airports() {
-    tableElement = document.getElementById('table-airport-selection')
-    fetch_airports_data()
-}
-
-window.onload = initialize_airports
-
-function create_settings_table() {
-    for (var i = 0; i < airportsData.airports.length; i++) {
-        var airportData = airportsData.airports[i]
-        console.log(airportData.icao)
-
-        var row = tableElement.insertRow(i)
-        row.insertCell(0).innerHTML = airportData.name + "<br/ >(" + airportData.icao + ")"
-        row.insertCell(1).innerHTML = ""
-        row.insertCell(2).innerHTML = ""
-        row.insertCell(3).innerHTML = ""
-    }
-}
-
-
-function fetch_airports_data() {
-    var dataUrl = '/airports.json'
-    var fetchPromise = fetch(dataUrl)
-
-    fetchPromise
-        .then(response => response.json())
-        .then(json => {
-            airportsData = json
-            console.log(airportsData)
-            create_settings_table()
-        })
-        .catch(function (error) {
-            console.log(error)
-            alert('Error!')
-        })
 }

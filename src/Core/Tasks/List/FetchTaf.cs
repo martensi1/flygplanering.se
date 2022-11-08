@@ -28,7 +28,7 @@ namespace FlightPlanner.Core.Tasks
                 {
                     try
                     {
-                        string metar = client.FetchTaf(airport.ToString());
+                        string metar = "TEST"; // client.FetchTaf(airport.ToString());
                         result.Add(airport, metar);
                     }
                     catch (NoDataAvailableException)
