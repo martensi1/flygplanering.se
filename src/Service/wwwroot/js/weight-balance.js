@@ -1,121 +1,127 @@
 ﻿/************************************************
  * Flight Planner
  ***********************************************/
-var aircraftsData = {}
+var aircraftsData = {};
 
-var selectElement = null
-var tableElement = null
+var selectElement = null;
+var tableElement = null;
 
 
 
-function initialize_weight_balance() {
-    selectElement = document.getElementById('select-weight-balance')
-    tableElement = document.getElementById('table-weight-balance')
+function showWeightBalanceSection() {
+    var sectionElement = document.getElementById('section-weight-balance');
+    var buttonElement = document.getElementById('button-weight-balance');
 
-    fetch_weight_balance_data()
+    sectionElement.style.display = 'block';
+    buttonElement.style.display = 'none';
 }
 
-window.onload = initialize_weight_balance
+function initializeWeightBalance() {
+    selectElement = document.getElementById('select-weight-balance');
+    tableElement = document.getElementById('table-weight-balance');
+
+    fetchWeightBalanceData();
+}
+
+window.onload = initializeWeightBalance;
 
 
 
-function fetch_weight_balance_data() {
-    var dataUrl = '/aircrafts.json'
-    var fetchPromise = fetch(dataUrl)
+function fetchWeightBalanceData() {
+    var dataUrl = '/aircrafts.json';
+    var fetchPromise = fetch(dataUrl);
 
     fetchPromise
         .then(response => response.json())
         .then(json => {
-            aircraftsData = json
-            create_weight_balance_table()
+            aircraftsData = json;
+            createWeightBalanceTable();
         })
         .catch(function (error) {
-            console.log(error)
-            alert('Error!')
+            console.log(error);
+            alert('Error!');
         })
 }
 
-function create_weight_balance_table() {
-    var selectValue = selectElement.value
+function createWeightBalanceTable() {
+    var selectValue = selectElement.value;
 
-    var aircraftData = aircraftsData[selectValue]
-    var weightPoints = aircraftData.weightPoints
+    var aircraftData = aircraftsData[selectValue];
+    var weightPoints = aircraftData.weightPoints;
 
-    clear_weight_balance_table()
+    clearWeightBalanceTable();
 
     for (var i = 0; i < weightPoints.length; i++) {
-        var weightPoint = weightPoints[i]
+        var weightPoint = weightPoints[i];
 
-        insert_weight_balance_row('weight-point', i, weightPoint.name, weightPoint.modifiable,
-            weightPoint.value, weightPoint.arm.toFixed(1), weightPoint.note || "")
+        insertWeightBalanceRow('weight-point', i, weightPoint.name, weightPoint.modifiable,
+            weightPoint.value, weightPoint.arm.toFixed(1), weightPoint.note || "");
     }
 
-    insert_weight_balance_row('summarize', weightPoints.length - 1, 'Torrvikt', false, 0, 0, ``)
-    insert_weight_balance_row('summarize', weightPoints.length + 1, 'Totalvikt', false, 0, 0, `Max ${aircraftData.maxWeight} kg`)
+    insertWeightBalanceRow('summarize', weightPoints.length - 1, 'Torrvikt', false, 0, 0, ``);
+    insertWeightBalanceRow('summarize', weightPoints.length + 1, 'Totalvikt', false, 0, 0, `Max ${aircraftData.maxWeight} kg`);
 
-    update_weight_balance_table()
+    updateWeightBalanceTable();
 }
 
-function update_weight_balance_table() {
-    var totalWeight = 0
-    var totalMoment = 0
+function updateWeightBalanceTable() {
+    var totalWeight = 0;
+    var totalMoment = 0;
 
     for (var row of tableElement.childNodes) {
-        var type = row.dataset.rowtype
+        var type = row.dataset.rowtype;
 
-        var cells = row.childNodes
-        var weightCell = cells[1], armCell = cells[2], momentCell = cells[3]
+        var cells = row.childNodes;
+        var weightCell = cells[1], armCell = cells[2], momentCell = cells[3];
 
         if (type == 'weight-point') {
-            var weight = Number(weightCell.firstChild?.value || weightCell.innerHTML)
-            var arm = Number(armCell.innerHTML)
+            var isInputCell = (weightCell.firstChild != null);
+
+            var weight = Number(isInputCell ? weightCell.firstChild.value : weightCell.innerHTML);
+            var arm = Number(armCell.innerHTML);
 
             if (isNaN(weight)) {
                 weight = 0;
             }
 
-            var moment = Math.round(weight * arm)
-            momentCell.innerHTML = moment
+            if (isInputCell) {
+                var weightStr = weight.toString();
+                weight = Number(weightStr.substring(0, 3));
+                weightCell.firstChild.value = weight.toString();
+            }
 
-            totalWeight += weight
-            totalMoment += moment
+            var moment = Math.round(weight * arm);
+            momentCell.innerHTML = moment;
+
+            totalWeight += weight;
+            totalMoment += moment;
         }
         else if (type == 'summarize') {
-            weightCell.innerHTML = parseFloat(totalWeight.toFixed(1))
-            armCell.innerHTML = (totalMoment / totalWeight).toFixed(1)
-            momentCell.innerHTML = totalMoment
+            weightCell.innerHTML = parseFloat(totalWeight.toFixed(1));
+            armCell.innerHTML = (totalMoment / totalWeight).toFixed(1);
+            momentCell.innerHTML = totalMoment;
         }
     }
 }
 
-function insert_weight_balance_row(type, position, name, modifiable, value, arm, note = null) {
-    var row = tableElement.insertRow(position)
-    row.dataset.rowtype = type
+function insertWeightBalanceRow(type, position, name, modifiable, value, arm) {
+    var row = tableElement.insertRow(position);
+    row.dataset.rowtype = type;
 
     var valueHtml = modifiable ?
-            `<input type="number" min="0" placeholder="Enter value..." value="${value}" oninput="update_weight_balance_table()" />` : value
+        `<input type="number" min="0" maxlength="3" inputmode="numeric" pattern="[0-9]*" placeholder="Skriv ett värde..."
+            value="${value}" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninput="updateWeightBalanceTable()" />` : value;
 
-    row.insertCell(0).innerHTML = name
-    row.insertCell(1).innerHTML = valueHtml
-    row.insertCell(2).innerHTML = arm
-    row.insertCell(3).innerHTML = 0
-    //row.insertCell(4).innerHTML = note || ''
+    row.insertCell(0).innerHTML = name;
+    row.insertCell(1).innerHTML = valueHtml;
+    row.insertCell(2).innerHTML = arm;
+    row.insertCell(3).innerHTML = 0;
 
     if (type == 'summarize') {
-        row.style.border = '2px solid'
+        row.style.border = '2px solid';
     }
 }
 
-function clear_weight_balance_table() {
-    tableElement.innerHTML = ''
-}
-
-
-
-function show_weight_balance_section() {
-    var sectionElement = document.getElementById('section-weight-balance')
-    var buttonElement = document.getElementById('button-weight-balance')
-
-    sectionElement.style.display = 'block'
-    buttonElement.style.display = 'none'
+function clearWeightBalanceTable() {
+    tableElement.innerHTML = '';
 }

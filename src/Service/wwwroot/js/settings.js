@@ -1,7 +1,7 @@
 ﻿/************************************************
  * Flight Planner
  ***********************************************/
-var settings = {}
+var settings = {};
 
 
 window.onload = function () {
@@ -45,7 +45,7 @@ function createSettingsTable(airportsData) {
 
 function createCheckboxHtml(icao, type) {
     var exists = settings[type].includes(icao);
-    return '<div><input type="checkbox" ' + (exists ? 'checked="checked"' : '') + ' onclick="onChange(this, \'' + type + '\', \'' + icao + '\')" /></div>'
+    return '<div><input type="checkbox" ' + (exists ? 'checked="checked"' : '') + ' onclick="onChange(this, \'' + type + '\', \'' + icao + '\')" /></div>';
 }
 
 function onChange(element, type, icao) {
@@ -55,13 +55,10 @@ function onChange(element, type, icao) {
     else {
         settings[type] = settings[type].filter(i => i != icao);
     }
-
-    console.log(settings)
 }
 
 function removeAirport(type, icao) {
     settings[type] = settings[type].filter(i => i != icao);
-    console.log(settings)
 }
 
 
@@ -70,13 +67,11 @@ function loadSettings() {
     var cookieValue = getCookie("fpl-settings");
     
     if (cookieValue == null) {
-        alert('Något gick fel! Kontakta sidans administratör')
+        alert('Något gick fel! Kontakta sidans administratör');
     }
 
-    decodedCookieValue = decodeURIComponent(cookieValue)
+    decodedCookieValue = decodeURIComponent(cookieValue);
     settings = JSON.parse(decodedCookieValue);
-
-    console.log(settings)
 }
 
 function saveSettings() {
@@ -88,9 +83,9 @@ function saveSettings() {
     console.log(jsonString);
 
     cookieValue = encodeURIComponent(jsonString);
-    setCookie("fpl-settings", cookieValue, 10)
+    setCookie("fpl-settings", cookieValue, 10);
 
-    location.href = "/"
+    location.href = "/";
 }
 
 
