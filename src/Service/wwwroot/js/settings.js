@@ -85,7 +85,7 @@ function saveSettings() {
     cookieValue = encodeURIComponent(jsonString);
     setCookie("fpl-settings", cookieValue, 10);
 
-    location.href = "/";
+    alert("Inställningarna sparade!");
 }
 
 

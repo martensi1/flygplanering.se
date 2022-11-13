@@ -24,6 +24,12 @@ namespace FlightPlanner.Service
 
             services.AddTransient<IStartupFilter, WebAppInit>();
             services.AddFlightDataCollection();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+            });
         }
 
 
@@ -41,6 +47,7 @@ namespace FlightPlanner.Service
                 app.UseHsts();
             }
 
+            app.UseCookiePolicy();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
