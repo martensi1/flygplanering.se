@@ -1,4 +1,6 @@
-﻿namespace FlightPlanner.Core.Tasks
+﻿using System;
+
+namespace FlightPlanner.Core.Tasks
 {
     public interface ITaskSubscriber
     {

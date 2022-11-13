@@ -1,0 +1,125 @@
+﻿h2 {
+    font-weight: 300;
+}
+
+.info-block {
+    margin-top: 60px;
+}
+
+.report-line {
+    display: table;
+    margin-bottom: 1rem;
+}
+
+.report-line b {
+    display: table-cell;
+    text-align: left;
+    width: 70px;
+}
+
+.report-line span {
+    display: table-cell;
+    text-align: left;
+    vertical-align: top;
+}
+
+.auto-overflow-x {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#last-update-time a, p {
+    color: gray;
+}
+
+#nswc-image {
+    border: 3px solid #555;
+    height: auto;
+    max-width: 90%;
+    width: 800px;
+}
+
+#settings-box {
+    z-index: 999;
+    position: fixed;
+    bottom: 20px;
+    right: 0px;
+    background-color: rgba(100, 100, 100, 0.1);
+    padding: 4px;
+}
+
+/*
+    Author: Alex (fabriceleven)
+    Link: https://fabriceleven.com/design/clever-way-to-change-the-drop-down-selector-arrow-icon/
+    Free to use
+*/
+select {
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    color: #333;
+    font-size: 16px;
+    height: 50px;
+    line-height: 1.75;
+    max-width: 140px;
+    margin-top: 5px;
+    padding: 0px 24px;
+    width: 100%;
+    word-break: normal;
+    -ms-word-break: normal;
+}
+
+
+
+@media screen {
+    .section-content {
+        display: none;
+    }
+}
+
+
+@media print {
+    body {
+        color: rgb(0, 0, 0) !important;
+        font-family: Helvetica, sans-serif !important;
+        font-size: 0.55cm !important;
+    }
+
+    h2 {
+        font-weight: bold !important;
+        text-align: left !important;
+    }
+
+    hr {
+        border-top: 1.5px solid rgba(0,0,0) !important;
+    }
+
+    th {
+        color: black;
+    }
+
+    table td:last-child {
+        display: none;
+    }
+
+    table th:last-child {
+        display: none;
+    }
+
+    inpit {
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    .section-content {
+        display: block;
+    }
+
+    .info-block {
+        margin-top: 35px !important;
+    }
+
+    #nswc-image {
+        max-width: 95% !important;
+        width: 95% !important;
+    }
+}

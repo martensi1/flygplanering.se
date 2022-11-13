@@ -1,0 +1,45 @@
+﻿@page "/settings"
+@model SettingsModel
+@{
+    ViewData["Title"] = "Flygplanering.se - Inställningar";
+}
+
+<script src="~/js/settings.js" asp-append-version="true"></script>
+
+
+<script>
+    function save_settings()
+    {
+        window.location.href = '/';
+    }
+</script>
+
+
+<div class="text-center" style="margin-top: 20px;">
+    <h2>Dina inställningar</h2>
+
+    <div style="margin-top: 20px">
+        <p>Välj nedan vilka flygplatser du vill se METAR, TAF och NOTAM för.<br />Klicka på sparaknappen när du är färdig</p>
+    </div>
+
+    <div class="auto-overflow-x">
+        <table style="margin-top: 30px">
+            <thead>
+                <tr>
+                    <th>Flygplats</th>
+                    <th>METAR</th>
+                    <th>TAF</th>
+                    <th>NOTAM</th>
+                </tr>
+            </thead>
+            <tbody id="table-airport-selection" />
+        </table>
+    </div>
+
+    <div style="margin-top: 40px">
+        <a id="button-save-settings" class="main-button" onclick="saveSettings()">
+            <i class="material-icons">lock</i>
+            <span>Spara och gå tillbaka</span>
+        </a>
+    </div>
+</div>

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-
 namespace FlightPlanner.Core.Types
 {
-    public sealed class IcaoCode
+    public sealed class IcaoCode :
+        IComparable<IcaoCode>
     {
-        private string _code;
+        private readonly string _code;
 
 
         public IcaoCode(string code)
@@ -28,11 +28,11 @@ namespace FlightPlanner.Core.Types
         {
             return _code == (obj as IcaoCode)._code;
         }
+        
         public bool Equals(IcaoCode p)
         {
             return this.Equals(p as object);
         }
-
 
         public static bool operator ==(IcaoCode left, IcaoCode right)
         {
@@ -43,6 +43,10 @@ namespace FlightPlanner.Core.Types
             return !left.Equals(right);
         }
 
+        public int CompareTo(IcaoCode other)
+        {
+            return _code.CompareTo(other._code);
+        }
 
         public override int GetHashCode()
         {
@@ -55,9 +59,14 @@ namespace FlightPlanner.Core.Types
         }
 
 
+        public static bool IsStringValid(string code)
+        {
+            return Regex.IsMatch(code, "^[A-Z]{4}$");
+        }
+
         private static void CheckIfValidCodeOrThrow(string input)
         {
-            if (!Regex.IsMatch(input, "^[A-Z]{4}$"))
+            if (!IsStringValid(input))
                 throw new ArgumentException("Invalid ICAO code");
         }
     }

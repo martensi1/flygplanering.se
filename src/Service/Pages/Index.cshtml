@@ -1,151 +1,160 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Flygplanering";
+    ViewData["Title"] = "Flygplanering.se - Briefingtjänst";
 }
 
-<script src="~/js/summary-print.js" asp-append-version="true"></script>
 <script src="~/js/weight-balance.js" asp-append-version="true"></script>
 
 
-<div class="text-center">
-    <p id="last-update-time">
-        Data from LFV, MET Norway and FAA NOTAM Search
-        <br />Retrieved @Model.LastGetUtc.ToString("HH:mm:ss dd-MM-yyyy UTC")
-    </p>
+<div class="container text-center">
+
+    <div id="last-update-time" class="mt-2">
+       <p>
+           Data från 
+           <a href="https://aro.lfv.se/" target="_blank">LFV</a>, 
+           <a href="https://www.met.no/" target="_blank">Meteorologisk institutt</a> och 
+           <a href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank">FAA Notam Search</a>
+           <br />Hämtad @Model.RetrievedTimeUtc
+        </p>     
+    </div>
+
 
     <div id="section-weather">
-        <div class="info-block">
-            <h2>METAR</h2>
-            <hr />
 
-            @if (Model.CurrentMetar?.Count > 0)
-            {
-                foreach (var kvp in Model.CurrentMetar)
-                {
+        @if (Model.Metar?.Count > 0) {
+            <div class="info-block">
+                <h2>METAR</h2>
+                <hr />
+            
+                @foreach (var kvp in Model.Metar) {
                     <div class="report-line">
-                        <b>@kvp.Key</b>
-                        <span>@kvp.Value</span>
+                        <b>@kvp.Key</b><span>@kvp.Value</span>
                     </div>
                 }
-            }
-            else
-            {
-                <p>No data available</p>
-            }
-        </div>
+            </div>
+        }
 
-        <div class="info-block">
-            <h2>TAF</h2>
-            <hr />
 
-            @if (Model.CurrentTaf?.Count > 0)
-            {
-                foreach (var kvp in Model.CurrentTaf)
-                {
+        @if (Model.Taf?.Count > 0) {
+            <div class="info-block">
+                <h2>TAF</h2>
+                <hr />
+            
+                @foreach (var kvp in Model.Taf) {
                     <div class="report-line">
-                        <b>@kvp.Key</b>
-                        <span>@kvp.Value</span>
+                        <b>@kvp.Key</b><span>@kvp.Value</span>
                     </div>
                 }
-            }
-            else
-            {
-                <p>No data available</p>
-            }
-        </div>
+            </div>
+        }
 
-        <div class="info-block">
-            <h2>NOTAM</h2>
-            <hr />
 
-            @if (Model.CurrentNotam?.Count > 0)
-            {
-                foreach (var kvp in Model.CurrentNotam)
+        @if (Model.Notam?.Count > 0)
+        {
+            <div class="info-block">
+                <h2>NOTAM</h2>
+                <hr />
+                
+                @foreach (var kvp in Model.Notam)
                 {
                     <div class="report-line">
                         <b>@kvp.Key</b>
                         <span>
-                            @foreach (var line in kvp.Value.Split("\n"))
+                            @foreach (var notam in kvp.Value)
                             {
-                                @line
+                                @notam.Message
+                                <br />
                                 <br />
                             }
                         </span>
                     </div>
                 }
-            }
-            else
-            {
-                <p>No data available</p>
-            }
-        </div>
+            </div>
+        }
 
-        <br/>
-        <div class="block no-print">
+
+        <div class="info-block d-print-none">
             <h2>Low Level Forecast</h2>
             <hr />
+            Klicka på länken nedan för att öppna NorthAviMets låghöjdsprognos i en ny flik
 
-            <a href="https://www.northavimet.com/low-level-forecast/denmarksweden" target="_blank">Click to open forecast</a>
+            <br />
+            <a href="https://www.northavimet.com/low-level-forecast/denmarksweden" target="_blank">Klicka för att öppna</a>
         </div>
 
-        <!-- Page break -->
-        <br />
+
         <p style="page-break-after: always;">&nbsp;</p>
+
 
         <div class="info-block">
             <h2>NSWC</h2>
             <hr />
 
-            <img id="nswc-image" alt="Significant Weather Chart" src="https://aro.lfv.se/tor/nswc2aro.gif?
-                 @Guid.NewGuid().ToString()" />
+            <img id="nswc-image" alt="Significant Weather Chart" src="@Model.NswcUrl" />
         </div>
     </div>
+
 
     <div id="section-weight-balance" style="display: none">
-        <!-- Page break -->
-        <br />
+
         <p style="page-break-after: always;">&nbsp;</p>
 
+
         <div class="info-block">
-            <h2>Weight and Balance</h2>
+            <h2>Vikt och Balans</h2>
             <hr />
 
+            <div>
+                <div class="d-print-none">
+                    <select id="select-weight-balance" onchange="create_weight_balance_table()">
+                        <option value="SE-KIK">SE-KIK</option>
+                        <option value="SE-KAV">SE-KAV</option>
+                        <option value="SE-IDG">SE-IDG</option>
+                        <option value="SE-VPO">SE-VPO</option>
+                    </select>
+                </div>
 
-            <div class="no-print">
-                <select id="select-weight-balance" onchange="create_weight_balance_table()">
-                    <option value="SE-KIK">SE-KIK</option>
-                    <option value="SE-KAV">SE-KAV</option>
-                    <option value="SE-IDG">SE-IDG</option>
-                    <option value="SE-VPO">SE-VPO</option>
-                </select>
-            </div>
-
-            <div class="auto-overflow-x">
-                <table style="margin-top: 30px">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Weight (kg)</th>
-                            <th>Arm (cm)</th>
-                            <th>Moment (kgcm)</th>
-                            <th>Notes</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-weight-balance" />
-                </table>
+                <div class="auto-overflow-x">
+                    <table style="margin-top: 30px">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Vikt (kg)</th>
+                                <th>Arm (cm)</th>
+                                <th>Moment (kgcm)</th>
+                                <!--<th>Notes</th>-->
+                            </tr>
+                        </thead>
+                        <tbody id="table-weight-balance" />
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="info-block" style="margin-top: 25px">
-        <a id="button-weight-balance" class="nice-button no-print" onclick="show_weight_balance_section()">
-            <i class="material-icons">balance</i>
-            <span>Add Weight & Balance</span>
+
+    <div class="my-5">
+
+        <a id="button-weight-balance" class="main-button d-print-none" onclick="show_weight_balance_section()">
+            <i class="material-icons">add</i>
+            <span>Vikt och Balans</span>
         </a>
-        <a id="button-print-summary" class="nice-button no-print" onclick="print_summary()">
+
+        <a id="button-print-summary" class="main-button d-print-none " onclick="window.print()">
             <i class="material-icons">print</i>
-            <span>Print Summary</span>
+            <span>Skriv ut</span>
         </a>
     </div>
+
+
+    <div id="settings-box">
+        <!--
+        <a>
+            <i class="material-icons" onclick="alert()">settings</i>
+        </a>
+        -->
+        <a style="vertical-align: top; line-height: 20px" href="/settings">Dina inställningar</a>
+    </div>
+
 </div>

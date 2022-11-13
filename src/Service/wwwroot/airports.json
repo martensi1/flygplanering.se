@@ -1,0 +1,80 @@
+{
+  "airports": [
+    {
+      "icao": "ESSA",
+      "name": "Stockholm-Arlanda"
+    },
+    {
+      "icao": "ESSB",
+      "name": "Stockholm-Bromma"
+    },
+    {
+      "icao": "ESGG",
+      "name": "Göteborg-Landvetter"
+    },
+    {
+      "icao": "ESMS",
+      "name": "Malmö Airport"
+    },
+    {
+      "icao": "ESSV",
+      "name": "Visby"
+    },
+    {
+      "icao": "ESMT",
+      "name": "Halmstad"
+    },
+    {
+      "icao": "ESGJ",
+      "name": "Jönköping"
+    },
+    {
+      "icao": "ESMQ",
+      "name": "Kalmar"
+    },
+    {
+      "icao": "ESOK",
+      "name": "Karlstad"
+    },
+    {
+      "icao": "ESSL",
+      "name": "Linköping-Saab"
+    },
+    {
+      "icao": "ESSP",
+      "name": "Norrköping-Kungsängens"
+    },
+    {
+      "icao": "ESMX",
+      "name": "Växjö-Kronoberg"
+    },
+    {
+      "icao": "ESGK",
+      "name": "Falköping"
+    },
+    {
+      "icao": "ESGC",
+      "name": "Falköping/Ålleberg"
+    },
+    {
+      "icao": "ESGL",
+      "name": "Lidköping-Hovby"
+    },
+    {
+      "icao": "ESGR",
+      "name": "Skövde"
+    },
+    {
+      "icao": "ESMY",
+      "name": "Smålandsstenar"
+    },
+    {
+      "icao": "ESMB",
+      "name": "Borgholm (Borglanda)"
+    },
+    {
+      "icao": "ESGP",
+      "name": "Göteborg City Airport (Säve)"
+    }
+  ]
+}

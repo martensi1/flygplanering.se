@@ -1,17 +1,16 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FlightPlanner.Core.Tasks;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-
-using FlightPlanner.Core.Tasks;
-
 
 namespace FlightPlanner.Core
 {
     public interface ITaskScheduler
     {
-        public void Schedule(TaskBase task, int intervalMilliseconds);
+        public void Schedule(TaskBase task, int intervalSeconds);
         public void SubscribeTo<T>(ITaskSubscriber observer);
     }
 
@@ -25,9 +24,9 @@ namespace FlightPlanner.Core
         {
             public TaskBase Task;
             public Timer Timer;
-            public List<ITaskSubscriber> Observers;
         }
         private readonly Dictionary<Type, ScheduledTask> _tasks;
+        private readonly Dictionary<Type, List<ITaskSubscriber>> _observers;
 
 
         public TaskScheduler(
@@ -36,6 +35,7 @@ namespace FlightPlanner.Core
         {
             _logger = logger;
             _tasks = new Dictionary<Type, ScheduledTask>();
+            _observers = new Dictionary<Type, List<ITaskSubscriber>>();
         }
 
         ~TaskScheduler()
@@ -45,7 +45,7 @@ namespace FlightPlanner.Core
         }
 
 
-        public void Schedule(TaskBase task, int intervalMilliseconds)
+        public void Schedule(TaskBase task, int intervalSeconds)
         {
             Type type = task.GetType();
 
@@ -54,30 +54,31 @@ namespace FlightPlanner.Core
 
             _tasks.Add(type, new ScheduledTask {
                 Task = task,
-                Timer = CreateTimer(task, intervalMilliseconds),
-                Observers = new List<ITaskSubscriber>()
+                Timer = CreateTimer(task, intervalSeconds)
             });
+
+            _logger.LogInformation("Task scheduled, name: {0}, interval: {1} s", task.Name, intervalSeconds);
         }
 
         public void SubscribeTo<TTask>(ITaskSubscriber observer)
         {
             Type type = typeof(TTask);
 
-            if (!_tasks.ContainsKey(type))
-                throw new ArgumentException("No registered task of type found");
+            if (!type.IsSubclassOf(typeof(TaskBase)))
+                throw new ArgumentException("Type is not a valid task");
 
-            _tasks[type].Observers.Add(observer);
+            if (!_observers.ContainsKey(type))
+                _observers.Add(type, new List<ITaskSubscriber>());
+            
+            _observers[type].Add(observer);
         }
 
 
-        private Timer CreateTimer(TaskBase task, int intervalMilliseconds)
+        private Timer CreateTimer(TaskBase task, int intervalSeconds)
         {
-            var callback = new TimerCallback(state =>
-            {
-                TaskResult result = task.Execute();
-                NotifyObservers(task.GetType(), result);
-            });
-
+            TimerCallback callback = CreateTimerCallback(task);
+            int intervalMilliseconds = intervalSeconds * 1000;
+            
             return new Timer(callback, null, 0, intervalMilliseconds);
         }
 
@@ -85,11 +86,34 @@ namespace FlightPlanner.Core
         {
             if (_tasks.ContainsKey(type))
             {
-                foreach (var observer in _tasks[type].Observers)
+                foreach (var observer in _observers[type])
                 {
                     observer.OnTaskFinished(result);
                 }
             }
+        }
+
+        private TimerCallback CreateTimerCallback(TaskBase task)
+        {
+            var callback = new TimerCallback(state =>
+            {
+                try
+                {
+                    var watch = Stopwatch.StartNew();
+                    TaskResult result = task.Execute();
+
+                    watch.Stop();
+                    _logger.LogInformation("Task finished, name: {0}, duration: {1} ms", task.Name, watch.ElapsedMilliseconds);
+
+                    NotifyObservers(task.GetType(), result);    
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Task execution failed, name: {0}", task.Name);
+                }
+            });
+
+            return callback;
         }
     }
 }

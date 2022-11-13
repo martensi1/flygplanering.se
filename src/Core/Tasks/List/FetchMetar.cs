@@ -1,8 +1,6 @@
-﻿using PilotAppLib.Clients.MetNorway;
+﻿using FlightPlanner.Core.Types;
+using PilotAppLib.Clients.MetNorway;
 using System.Collections.Generic;
-
-using FlightPlanner.Core.Types;
-
 
 namespace FlightPlanner.Core.Tasks
 {
@@ -20,7 +18,7 @@ namespace FlightPlanner.Core.Tasks
 
         protected sealed override object Run()
         {
-            var result = new AirportReportMap();
+            var result = new Dictionary<IcaoCode, string> ();
 
             using (var client = new MetNorwayClient())
             {
