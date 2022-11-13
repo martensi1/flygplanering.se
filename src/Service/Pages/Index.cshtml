@@ -11,11 +11,11 @@
 
     <div id="last-update-time" class="mt-2">
        <p>
-           Data from 
+           Data från 
            <a href="https://aro.lfv.se/" target="_blank">LFV</a>, 
-           <a href="https://www.met.no/" target="_blank">MET Norway</a> and 
+           <a href="https://www.met.no/" target="_blank">Meteorologisk institutt</a> och 
            <a href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank">FAA Notam Search</a>
-           <br />Retrieved @Model.RetrievedTimeUtc
+           <br />Hämtad @Model.RetrievedTimeUtc
         </p>     
     </div>
 
@@ -77,10 +77,10 @@
         <div class="info-block d-print-none">
             <h2>Low Level Forecast</h2>
             <hr />
-            Click on the link below to open the NortAviMet low level forecast for the Nordic Region
+            Klicka på länken nedan för att öppna NorthAviMets låghöjdsprognos i en ny flik
 
             <br />
-            <a href="https://www.northavimet.com/low-level-forecast/denmarksweden" target="_blank">Click to open forecast</a>
+            <a href="https://www.northavimet.com/low-level-forecast/denmarksweden" target="_blank">Klicka för att öppna</a>
         </div>
 
 
@@ -102,7 +102,7 @@
 
 
         <div class="info-block">
-            <h2>Weight and Balance</h2>
+            <h2>Vikt och Balans</h2>
             <hr />
 
             <div>
@@ -120,7 +120,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Weight (kg)</th>
+                                <th>Vikt (kg)</th>
                                 <th>Arm (cm)</th>
                                 <th>Moment (kgcm)</th>
                                 <!--<th>Notes</th>-->
@@ -148,10 +148,12 @@
     </div>
 
 
-    <div style="z-index: 999; position: fixed; bottom: 20px; right: 0px; background-color: rgba(100, 100, 100, 0.1)">
+    <div id="settings-box">
+        <!--
         <a>
             <i class="material-icons" onclick="alert()">settings</i>
         </a>
+        -->
         <a style="vertical-align: top; line-height: 20px" href="/settings">Dina inställningar</a>
     </div>
 

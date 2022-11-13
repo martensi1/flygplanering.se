@@ -1,90 +1,14 @@
-﻿/* Add style to Google's material-icons class */
-.material-icons {
-    color: gray;
-}
-
-/* Disable number input spinner */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Disable number input spinner */
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
-
-
-
-h2 {
+﻿h2 {
     font-weight: 300;
-}
-
-input {
-    border: none;
-    background: hsl(0 0% 93%);
-    border-color: darkgray;
-    border-radius: .25rem;
-    padding: .5rem 1rem;
-    text-align: center;
 }
 
 .info-block {
     margin-top: 60px;
 }
 
-
-
-
-/*
-    Author: Alex (fabriceleven)
-    Link: https://fabriceleven.com/design/clever-way-to-change-the-drop-down-selector-arrow-icon/
-    Free to use
-*/
-select {
-    background-color: #ffffff;
-    background-image: none;
-    border: 1px solid #cccccc;
-    color: #333;
-    font-size: 16px;
-    height: 50px;
-    line-height: 1.75;
-    max-width: 140px;
-    margin-top: 5px;
-    padding: 0px 24px;
-    width: 100%;
-    word-break: normal;
-    -ms-word-break: normal;
-}
-
-table, th, td {
-    border: 1px solid;
-}
-
-table {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-th, td {
-    padding: 15px;
-    text-align: center;
-    min-width: 129px;
-    height: 71px;
-}
-
-th {
-    background-color: lightgray;
-    color: white;
-    border-color: black;
-}
-
-
 .report-line {
     display: table;
-    margin-bottom: 1rem
+    margin-bottom: 1rem;
 }
 
 .report-line b {
@@ -115,7 +39,35 @@ th {
     width: 800px;
 }
 
+#settings-box {
+    z-index: 999;
+    position: fixed;
+    bottom: 20px;
+    right: 0px;
+    background-color: rgba(100, 100, 100, 0.1);
+    padding: 4px;
+}
 
+/*
+    Author: Alex (fabriceleven)
+    Link: https://fabriceleven.com/design/clever-way-to-change-the-drop-down-selector-arrow-icon/
+    Free to use
+*/
+select {
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    color: #333;
+    font-size: 16px;
+    height: 50px;
+    line-height: 1.75;
+    max-width: 140px;
+    margin-top: 5px;
+    padding: 0px 24px;
+    width: 100%;
+    word-break: normal;
+    -ms-word-break: normal;
+}
 
 
 
@@ -124,6 +76,7 @@ th {
         display: none;
     }
 }
+
 
 @media print {
     body {
@@ -146,11 +99,11 @@ th {
     }
 
     table td:last-child {
-        display: none
+        display: none;
     }
 
     table th:last-child {
-        display: none
+        display: none;
     }
 
     inpit {

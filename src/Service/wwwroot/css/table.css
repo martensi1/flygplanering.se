@@ -1,0 +1,58 @@
+﻿table, th, td {
+    border: 1px solid;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th, td {
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+    min-width: 100px;
+    height: 71px;
+}
+
+td input {
+    border: none;
+    background: hsl(0 0% 93%);
+    border-color: darkgray;
+    border-radius: .25rem;
+    padding: .5rem 1rem;
+    text-align: center;
+    height: 40px;
+}
+
+/* Disable number input spinner */
+td input::-webkit-outer-spin-button,
+td input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Disable number input spinner */
+td input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+@media only screen and (max-width: 600px) {
+    th, td {
+        min-width: 10px;
+        padding: 5px;
+    }
+
+    td input {
+        margin-left: 5px;
+        margin-right: 5px;
+        max-width: 70px;
+    }
+}
+
+th {
+    background-color: lightgray;
+    color: white;
+    border-color: black;
+}
