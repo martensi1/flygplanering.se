@@ -1,6 +1,7 @@
 ﻿using FlightPlanner.Core.Tasks;
 using FlightPlanner.Core.Types;
 using Microsoft.Extensions.Logging;
+using PilotAppLib.Clients.NotamSearch;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,12 +10,11 @@ namespace FlightPlanner.Core
 {
     public interface IFlightDataSource
     {
-        public void Start();
         public bool WaitForData(short timeoutMs, short retryTimeMs);
 
         public Dictionary<IcaoCode, string>  CurrentMetar { get; }
         public Dictionary<IcaoCode, string>  CurrentTaf { get; }
-        public Dictionary<IcaoCode, string>  CurrentNotam { get; }
+        public Dictionary<IcaoCode, List<NotamRecord>>  CurrentNotam { get; }
     }
 
 
@@ -28,7 +28,7 @@ namespace FlightPlanner.Core
         
         public Dictionary<IcaoCode, string>  CurrentMetar { get; private set; }
         public Dictionary<IcaoCode, string>  CurrentTaf { get; private set; }
-        public Dictionary<IcaoCode, string>  CurrentNotam { get; private set; }
+        public Dictionary<IcaoCode, List<NotamRecord>>  CurrentNotam { get; private set; }
         
 
         public FlightDataSource(
@@ -42,15 +42,12 @@ namespace FlightPlanner.Core
             CurrentMetar = null;
             CurrentTaf = null;
             CurrentNotam = null;
-        }
 
-
-        public void Start()
-        {
             _taskScheduler.SubscribeTo<FetchMetar>(this);
             _taskScheduler.SubscribeTo<FetchTaf>(this);
             _taskScheduler.SubscribeTo<FetchNotam>(this);
         }
+
 
         public bool WaitForData(short timeoutMs, short retryTimeMs)
         {
@@ -76,7 +73,7 @@ namespace FlightPlanner.Core
                 if (result.TaskType == typeof(FetchTaf))
                     CurrentTaf = result.Data as Dictionary<IcaoCode, string> ;
                 if (result.TaskType == typeof(FetchNotam))
-                    CurrentNotam = result.Data as Dictionary<IcaoCode, string> ;
+                    CurrentNotam = result.Data as Dictionary<IcaoCode, List<NotamRecord>> ;
             }
             catch (Exception ex)
             {

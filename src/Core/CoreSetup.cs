@@ -1,6 +1,5 @@
 ﻿using FlightPlanner.Core;
 
-
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class CoreSetup

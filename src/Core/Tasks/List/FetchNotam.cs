@@ -1,9 +1,7 @@
-﻿using PilotAppLib.Clients.NotamSearch;
+﻿using FlightPlanner.Core.Types;
+using PilotAppLib.Clients.NotamSearch;
 using System.Collections.Generic;
 using System.Linq;
-
-using FlightPlanner.Core.Types;
-
 
 namespace FlightPlanner.Core.Tasks
 {
@@ -21,16 +19,30 @@ namespace FlightPlanner.Core.Tasks
 
         protected sealed override object Run()
         {
-            var result = new Dictionary<IcaoCode, string> ();
-            var icaos = _airports.Select(i => i.ToString()).ToArray();
+            var icaoCodes = _airports.Select(i => i.ToString()).ToArray();
+            
+            try
+            {
+                return FetchNotams(icaoCodes);
+            }
+            catch (System.Net.Http.HttpRequestException ex)
+            {
+                // If the fetch fails, rethrow the exception (will be caught by the TaskScheduler)
+                throw ex;
+            }
+        }
+        
+        private Dictionary<IcaoCode, List<NotamRecord>> FetchNotams(string[] icaoCodes)
+        {
+            var result = new Dictionary<IcaoCode, List<NotamRecord>>();
 
             using (var client = new NotamSearchClient())
             {
-                var notams = new Dictionary<string, string>();//client.FetchNotam(icaos);
+                var fetchedNotams = client.FetchNotams(icaoCodes);
 
-                foreach (var notam in notams)
+                foreach ((string icaoCode, List<NotamRecord> aerodromeNotams) in fetchedNotams)
                 {
-                    result.Add(new IcaoCode(notam.Key), notam.Value);
+                    result.Add(new IcaoCode(icaoCode), aerodromeNotams);
                 }
             }
 

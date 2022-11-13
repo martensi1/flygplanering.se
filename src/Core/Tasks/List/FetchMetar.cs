@@ -1,8 +1,6 @@
-﻿using PilotAppLib.Clients.MetNorway;
+﻿using FlightPlanner.Core.Types;
+using PilotAppLib.Clients.MetNorway;
 using System.Collections.Generic;
-
-using FlightPlanner.Core.Types;
-
 
 namespace FlightPlanner.Core.Tasks
 {
@@ -28,7 +26,7 @@ namespace FlightPlanner.Core.Tasks
                 {
                     try
                     {
-                        string metar = "TEST"; //client.FetchMetar(airport.ToString());
+                        string metar = client.FetchMetar(airport.ToString());
                         result.Add(airport, metar);
                     }
                     catch (NoDataAvailableException)

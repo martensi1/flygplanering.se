@@ -4,14 +4,12 @@
     ViewData["Title"] = "Flygplanering.se - Briefingtjänst";
 }
 
-
-<script src="~/js/summary-print.js" asp-append-version="true"></script>
 <script src="~/js/weight-balance.js" asp-append-version="true"></script>
 
 
-<div class="text-center">
+<div class="container text-center">
 
-    <div id="last-update-time">
+    <div id="last-update-time" class="mt-2">
        <p>
            Data from 
            <a href="https://aro.lfv.se/" target="_blank">LFV</a>, 
@@ -57,15 +55,16 @@
             <div class="info-block">
                 <h2>NOTAM</h2>
                 <hr />
-
+                
                 @foreach (var kvp in Model.Notam)
                 {
                     <div class="report-line">
                         <b>@kvp.Key</b>
                         <span>
-                            @foreach (var line in kvp.Value.Split("\n"))
+                            @foreach (var notam in kvp.Value)
                             {
-                                @line
+                                @notam.Message
+                                <br />
                                 <br />
                             }
                         </span>
@@ -75,7 +74,7 @@
         }
 
 
-        <div class="info-block no-print">
+        <div class="info-block d-print-none">
             <h2>Low Level Forecast</h2>
             <hr />
             Click on the link below to open the NortAviMet low level forecast for the Nordic Region
@@ -85,7 +84,7 @@
         </div>
 
 
-        <br /><p style="page-break-after: always;">&nbsp;</p>
+        <p style="page-break-after: always;">&nbsp;</p>
 
 
         <div class="info-block">
@@ -99,7 +98,7 @@
 
     <div id="section-weight-balance" style="display: none">
 
-        <br /><p style="page-break-after: always;">&nbsp;</p>
+        <p style="page-break-after: always;">&nbsp;</p>
 
 
         <div class="info-block">
@@ -107,7 +106,7 @@
             <hr />
 
             <div>
-                <div class="no-print">
+                <div class="d-print-none">
                     <select id="select-weight-balance" onchange="create_weight_balance_table()">
                         <option value="SE-KIK">SE-KIK</option>
                         <option value="SE-KAV">SE-KAV</option>
@@ -135,14 +134,14 @@
     </div>
 
 
-    <div class="info-block" style="margin-top: 25px">
+    <div class="my-5">
 
-        <a id="button-weight-balance" class="main-button no-print" onclick="show_weight_balance_section()">
-            <i class="material-icons">balance</i>
+        <a id="button-weight-balance" class="main-button d-print-none" onclick="show_weight_balance_section()">
+            <i class="material-icons">add</i>
             <span>Vikt och Balans</span>
         </a>
 
-        <a id="button-print-summary" class="main-button no-print" onclick="window.print()">
+        <a id="button-print-summary" class="main-button d-print-none " onclick="window.print()">
             <i class="material-icons">print</i>
             <span>Skriv ut</span>
         </a>

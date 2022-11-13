@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace FlightPlanner.Core.Tasks
 {
     public abstract class TaskBase

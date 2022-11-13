@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 
-
 namespace FlightPlanner.Core.Tasks
 {
     [DebuggerDisplay("Task={TaskType.FullName}, Data={Data}")]

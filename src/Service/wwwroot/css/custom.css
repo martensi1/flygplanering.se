@@ -1,7 +1,25 @@
-﻿h2 {
-    font-size: 2.0rem;
+﻿/* Add style to Google's material-icons class */
+.material-icons {
+    color: gray;
+}
+
+/* Disable number input spinner */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Disable number input spinner */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+
+
+h2 {
     font-weight: 300;
-    line-height: 1.2;
 }
 
 input {
@@ -12,6 +30,13 @@ input {
     padding: .5rem 1rem;
     text-align: center;
 }
+
+.info-block {
+    margin-top: 60px;
+}
+
+
+
 
 /*
     Author: Alex (fabriceleven)
@@ -57,53 +82,31 @@ th {
 }
 
 
-/* Disable number input spinner */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
-
-
-.info-block {
-    margin-top: 60px;
-}
-
 .report-line {
     display: table;
     margin-bottom: 1rem
 }
 
-    .report-line b {
-        display: table-cell;
-        text-align: left;
-        width: 70px;
-    }
+.report-line b {
+    display: table-cell;
+    text-align: left;
+    width: 70px;
+}
 
-    .report-line span {
-        display: table-cell;
-        text-align: left;
-        vertical-align: top;
-    }
+.report-line span {
+    display: table-cell;
+    text-align: left;
+    vertical-align: top;
+}
 
 .auto-overflow-x {
     width: 100%;
     overflow-x: auto;
 }
 
-
-#last-update-time {
-    margin-top: 20px;
+#last-update-time a, p {
+    color: gray;
 }
-
-    #last-update-time a, p {
-        color: gray;
-    }
 
 #nswc-image {
     border: 3px solid #555;
@@ -113,15 +116,6 @@ input[type=number] {
 }
 
 
-input[type=checkbox] {
-    
-}
-
-
-/* Add style to Google's material-icons class */
-.material-icons {
-    color: gray;
-}
 
 
 
@@ -161,10 +155,6 @@ input[type=checkbox] {
 
     inpit {
         background-color: rgba(0, 0, 0, 0);
-    }
-
-    .no-print, .no-.no-print * {
-        display: none !important;
     }
 
     .section-content {

@@ -44,7 +44,8 @@ function createSettingsTable(airportsData) {
 }
 
 function createCheckboxHtml(icao, type) {
-    return '<div><input type="checkbox" class="form-check-input" aria-label="..." checked="checked" value="" onclick="onChange(this, \'' + type + '\', \'' + icao + '\')" /></div>'
+    var exists = settings[type].includes(icao);
+    return '<div><input type="checkbox" ' + (exists ? 'checked="checked"' : '') + ' onclick="onChange(this, \'' + type + '\', \'' + icao + '\')" /></div>'
 }
 
 function onChange(element, type, icao) {
