@@ -8,10 +8,21 @@
     html {
         font-size: 16px;
     }
+
+    body {
+        padding-bottom: 
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 80px;
+    }
 }
 
 body {
     margin-bottom: 60px;
+    padding-bottom: 100px;
 }
 
 h2 {
@@ -22,6 +33,36 @@ h2 {
 a {
     color: #0366d6;
 }
+
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+
+
 
 .info-block {
     margin-top: 60px;
@@ -49,7 +90,7 @@ a {
     overflow-x: auto;
 }
 
-#last-update-time a, p {
+p, p a {
     color: gray;
 }
 
@@ -58,15 +99,6 @@ a {
     height: auto;
     max-width: 90%;
     width: 800px;
-}
-
-#settings-box {
-    z-index: 999;
-    position: fixed;
-    bottom: 20px;
-    right: 0px;
-    background-color: rgba(100, 100, 100, 0.1);
-    padding: 4px;
 }
 
 /*

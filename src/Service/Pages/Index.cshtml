@@ -9,10 +9,10 @@
 
 <div class="container text-center">
 
-    <div id="last-update-time" class="mt-2">
+    <div class="mt-2">
        <p>
            Data från 
-           <a href="https://aro.lfv.se/" target="_blank">LFV</a>, 
+           <a href="https://www.smhi.se/professionella-tjanster/hallbara-och-sakra-transporter/flyg/nswc-1.2428" target="_blank">SMHI</a>, 
            <a href="https://www.met.no/" target="_blank">Meteorologisk institutt</a> och 
            <a href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank">FAA Notam Search</a>
            <br />Hämtad @Model.RetrievedTimeUtc
@@ -91,7 +91,12 @@
             <h2>NSWC</h2>
             <hr />
 
-            <img id="nswc-image" alt="Significant Weather Chart" src="@Model.NswcUrl" />
+            <p class="d-print-none" style="font-size: 10px">
+                <a href="https://www.smhi.se/professionella-tjanster/hallbara-och-sakra-transporter/flyg/nswc-1.2428">NSWC</a> by SMHI, 
+                licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+            </p>
+
+            <img id="nswc-image" alt="SWC Norden" src="@Model.NswcUrl" />
         </div>
     </div>
 
@@ -144,16 +149,6 @@
             <i class="material-icons">print</i>
             <span>Skriv ut</span>
         </a>
-    </div>
-
-
-    <div id="settings-box">
-        <!--
-        <a>
-            <i class="material-icons" onclick="alert()">settings</i>
-        </a>
-        -->
-        <a style="vertical-align: top; line-height: 20px" href="/settings">Dina inställningar</a>
     </div>
 
 </div>
