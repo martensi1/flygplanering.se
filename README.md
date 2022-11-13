@@ -17,10 +17,6 @@ The information presented on the page is taken from three different data sources
   [NOTAM Search (FAA)](https://notams.aim.faa.gov/notamSearch)  
   *The Federal Aviation Administration (FAA) provides a web interface for accessing digital airport NOTAMs. This system also includes an simple REST API that can be used to retrieve NOTAMs with a simple HTTP POST request; no authentication or API key is needed.*
 
-## Limitations
-
-Future plans for this project is to add a feature where each client can configure which airports should be included in their summary
-
 ## License
 
 This repository is licensed with the [MIT](LICENSE) license
