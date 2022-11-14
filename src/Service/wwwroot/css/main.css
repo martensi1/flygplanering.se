@@ -30,7 +30,11 @@ h2 {
     font-weight: 300;
 }
 
-p, p a {
+p {
+    color: gray;
+}
+
+ul, li {
     color: gray;
 }
 

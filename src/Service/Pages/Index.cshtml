@@ -1,21 +1,18 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Flygplanering.se - Briefingtjänst";
+    ViewData["Title"] = "Briefingtjänst";
     ViewData["Description"] = "Briefingtjänst för PPL-piloter. Få översikt över METAR, TAF, NOTAM och annan värdefull väderinformation.";
 }
 
 <script src="~/js/weight-balance.js" asp-append-version="true"></script>
-
+<partial name="_TipsAndTricksPartial" />
 
 <div class="container text-center">
 
     <div class="mt-2">
        <p>
-           Data från 
-           <a href="https://www.smhi.se/professionella-tjanster/hallbara-och-sakra-transporter/flyg/nswc-1.2428" target="_blank">SMHI</a>, 
-           <a href="https://www.met.no/" target="_blank">Meteorologisk institutt</a> och 
-           <a href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank">FAA Notam Search</a>
+           Data från SMHI, Meteorologisk institutt och FAA Notam Search
            <br />Hämtad @Model.RetrievedTimeUtc
         </p>     
     </div>

@@ -1,13 +1,40 @@
 ﻿@page "/about"
 @{
-    ViewData["Title"] = "Flygplanering.se - Om sidan";
+    ViewData["Title"] = "Om sidan";
     ViewData["Description"] = "Briefingtjänst för PPL-piloter. Få översikt över METAR, TAF, NOTAM och annan värdefull väderinformation.";
 }
 
-<div class="text-center mt-4">
+<div class="mt-4 text-center">
     <h1>Om sidan</h1>
 
-    <div class="mt-4">
-        <p>Briefingtjänst för PPL-piloter. Få översikt över METAR, TAF, NOTAM och annan värdefull väderinformation</p>
+    <div class="mt-4" style="color: gray">
+        <p>
+            Enkel briefingtjänst för PPL-piloter. Få översikt över METAR, TAF, NOTAM och annan värdefull väderinformation!
+        </p>
+
+        <p class="mt-5">
+            <b class="mt-5">Öppen källkod</b>
+        </p>
+        <p class="mt-2">
+            Denna hemsida har öppen källkod, projektet kan hittas <a href="https://gitlab.com/martensi1/jfk-flight-planner" target="_blank">här</a>.
+        </p>
+
+        <p class="mt-5">
+            <b>Användarvillkor</b>
+        </p>
+        <p class="mt-2">
+            Väderrapporter och data på denna sida är hämtad från tredjepart och flygplanering.se tar inte<br/>
+            ansvar för att informationen är fullständig, heltäckande eller korrekt. Basera alltid viktiga beslut på officiella väderprognoser och varningar.
+            <br/>
+
+            <div class="text-left w-50 mx-auto" style="min-width: min(600px, 90%)">
+                <ul>
+                    <li>METAR och TAF hämtas från <a href="https://www.met.no/" target="_blank">Meteorologisk institutt</a></li>
+                    <li>NOTAM information kommer från <a href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank">FAA Notam Search</a></li>
+                    <li>NSWC kartan är en direktlänk till den <a href="https://www.smhi.se/professionella-tjanster/hallbara-och-sakra-transporter/flyg/nswc-1.2428" 
+                        target="_blank">officiella karta</a> som LFV och SMHI förser</li>
+                </ul>
+            </div>
+        </p>
     </div>
 </div>
