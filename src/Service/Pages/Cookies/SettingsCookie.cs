@@ -11,22 +11,26 @@ namespace FlightPlanner.Service
     {
         [JsonPropertyName("METAR")]
         public List<IcaoCode> MetarAirports { get; set; } = new List<IcaoCode>() {
+            "ESMS",
             "ESGJ",
             "ESGR",
             "ESMX",
             "ESMT",
             "ESGG",
-            "ESSL"
+            "ESSL",
+            "ESSV"
         };
 
         [JsonPropertyName("TAF")]
         public List<IcaoCode> TafAirports { get; set; } = new List<IcaoCode>() {
+            "ESMS",
             "ESGJ",
             "ESGR",
             "ESMX",
             "ESMT",
             "ESGG",
-            "ESSL"
+            "ESSL",
+            "ESSV"
         };
 
         [JsonPropertyName("NOTAM")]
