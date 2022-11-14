@@ -69,6 +69,8 @@ select {
         color: rgb(0, 0, 0) !important;
         font-family: Helvetica, sans-serif !important;
         font-size: 0.55cm !important;
+        margin-bottom: 0px;
+        padding-top: 0px;
     }
 
     h2 {
