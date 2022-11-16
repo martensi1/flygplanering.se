@@ -20,16 +20,21 @@ namespace FlightPlanner.Service
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // For temp data
+            services.AddMvc().AddSessionStateTempDataProvider();
+            services.AddSession();
+
+            // Razor pages initialization
             services.AddRazorPages();
-
-            services.AddTransient<IStartupFilter, WebAppInit>();
-            services.AddFlightDataCollection();
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
             });
+
+            // Initialization code
+            services.AddTransient<IStartupFilter, WebAppInit>();
+            services.AddFlightDataCollection();
         }
 
 
@@ -49,11 +54,10 @@ namespace FlightPlanner.Service
 
             app.UseCookiePolicy();
             app.UseHttpsRedirection();
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseAuthorization();
-
             AddNoCacheHeaders(app);
 
             app.UseEndpoints(endpoints =>

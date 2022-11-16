@@ -1,0 +1,22 @@
+﻿@model AlertModel
+@{
+    string elementId = PageUtil.GenerateRandomElementId();
+}
+
+<div id="@elementId" class="alert @Model.AlertClass alert-dismissible fade show d-print-none" role="alert">
+    @Html.Raw(Model.HtmlContent)
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<script>
+    (function () {
+        var button = document.querySelector("#@elementId button");
+
+        button.addEventListener("click", function (event) {
+            var tipsAndTricksContainer = document.querySelector("#@elementId");
+            tipsAndTricksContainer.remove();
+        }, false);
+    })();
+</script>

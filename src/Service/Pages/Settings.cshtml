@@ -1,19 +1,16 @@
 ﻿@page "/settings"
 @model SettingsModel
+
+@using Microsoft.AspNetCore.Antiforgery;
+@inject IAntiforgery antiforgery
 @{
     ViewData["Title"] = "Dina inställningar";
     ViewData["Description"] = "Ändra vilka flygplatser du vill ska synas.";
+
+    string crsfToken = antiforgery.GetAndStoreTokens(HttpContext).RequestToken;
 }
 
 <script src="~/js/settings.js" asp-append-version="true"></script>
-
-
-<script>
-    function save_settings()
-    {
-        window.location.href = '/';
-    }
-</script>
 
 
 <div class="text-center mt-4">
@@ -36,11 +33,15 @@
             <tbody id="table-airport-selection" />
         </table>
     </div>
-    
+
     <div class="my-5">
-        <a id="button-save-settings" class="main-button" onclick="saveSettings()">
-            <i class="material-icons">lock</i>
-            <span>Spara inställningar</span>
-        </a>
+        <form id="settings-form" action="/settings" method="post">
+            <input type="hidden" name="__RequestVerificationToken" value="@crsfToken" />
+
+            <a id="button-save-settings" class="main-button" onclick="saveSettings()">
+                <i class="material-icons">lock</i>
+                <span>Spara inställningar</span>
+            </a>
+        </form>
     </div>
 </div>

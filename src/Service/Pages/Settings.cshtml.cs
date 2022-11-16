@@ -1,30 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
-
 
 namespace FlightPlanner.Service.Pages
 {
     public class SettingsModel : PageModel
     {
-        private readonly ILogger<ErrorModel> _logger;
+        private readonly ILogger<SettingsModel> _logger;
+
+        // Used by index page to check if a settings saved notification should be shown
+        [TempData]
+        public bool SettingsSaved { get; set; }
 
 
-        public string RequestId { get; set; }
-
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-
-
-        public SettingsModel(ILogger<ErrorModel> logger)
+        public SettingsModel(ILogger<SettingsModel> logger)
         {
             _logger = logger;
         }
 
-
-        public void OnGet()
+        public IActionResult OnPost()
         {
-            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            SettingsSaved = true;
+            _logger.LogInformation("Settings saved, redirecting user to index page");
+
+            return RedirectToPage("/Index");
         }
     }
 }

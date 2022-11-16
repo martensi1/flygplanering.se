@@ -10,6 +10,7 @@ window.onload = function () {
 }
 
 
+
 function fetchAirportsData() {
     fetch('/airports.json')
         .then(response => response.json())
@@ -85,7 +86,7 @@ function saveSettings() {
     cookieValue = encodeURIComponent(jsonString);
     setCookie("fpl-settings", cookieValue, 10);
 
-    alert("Inställningarna sparade!");
+    document.getElementById("settings-form").submit();
 }
 
 
