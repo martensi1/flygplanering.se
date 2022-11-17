@@ -10,7 +10,7 @@ stages:
 
 
 default:
-  image: mcr.microsoft.com/dotnet/core/sdk:6.0
+  image: mcr.microsoft.com/dotnet/sdk:6.0
   before_script:
     - dotnet nuget add source "https://gitlab.com/api/v4/projects/38057324/packages/nuget/index.json" --name gitlab --username gitlab-ci-token --password $CI_JOB_TOKEN --store-password-in-clear-text || true
 
