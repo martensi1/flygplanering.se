@@ -5,23 +5,37 @@
 
 @if (showBanner)
 {
-    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        Denna sida använder kakor (cookies) för att fungera korrekt. <a asp-page="/About">Lär dig mer</a>.
-        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">Acceptera</span>
-        </button>
-        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">Avvisa</span>
-        </button>
+    <div class="modal fade" id="consentModal" tabindex="-1" role="dialog" aria-labelledby="consentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="consentModalLabel">Hejsan!</h5>
+                </div>
+                <div class="modal-body">
+                    Denna sida använder kakor (cookies) för att spara vilka flygplatser användaren
+                    vill METAR, TAF och NOTAM ska visas för.
+                    <br/>
+                    <br/>
+                    Du kan läsa mer om kakor <a href="https://www.allaboutcookies.org/" target="_blank">här</a>.
+                </div>
+                <div class="modal-footer">
+                    <button id="consentButton" type="button" class="btn btn-primary" data-cookie-string="@cookieString">Acceptera</button>
+                </div>
+            </div>
+        </div>
     </div>
+
     <script>
+        window.addEventListener("load", function() {
+            $('#consentModal').modal('show');
+        });
+
         (function () {
-            var button = document.querySelector("#cookieConsent button[data-cookie-string]");
+            var button = document.querySelector("#consentButton");
             
             button.addEventListener("click", function (event) {
                 document.cookie = button.dataset.cookieString;
-				var cookieContainer = document.querySelector("#cookieConsent");
-				cookieContainer.remove();
+                $('#consentModal').modal('hide');
             }, false);
         })();
     </script>

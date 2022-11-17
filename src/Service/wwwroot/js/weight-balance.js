@@ -8,6 +8,13 @@ var tableElement = null;
 
 
 
+window.addEventListener("load", function () {
+    selectElement = document.getElementById('select-weight-balance');
+    tableElement = document.getElementById('table-weight-balance');
+
+    fetchWeightBalanceData();
+});
+
 function showWeightBalanceSection() {
     var sectionElement = document.getElementById('section-weight-balance');
     var buttonElement = document.getElementById('button-weight-balance');
@@ -15,15 +22,6 @@ function showWeightBalanceSection() {
     sectionElement.style.display = 'block';
     buttonElement.style.display = 'none';
 }
-
-function initializeWeightBalance() {
-    selectElement = document.getElementById('select-weight-balance');
-    tableElement = document.getElementById('table-weight-balance');
-
-    fetchWeightBalanceData();
-}
-
-window.onload = initializeWeightBalance;
 
 
 

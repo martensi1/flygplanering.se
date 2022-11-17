@@ -1,0 +1,240 @@
+﻿/**********************************
+    Main
+**********************************/
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    padding-top: 100px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 80px;
+    }
+}
+
+h1 {
+    font-weight: 300;
+}
+
+h2 {
+    font-weight: 400;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+ul, li {
+    color: gray;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+
+
+.auto-overflow-x {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.gray-link {
+    color: gray;
+}
+
+/* Add style to Google's material-icons class */
+.material-icons {
+    color: gray;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.report-image {
+    border: 3px solid #555;
+    height: auto;
+    max-width: 90%;
+    width: 800px;
+}
+
+@media print {
+    .report-image {
+        max-width: 95% !important;
+        width: 95% !important;
+    }
+}
+
+
+
+/**********************************
+    Buttons
+**********************************/
+.main-button {
+    appearance: none;
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292E;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    height: 34px;
+    line-height: 20px;
+    list-style: none;
+    margin: 30px 30px 0px 30px;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: break-word;
+}
+
+.main-button:hover {
+    background-color: #F3F4F6;
+    text-decoration: none;
+    transition-duration: 0.1s;
+}
+
+.main-button:disabled {
+    background-color: #FAFBFC;
+    border-color: rgba(27, 31, 35, 0.15);
+    color: #959DA5;
+    cursor: default;
+}
+
+.main-button:active {
+    background-color: #EDEFF2;
+    box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+    transition: none 0s;
+}
+
+.main-button:focus {
+    outline: 1px transparent;
+}
+
+.main-button:before {
+    display: none;
+}
+
+.main-button:-webkit-details-marker {
+    display: none;
+}
+
+.main-button span {
+    margin-left: 10px;
+    vertical-align: top;
+}
+
+.main-button i {
+    line-height: 20px !important;
+}
+
+
+
+/**********************************
+    Tables
+**********************************/
+table, th, td {
+    border: 1px solid;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th {
+    background-color: lightgray;
+    color: white;
+    border-color: black;
+}
+
+th, td {
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+    min-width: 200px;
+    height: 71px;
+}
+
+td input {
+    border: none;
+    background: hsl(0 0% 93%);
+    border-color: darkgray;
+    border-radius: .25rem;
+    padding: 1rem 1rem;
+    text-align: center;
+    height: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+td input[type=number] {
+    width: 90%;
+}
+
+/* Disable number input spinner */
+td input::-webkit-outer-spin-button,
+td input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Disable number input spinner */
+td input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+@media only screen and (max-width: 1000px) {
+    th, td {
+        min-width: 10px;
+        padding: 5px;
+    }
+
+    td input {
+        /*
+    max-width: 70px;*/
+    }
+}

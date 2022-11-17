@@ -6,12 +6,13 @@
 }
 
 
-@if (TempData.Remove("SettingsSaved"))
+@if (Model.SettingsSaved)
 {
     <partial name="_AlertPartial"
              model='new AlertModel("Dina inställningar sparades!", AlertType.Success)' />
 }
-else if (!SessionUtil.GetFlag(HttpContext, SeassionFlag.TipsAndTrickShowed))
+else if (!CookieUtil.IsConsentPending(HttpContext) && 
+    !SessionUtil.GetFlag(HttpContext, SeassionFlag.TipsAndTrickShowed))
 {
     <partial name="_AlertPartial"
              model='new AlertModel("Saknas du vissa flygplatser? Gå till <a href=\"/Settings\">dina inställningar</a> för att ändra vilka du kan se!", AlertType.Info)' />
@@ -23,7 +24,7 @@ else if (!SessionUtil.GetFlag(HttpContext, SeassionFlag.TipsAndTrickShowed))
     <div class="mt-2">
         <p>
             Data från SMHI, Meteorologisk institutt och FAA Notam Search
-            <br />Hämtad @Model.RetrievedTimeUtc
+            <br />Hämtad @Model.CurrentTimeUtc
         </p>
     </div>
 
@@ -101,7 +102,7 @@ else if (!SessionUtil.GetFlag(HttpContext, SeassionFlag.TipsAndTrickShowed))
                 licensed under <a class="gray-link" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>
             </p>
 
-            <img id="nswc-image" alt="SWC Norden" src="@Model.NswcUrl" />
+            <img class="report-image" alt="SWC Norden" src="https://aro.lfv.se/tor/nswc2aro.gif" asp-append-version="true" />
         </div>
     </div>
 

@@ -1,50 +1,5 @@
-﻿html {
-    font-size: 14px;
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    margin-bottom: 60px;
-    padding-top: 100px;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 768px) {
-    body {
-        padding-top: 80px;
-    }
-}
-
-
-h1 {
-    font-weight: 300;
-}
-
-h2 {
-    font-weight: 300;
-}
-
-p {
-    color: gray;
-}
-
-ul, li {
-    color: gray;
-}
-
-/* Provide sufficient contrast against white background */
-a {
-    color: #0366d6;
-}
-
-/*
-    Author: Alex (fabriceleven)
+﻿/*
+    Select element author: Alex (fabriceleven)
     Link: https://fabriceleven.com/design/clever-way-to-change-the-drop-down-selector-arrow-icon/
     Free to use
 */
@@ -62,6 +17,10 @@ select {
     width: 100%;
     word-break: normal;
     -ms-word-break: normal;
+}
+
+p {
+    color: gray;
 }
 
 @media print {
@@ -101,43 +60,8 @@ select {
 
 
 
-.auto-overflow-x {
-    width: 100%;
-    overflow-x: auto;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
-}
-
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-.border-top {
-    border-top: 1px solid #e5e5e5;
-}
-
-.gray-link {
-    color: gray;
-}
-
 .info-block {
     margin-top: 60px;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
 }
 
 .report-line {
@@ -157,12 +81,6 @@ select {
     vertical-align: top;
 }
 
-@media screen {
-    .section-content {
-        display: none;
-    }
-}
-
 @media print {
     .info-block {
         margin-top: 35px !important;
@@ -170,21 +88,5 @@ select {
 
     .section-content {
         display: block;
-    }
-}
-
-
-
-#nswc-image {
-    border: 3px solid #555;
-    height: auto;
-    max-width: 90%;
-    width: 800px;
-}
-
-@media print {
-    #nswc-image {
-        max-width: 95% !important;
-        width: 95% !important;
     }
 }

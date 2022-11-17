@@ -15,33 +15,38 @@ namespace FlightPlanner.Service.Pages
     public class IndexModel : PageModel
     {
         private readonly IFlightDataSource _dataSource;
-        private readonly ILogger<IndexModel> _logger;
 
 
-        public IndexModel(IFlightDataSource dataSource, ILogger<IndexModel> logger)
+        public IndexModel(IFlightDataSource dataSource)
         {
             _dataSource = dataSource;
-            _logger = logger;
         }
-        
-        
+
+
+        public string CurrentTimeUtc
+        {
+            get {
+                return DateTime.Now.ToUniversalTime()
+                .ToString("HH:mm (UTC), dd-MM-yyyy");
+            }
+        }
+
+        public bool SettingsSaved { get; private set; }
+
         public Dictionary<IcaoCode, string> Metar { get; private set; }
         public Dictionary<IcaoCode, string> Taf { get; private set; }
         public Dictionary<IcaoCode, List<NotamRecord>> Notam { get; private set; }
 
-        public string RetrievedTimeUtc { get; private set; }
-        public string NswcUrl { get; private set; }
 
 
         public IActionResult OnGet()
         {
+            SettingsSaved = TempData.Remove("SettingsSaved");
+
             if (!GetAndFilterData()) 
             {
                 return StatusCode(StatusCodes.Status503ServiceUnavailable);
             }
-
-            SetDataRetrievedTime();
-            CreateNonCacheableNswcUrl();
 
             return Page();
         }
@@ -73,18 +78,6 @@ namespace FlightPlanner.Service.Pages
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
 
             return sortedDictionary;
-        }
-        
-        private void SetDataRetrievedTime()
-        {
-            RetrievedTimeUtc = DateTime.Now.ToUniversalTime()
-                .ToString("HH:mm (UTC), dd-MM-yyyy");
-        }
-
-        private void CreateNonCacheableNswcUrl()
-        {
-            var guid = Guid.NewGuid();
-            NswcUrl = "https://aro.lfv.se/tor/nswc2aro.gif?" + guid.ToString();
         }
     }
 }
