@@ -40,7 +40,7 @@ namespace FlightPlanner.Service
 
 
 
-        private const string CookieName = "fpl-settings";
+        private const string CookieName = "fpl-airports";
 
         public static SettingsCookie CreateFrom(HttpRequest httpRequest)
         {
@@ -72,7 +72,10 @@ namespace FlightPlanner.Service
             options.Converters.Add(new IcaoCodeListConverter());
 
             string jsonString = JsonSerializer.Serialize(this, options);
-            httpResponse.Cookies.Append(CookieName, jsonString);
+
+            httpResponse.Cookies.Append(CookieName, jsonString, new CookieOptions() {
+                IsEssential = true,
+            });
         }
 
         

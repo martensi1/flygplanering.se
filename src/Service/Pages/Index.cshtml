@@ -5,21 +5,21 @@
     ViewData["Description"] = "Briefingtjänst för PPL-piloter. Få översikt över METAR, TAF, NOTAM och annan värdefull väderinformation.";
 }
 
-<script src="~/js/weight-balance.js" asp-append-version="true"></script>
 
 @if (TempData.Remove("SettingsSaved"))
 {
     <partial name="_AlertPartial"
-             model='new AlertModel("Dina inställningar sparades!", "success")' />
+             model='new AlertModel("Dina inställningar sparades!", AlertType.Success)' />
 }
-else
+else if (!SessionUtil.GetFlag(HttpContext, SeassionFlag.TipsAndTrickShowed))
 {
     <partial name="_AlertPartial"
-             model='new AlertModel("Saknas du vissa flygplatser? Gå till <a href=\"/Settings\">dina inställningar</a> för att ändra vilka du kan se!", "info")' />
+             model='new AlertModel("Saknas du vissa flygplatser? Gå till <a href=\"/Settings\">dina inställningar</a> för att ändra vilka du kan se!", AlertType.Info)' />
+    SessionUtil.SetFlag(HttpContext, SeassionFlag.TipsAndTrickShowed);
 }
 
-<div class="container text-center">
 
+<div class="container text-center">
     <div class="mt-2">
         <p>
             Data från SMHI, Meteorologisk institutt och FAA Notam Search
@@ -27,9 +27,7 @@ else
         </p>
     </div>
 
-
     <div id="section-weather">
-
         @if (Model.Metar?.Count > 0)
         {
             <div class="info-block">
@@ -45,7 +43,6 @@ else
             </div>
         }
 
-
         @if (Model.Taf?.Count > 0)
         {
             <div class="info-block">
@@ -60,7 +57,6 @@ else
                 }
             </div>
         }
-
 
         @if (Model.Notam?.Count > 0)
         {
@@ -85,7 +81,6 @@ else
             </div>
         }
 
-
         <div class="info-block d-print-none">
             <h2>Low Level Forecast</h2>
             <hr />
@@ -95,9 +90,7 @@ else
             <a href="https://www.northavimet.com/low-level-forecast/denmarksweden" target="_blank">Klicka för att öppna</a>
         </div>
 
-
         <p style="page-break-after: always;">&nbsp;</p>
-
 
         <div class="info-block">
             <h2 class="d-print-none">NSWC</h2>
@@ -114,9 +107,7 @@ else
 
 
     <div id="section-weight-balance" style="display: none">
-
         <p style="page-break-after: always;">&nbsp;</p>
-
 
         <div class="info-block">
             <h2>Vikt och Balans</h2>
@@ -151,7 +142,6 @@ else
 
 
     <div class="my-5">
-
         <a id="button-weight-balance" class="main-button d-print-none" onclick="showWeightBalanceSection()">
             <i class="material-icons">add</i>
             <span>Vikt och Balans</span>
@@ -164,3 +154,5 @@ else
     </div>
 
 </div>
+
+<script src="~/js/weight-balance.js" asp-append-version="true"></script>

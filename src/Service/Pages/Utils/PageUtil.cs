@@ -1,9 +1,19 @@
+using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Http;
 using System;
 
-namespace FlightPlanner.Service
+namespace FlightPlanner.Service.Pages
 {
     public static class PageUtil
     {
+        public static string GetCrsfToken(HttpContext context)
+        {
+            var antiforgery = (IAntiforgery)context.RequestServices
+                .GetService(typeof(IAntiforgery));
+
+            return antiforgery.GetAndStoreTokens(context).RequestToken;
+        }
+
         public static string GenerateRandomElementId()
         {
             var guid = Guid.NewGuid();

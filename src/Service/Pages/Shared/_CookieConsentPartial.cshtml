@@ -1,9 +1,6 @@
-﻿@using Microsoft.AspNetCore.Http.Features
-
-@{
-    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
-    var showBanner = !consentFeature?.CanTrack ?? false;
-    var cookieString = consentFeature?.CreateConsentCookie();
+﻿@{
+    var showBanner = CookieUtil.IsConsentPending(Context);
+    var cookieString = CookieUtil.CreateConsentCookie(Context);
 }
 
 @if (showBanner)
@@ -11,7 +8,10 @@
     <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
         Denna sida använder kakor (cookies) för att fungera korrekt. <a asp-page="/About">Lär dig mer</a>.
         <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">Jag förstår!</span>
+            <span aria-hidden="true">Acceptera</span>
+        </button>
+        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
+            <span aria-hidden="true">Avvisa</span>
         </button>
     </div>
     <script>

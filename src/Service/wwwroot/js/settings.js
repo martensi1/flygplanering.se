@@ -65,7 +65,7 @@ function removeAirport(type, icao) {
 
 
 function loadSettings() {
-    var cookieValue = getCookie("fpl-settings");
+    var cookieValue = getCookie("fpl-airports");
     
     if (cookieValue == null) {
         alert('Något gick fel! Kontakta sidans administratör');
@@ -84,7 +84,7 @@ function saveSettings() {
     console.log(jsonString);
 
     cookieValue = encodeURIComponent(jsonString);
-    setCookie("fpl-settings", cookieValue, 10);
+    setCookie("fpl-airports", cookieValue, 10);
 
     document.getElementById("settings-form").submit();
 }

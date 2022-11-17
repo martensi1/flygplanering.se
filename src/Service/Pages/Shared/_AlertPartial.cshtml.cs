@@ -1,16 +1,14 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 
 namespace FlightPlanner.Service.Pages
 {
     public class AlertModel : PageModel
     {
-        private readonly IReadOnlyDictionary<string, string> 
-            _alertClassLookup = new Dictionary<string, string>() {
-            { "info", "alert-info" },
-            { "success", "alert-success" }
+        private readonly IReadOnlyDictionary<AlertType, string> 
+            _alertClassLookup = new Dictionary<AlertType, string>() {
+            { AlertType.Info, "alert-info" },
+            { AlertType.Success, "alert-success" }
         };
 
 
@@ -19,7 +17,7 @@ namespace FlightPlanner.Service.Pages
         public string AlertClass { get; private set; }
 
 
-        public AlertModel(string htmlContent, string alertType)
+        public AlertModel(string htmlContent, AlertType alertType)
         {
             HtmlContent = htmlContent;
             AlertClass = _alertClassLookup[alertType];
