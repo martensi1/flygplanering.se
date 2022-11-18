@@ -27,7 +27,12 @@
 
     <script>
         window.addEventListener("load", function() {
-            $('#consentModal').modal('show');
+            $('#consentModal').modal(
+                {
+                    backdrop: 'static',
+                    keyboard: false
+                },
+            'show');
         });
 
         (function () {
