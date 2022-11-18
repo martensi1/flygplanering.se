@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>FlightPlanApp.Service</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PilotAppLibs.Clients.FaaNotamSearch" Version="3.0.1" />
+    <PackageReference Include="PilotAppLibs.Clients.MetNorway" Version="1.0.1" />
+  </ItemGroup>
+
+</Project>
