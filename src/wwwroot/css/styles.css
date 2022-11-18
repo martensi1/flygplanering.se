@@ -24,6 +24,12 @@ body {
     }
 }
 
+@media print {
+    body {
+        padding-top: 0px;
+    }
+}
+
 h1 {
     font-weight: 300;
 }
