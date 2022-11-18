@@ -1,3 +1,4 @@
+using FlightPlanner.Service.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,7 +26,10 @@ namespace FlightPlanner.Service
             services.AddSession();
 
             // Razor pages initialization
-            services.AddRazorPages();
+            services.AddRazorPages().AddMvcOptions(options =>
+            {
+                options.Filters.Add(new RejectFilter());
+            });
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
