@@ -1,6 +1,7 @@
 ﻿using FlightPlanner.Core;
 using FlightPlanner.Core.Types;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -8,6 +9,7 @@ using PilotAppLib.Clients.NotamSearch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace FlightPlanner.Service.Pages
 {
@@ -28,6 +30,18 @@ namespace FlightPlanner.Service.Pages
             get {
                 return DateTime.Now.ToUniversalTime()
                 .ToString("HH:mm (UTC), dd-MM-yyyy");
+            }
+        }
+
+        public bool ShowWeightBalanceSection
+        {
+            get
+            {
+                string displayUrl = HttpContext.Request.GetDisplayUrl();
+                string expectedSubdomain = "jfk";
+
+                return Regex.IsMatch(displayUrl,
+                    "^(http:\\/\\/|https:\\/\\/|)(www\\.|)" + expectedSubdomain + "\\.");
             }
         }
 

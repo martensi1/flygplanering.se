@@ -107,7 +107,7 @@ else if (!CookieUtil.IsConsentPending(HttpContext) &&
     </div>
 
 
-    <div id="section-weight-balance" style="display: none">
+    <div include-if="Model.ShowWeightBalanceSection" id="section-weight-balance" style="display: none">
         <p style="page-break-after: always;">&nbsp;</p>
 
         <div class="info-block">
@@ -116,7 +116,7 @@ else if (!CookieUtil.IsConsentPending(HttpContext) &&
 
             <div>
                 <div class="d-print-none">
-                    <select id="select-weight-balance" onchange="create_weight_balance_table()">
+                    <select id="select-weight-balance" onchange="createWeightBalanceTable()">
                         <option value="SE-KIK">SE-KIK</option>
                         <option value="SE-KAV">SE-KAV</option>
                         <option value="SE-IDG">SE-IDG</option>
@@ -143,7 +143,7 @@ else if (!CookieUtil.IsConsentPending(HttpContext) &&
 
 
     <div class="my-5">
-        <a id="button-weight-balance" class="main-button d-print-none" onclick="showWeightBalanceSection()">
+        <a include-if="Model.ShowWeightBalanceSection" id="button-weight-balance" class="main-button d-print-none" onclick="showWeightBalanceSection()">
             <i class="material-icons">add</i>
             <span>Vikt och Balans</span>
         </a>
@@ -156,4 +156,4 @@ else if (!CookieUtil.IsConsentPending(HttpContext) &&
 
 </div>
 
-<script src="~/js/weight-balance.js" asp-append-version="true"></script>
+<script include-if="Model.ShowWeightBalanceSection" src="~/js/weight-balance.js" asp-append-version="true"></script>
