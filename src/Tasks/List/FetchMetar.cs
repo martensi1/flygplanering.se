@@ -1,6 +1,7 @@
 ﻿using FlightPlanner.Service.Models;
 using PilotAppLib.Clients.MetNorway;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace FlightPlanner.Service.Tasks
 {
@@ -27,6 +28,8 @@ namespace FlightPlanner.Service.Tasks
                     try
                     {
                         string metar = client.FetchMetar(airport.ToString());
+                        metar = Regex.Replace(metar, "^[A-Z]{4} ", "");
+
                         result.Add(airport, metar);
                     }
                     catch (NoDataAvailableException)
