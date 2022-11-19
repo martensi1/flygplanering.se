@@ -31,6 +31,7 @@ namespace FlightPlanner.Service
             services.AddRazorPages().AddMvcOptions(options =>
             {
                 options.Filters.Add(new RejectFilter());
+                options.Filters.Add(new OrganizationFilter());
             });
             services.Configure<CookiePolicyOptions>(options =>
             {
