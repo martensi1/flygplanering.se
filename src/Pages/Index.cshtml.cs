@@ -34,13 +34,8 @@ namespace FlightPlanner.Service.Pages
 
         public bool ShowWeightBalanceSection
         {
-            get
-            {
-                string displayUrl = HttpContext.Request.GetDisplayUrl();
-                string expectedSubdomain = "jfk";
-
-                return Regex.IsMatch(displayUrl,
-                    "^(http:\\/\\/|https:\\/\\/|)(www\\.|)" + expectedSubdomain + "\\.");
+            get {
+                return HttpContext.Items.ContainsKey("JFK");
             }
         }
 

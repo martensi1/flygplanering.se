@@ -1,6 +1,4 @@
-﻿@{
-    var websiteUrl = "https://flygplanering.se";
-}
+﻿@using FlightPlanner.Service.Config
 
 
 <!DOCTYPE html>
@@ -10,7 +8,7 @@
     <title>@ViewData["Title"]</title>
 
     <meta charset="utf-8" />
-    <meta name="author" content="Simon Mårtensson">
+    <meta name="author" content="@Constants.WebsiteAuthor">
     <meta name="description" content="@ViewData["Description"]">
     <meta name="format-detection" content="telephone=no">
     <meta name="keywords" content="Briefing, flygplanering, väder, weather, NOTAM, Sweden, METAR, TAF, SWC, NSWC, låghöjdsprognos, low level forecast">
@@ -21,11 +19,11 @@
     <meta name="og:type" content="website" />
     <meta name="og:title" content="@ViewData["Title"]" />
     <meta name="og:description" content="@ViewData["Description"]" />
-    <meta name="og:site_name" content="Flygplanering.se" />
-    <meta name="og:url" content="@websiteUrl" />
+    <meta name="og:site_name" content="@Constants.WebsiteName" />
+    <meta name="og:url" content="@Constants.WebsiteUrl" />
     
-    <link rel="canonical" href="@websiteUrl" />
-    <link rel="shortlink" href="@websiteUrl" />
+    <link rel="canonical" href="@Constants.WebsiteUrl" />
+    <link rel="shortlink" href="@Constants.WebsiteUrl" />
 
     <link rel="icon" sizes="192x192" href="/favicon.png" type="image/png" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
@@ -81,7 +79,7 @@
     
     <footer class="border-top footer text-muted d-print-none">
         <div class="container text-center">
-            &copy; 2022 - Simon Mårtensson - <a asp-area="" asp-page="/About">Användarvillkor</a>
+            &copy; 2022 - @Constants.WebsiteAuthor - <a asp-area="" asp-page="/About">Användarvillkor</a>
         </div>
     </footer>
 

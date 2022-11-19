@@ -1,4 +1,5 @@
 ﻿@page
+@using FlightPlanner.Service.Config
 @model IndexModel
 @{
     ViewData["Title"] = "Flygplanering.se - Briefingtjänst";
@@ -85,7 +86,7 @@ else if (!CookieUtil.IsConsentPending(HttpContext) &&
             Klicka på länken nedan för att öppna NorthAviMets låghöjdsprognos i en ny flik
 
             <br />
-            <a href="https://www.northavimet.com/low-level-forecast/denmarksweden" target="_blank">Klicka för att öppna</a>
+            <a href="@Constants.NorthAviMetUrl" target="_blank">Klicka för att öppna</a>
         </div>
 
         <p style="page-break-after: always;">&nbsp;</p>
@@ -95,11 +96,11 @@ else if (!CookieUtil.IsConsentPending(HttpContext) &&
             <hr class="d-print-none" />
 
             <p class="d-print-none" style="font-size: 10px">
-                <a class="gray-link" href="https://www.smhi.se/professionella-tjanster/hallbara-och-sakra-transporter/flyg/nswc-1.2428" target="_blank">NSWC</a> by SMHI,
-                licensed under <a class="gray-link" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>
+                <a class="gray-link" href="@Constants.AboutNswcUrl" target="_blank">NSWC</a> by SMHI,
+                licensed under <a class="gray-link" href="@Constants.CC4LicenseUrl" target="_blank">CC BY 4.0</a>
             </p>
 
-            <img class="report-image" alt="SWC Norden" src="https://aro.lfv.se/tor/nswc2aro.gif" asp-append-version="true" />
+            <img class="report-image" alt="SWC Norden" src="@Constants.NswcUrl" asp-append-version="true" />
         </div>
     </div>
 

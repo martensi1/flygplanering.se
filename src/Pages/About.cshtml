@@ -1,4 +1,5 @@
 ﻿@page "/about"
+@using FlightPlanner.Service.Config
 @model AboutModel
 @{
     ViewData["Title"] = "Om sidan";
@@ -18,7 +19,7 @@
             <b class="mt-5">Öppen källkod</b>
         </p>
         <p class="mt-1">
-            Denna hemsida har öppen källkod, projektet kan hittas <a href="https://gitlab.com/martensi1/jfk-flight-planner" target="_blank">här</a>.
+            Denna hemsida har öppen källkod, projektet kan hittas <a href="@Constants.ProjectUrl" target="_blank">här</a>.
         </p>
 
         <p class="mt-5">
@@ -31,10 +32,9 @@
 
             <div class="text-left w-50 mx-auto" style="min-width: min(600px, 90%)">
                 <ul>
-                    <li>METAR och TAF hämtas från <a href="https://www.met.no/" target="_blank">Meteorologisk institutt</a></li>
-                    <li>NOTAM information kommer från <a href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank">FAA Notam Search</a></li>
-                    <li>NSWC kartan är en direktlänk till den <a href="https://www.smhi.se/professionella-tjanster/hallbara-och-sakra-transporter/flyg/nswc-1.2428" 
-                        target="_blank">officiella karta</a> som LFV och SMHI förser</li>
+                    <li>METAR och TAF hämtas från <a href="@Constants.MetHomePageUrl" target="_blank">Meteorologisk institutt</a></li>
+                    <li>NOTAM information kommer från <a href="@Constants.NotamSearchHomePageUrl" target="_blank">FAA Notam Search</a></li>
+                    <li>NSWC kartan är en direktlänk till den <a href="@Constants.AboutNswcUrl" target="_blank">officiella karta</a> som LFV och SMHI förser</li>
                 </ul>
             </div>
         </p>
@@ -44,7 +44,7 @@
         <p class="mt-1">
             Denna hemsida använder kakor för att spara användarinställningar.
             <br/>
-            Du kan läsa mer om kakor <a href="https://www.allaboutcookies.org/" target="_blank">här</a>.
+            Du kan läsa mer om kakor <a href="@Constants.AboutCookiesUrl" target="_blank">här</a>.
         </p>
     </div>
 </div>

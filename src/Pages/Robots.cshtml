@@ -1,4 +1,5 @@
 ﻿@page "/robots.txt"
+@using FlightPlanner.Service.Config
 @{
     Layout = null;
     Response.ContentType = "text/plain";
@@ -10,4 +11,4 @@ Disallow: /aircrafts.json
 User-agent: Googlebot-Image
 Disallow: /
 
-Sitemap: https://flygplanering.se/sitemap.xml
+Sitemap: @Constants.WebsiteSitemap
