@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 
-namespace FlightPlanner.Service.TagHelpers
+namespace Service.TagHelpers
 {
     [HtmlTargetElement(Attributes = IncludeAttributeName)]
     [HtmlTargetElement(Attributes = ExcludeAttributeName)]
