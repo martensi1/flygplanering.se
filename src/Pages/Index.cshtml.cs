@@ -1,14 +1,12 @@
-﻿using FlightPlanner.Service.Models;
-using FlightPlanner.Service.Repositories;
+﻿using FlightPlanner.Service.Repositories;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PilotAppLib.Clients.NotamSearch;
+using PilotAppLib.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace FlightPlanner.Service.Pages
 {

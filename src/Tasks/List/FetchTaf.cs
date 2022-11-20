@@ -1,5 +1,5 @@
-﻿using FlightPlanner.Service.Models;
-using PilotAppLib.Clients.MetNorway;
+﻿using PilotAppLib.Clients.MetNorway;
+using PilotAppLib.Common;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -27,7 +27,7 @@ namespace FlightPlanner.Service.Tasks
                 {
                     try
                     {
-                        string taf = client.FetchTaf(airport.ToString());
+                        string taf = client.FetchTaf(airport);
                         taf = Regex.Replace(taf, "^[A-Z]{4} ", "");
 
                         result.Add(airport, taf);

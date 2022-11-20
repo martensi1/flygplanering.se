@@ -1,5 +1,5 @@
-﻿using FlightPlanner.Service.Models;
-using PilotAppLib.Clients.MetNorway;
+﻿using PilotAppLib.Clients.MetNorway;
+using PilotAppLib.Common;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 

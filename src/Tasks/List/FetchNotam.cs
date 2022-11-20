@@ -1,5 +1,5 @@
-﻿using FlightPlanner.Service.Models;
-using PilotAppLib.Clients.NotamSearch;
+﻿using PilotAppLib.Clients.NotamSearch;
+using PilotAppLib.Common;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +19,7 @@ namespace FlightPlanner.Service.Tasks
 
         protected sealed override object Run()
         {
-            var icaoCodes = _airports.Select(i => i.ToString()).ToArray();
+            string[] icaoCodes = _airports.Select(i => i.ToString()).ToArray();
             
             try
             {

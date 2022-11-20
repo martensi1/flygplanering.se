@@ -1,5 +1,5 @@
-using FlightPlanner.Service.Models;
 using Microsoft.AspNetCore.Http;
+using PilotAppLib.Common;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -93,7 +93,7 @@ namespace FlightPlanner.Service
                     {
                         var code = reader.GetString();
 
-                        if (IcaoCode.IsStringValid(code))
+                        if (IcaoCode.IsValidCode(code))
                             list.Add(code);
                     }
                 }

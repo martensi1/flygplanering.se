@@ -1,7 +1,7 @@
-﻿using FlightPlanner.Service.Models;
-using FlightPlanner.Service.Tasks;
+﻿using FlightPlanner.Service.Tasks;
 using Microsoft.Extensions.Logging;
 using PilotAppLib.Clients.NotamSearch;
+using PilotAppLib.Common;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -69,11 +69,11 @@ namespace FlightPlanner.Service.Repositories
             try
             {
                 if (result.TaskType == typeof(FetchMetar))
-                    CurrentMetar = result.Data as Dictionary<IcaoCode, string> ;
+                    CurrentMetar = result.Data as Dictionary<IcaoCode, string>;
                 if (result.TaskType == typeof(FetchTaf))
-                    CurrentTaf = result.Data as Dictionary<IcaoCode, string> ;
+                    CurrentTaf = result.Data as Dictionary<IcaoCode, string>;
                 if (result.TaskType == typeof(FetchNotam))
-                    CurrentNotam = result.Data as Dictionary<IcaoCode, List<NotamRecord>> ;
+                    CurrentNotam = result.Data as Dictionary<IcaoCode, List<NotamRecord>>;
             }
             catch (Exception ex)
             {
