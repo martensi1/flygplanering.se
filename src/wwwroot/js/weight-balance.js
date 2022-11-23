@@ -140,7 +140,7 @@ function createTable() {
     }
 
     insertSummarizeRow('dry-weight', weightPoints.length - 1, 'Torrvikt');
-    insertSummarizeRow('gross-weight', weightPoints.length + 1, 'Totalvikt');
+    insertSummarizeRow('gross-weight', weightPoints.length + 1, 'Startvikt');
 
     updateTableCalculations();
 }
@@ -464,7 +464,7 @@ function getChartData(x1, y1, x2, y2) {
                 backgroundColor: 'rgb(210, 100, 100)'
             },
             {
-                label: 'Totalvikt',
+                label: 'Startvikt',
                 data: [{
                     x: x1,
                     y: y1
@@ -530,6 +530,7 @@ Chart.register({
         var x2 = xAxis.getPixelForValue(arrowData.x2, 0, 0, true);
         var y2 = yAxis.getPixelForValue(arrowData.y2, 0, 0, true);
 
+        var distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         var distanceOffset = arrowData?.do || 0;
 
         var ctx = chartInstance.ctx;
@@ -539,7 +540,14 @@ Chart.register({
         ctx.setLineDash([]);
         ctx.strokeStyle = "rgba(100, 100, 100, 0.5)";
 
-        drawCanvasArrow(ctx, x1, y1, x2, y2, distanceOffset);
+        console.log(distance)
+
+        if (distance > 25) {
+            drawCanvasArrow(ctx, x1, y1, x2, y2, distanceOffset);
+        }
+        else {
+            drawCanvasLine(ctx, x1, y1, x2, y2);
+        }
 
         ctx.closePath();
         ctx.stroke();
@@ -563,7 +571,7 @@ function drawCanvasArrow(ctx, x1, y1, x2, y2, distanceOffset) {
     x2 = x2 + Math.cos(arrowAngle) * distanceOffset;
     y2 = y2 + Math.sin(arrowAngle) * distanceOffset;
 
-    const headLength = 10;
+    const headLength = 8;
     const headAngle = Math.PI / 6;
 
     ctx.moveTo(x1, y1);
