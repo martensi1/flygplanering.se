@@ -33,7 +33,8 @@ namespace FlightPlanner.Service.Pages
         public bool ShowWeightBalanceSection
         {
             get {
-                return HttpContext.Items.ContainsKey("JFK");
+                return HttpContext.Items.TryGetValue("Organization", out object organization) &&
+                    organization as string == "JFK";
             }
         }
 

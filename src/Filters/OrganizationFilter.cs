@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using PilotAppLib.Http;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -22,9 +23,9 @@ namespace FlightPlanner.Service.Filters
             var request = context.HttpContext.Request;
             string displayUrl = request.GetDisplayUrl();
 
-            if (HasSubdomain(displayUrl, "jfk"))
+            if (HasSubdomain(displayUrl, "jfk") || IsLocalhost(displayUrl))
             {
-                context.HttpContext.Items.Add("JFK", "");
+                context.HttpContext.Items.Add("Organization", "JFK");
             }
 
             await next.Invoke();
@@ -37,6 +38,15 @@ namespace FlightPlanner.Service.Filters
                 return false;
 
             string pattern = "^(http:\\/\\/|https:\\/\\/|)(www\\.|)" + subdomain + "\\.";
+            return Regex.IsMatch(url, pattern);
+        }
+
+        private bool IsLocalhost(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                return false;
+
+            string pattern = "^(http:\\/\\/|https:\\/\\/|)localhost";
             return Regex.IsMatch(url, pattern);
         }
     }
