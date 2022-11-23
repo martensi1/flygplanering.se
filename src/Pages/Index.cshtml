@@ -12,7 +12,7 @@
     <partial name="_AlertPartial"
              model='new AlertModel("Dina inställningar sparades!", AlertType.Success)' />
 }
-else if (!CookieUtil.IsConsentPending(HttpContext) && 
+else if (!CookieUtil.IsConsentPending(HttpContext) &&
     !SessionUtil.GetFlag(HttpContext, SeassionFlag.TipsAndTrickShowed))
 {
     <partial name="_AlertPartial"
@@ -116,7 +116,7 @@ else if (!CookieUtil.IsConsentPending(HttpContext) &&
 
             <div>
                 <div class="d-print-none">
-                    <select id="select-weight-balance" onchange="createWeightBalanceTable()">
+                    <select id="select-weight-balance" onchange="createTable()">
                         <option value="SE-KIK">SE-KIK</option>
                         <option value="SE-KAV">SE-KAV</option>
                         <option value="SE-IDG">SE-IDG</option>
@@ -143,7 +143,7 @@ else if (!CookieUtil.IsConsentPending(HttpContext) &&
 
 
     <div class="my-5">
-        <a include-if="Model.ShowWeightBalanceSection" id="button-weight-balance" class="main-button d-print-none" onclick="showWeightBalanceSection()">
+        <a include-if="Model.ShowWeightBalanceSection" id="button-weight-balance" class="main-button d-print-none" onclick="showWeightBalance()">
             <i class="material-icons">add</i>
             <span>Vikt och Balans</span>
         </a>

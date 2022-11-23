@@ -1,9 +1,5 @@
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using PilotAppLib.Http;
-using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -30,8 +26,8 @@ namespace FlightPlanner.Service.Filters
 
             await next.Invoke();
         }
-    
-        
+
+
         private bool HasSubdomain(string url, string subdomain)
         {
             if (string.IsNullOrEmpty(url))

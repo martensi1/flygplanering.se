@@ -1,199 +1,201 @@
 {
-  "SE-VPO": {
-    "maxWeight": 450,
-    "chart": {
-      "xMin": 20,
-      "xMax": 40,
-      "yMin": 275,
-      "yMax": 475,
-      "coords": [
-        [ 23.7, 275 ],
-        [ 23.7, 450 ],
-        [ 35.55, 450 ],
-        [ 35.55, 275 ],
-        [ 23.7, 275 ]
+  "JFK": {
+    "SE-VPO": {
+      "maxWeight": 450,
+      "chart": {
+        "xMin": 20,
+        "xMax": 40,
+        "yMin": 275,
+        "yMax": 475,
+        "coords": [
+          [ 23.7, 275 ],
+          [ 23.7, 450 ],
+          [ 35.55, 450 ],
+          [ 35.55, 275 ],
+          [ 23.7, 275 ]
+        ]
+      },
+      "weightPoints": [
+        {
+          "name": "Grundtomvikt",
+          "arm": 12.6,
+          "value": 275,
+          "modifiable": false
+        },
+        {
+          "name": "Förare",
+          "arm": 64.3,
+          "value": 75,
+          "modifiable": true
+        },
+        {
+          "name": "Pax",
+          "arm": 64.3,
+          "value": 75,
+          "modifiable": true
+        },
+        {
+          "name": "Bagage",
+          "arm": 102.3,
+          "value": 5,
+          "modifiable": true,
+          "note": "Max 10 kg"
+        },
+        {
+          "name": "Bränsle",
+          "arm": 16.3,
+          "value": 15,
+          "modifiable": true
+        }
       ]
     },
-    "weightPoints": [
-      {
-        "name": "Grundtomvikt",
-        "arm": 12.6,
-        "value": 275,
-        "modifiable": false
+    "SE-KIK": {
+      "maxWeight": 1055,
+      "chart": {
+        "xMin": 200,
+        "xMax": 250,
+        "yMin": 667,
+        "yMax": 1100,
+        "coords": [
+          [ 211, 667 ],
+          [ 211, 883 ],
+          [ 221, 1055 ],
+          [ 236, 1055 ],
+          [ 236, 667 ],
+          [ 211, 667 ]
+        ]
       },
-      {
-        "name": "Förare",
-        "arm": 64.3,
-        "value": 75,
-        "modifiable": true
-      },
-      {
-        "name": "Pax",
-        "arm": 64.3,
-        "value": 75,
-        "modifiable": true
-      },
-      {
-        "name": "Bagage",
-        "arm": 102.3,
-        "value": 5,
-        "modifiable": true,
-        "note": "Max 10 kg"
-      },
-      {
-        "name": "Bränsle",
-        "arm": 16.3,
-        "value": 15,
-        "modifiable": true
-      }
-    ]
-  },
-  "SE-KIK": {
-    "maxWeight": 1055,
-    "chart": {
-      "xMin": 200,
-      "xMax": 250,
-      "yMin": 667,
-      "yMax": 1100,
-      "coords": [
-        [ 211, 667 ],
-        [ 211, 883 ],
-        [ 221, 1055 ],
-        [ 236, 1055 ],
-        [ 236, 667 ],
-        [ 211, 667 ]
+      "weightPoints": [
+        {
+          "name": "Grundtomvikt",
+          "arm": 213.5,
+          "value": 667.5,
+          "modifiable": false
+        },
+        {
+          "name": "Framsits",
+          "arm": 204,
+          "value": 150,
+          "modifiable": true
+        },
+        {
+          "name": "Baksits",
+          "arm": 300,
+          "value": 5,
+          "modifiable": true
+        },
+        {
+          "name": "Bagage",
+          "arm": 363,
+          "value": 0,
+          "modifiable": true
+        },
+        {
+          "name": "Bränsle",
+          "arm": 241,
+          "value": 91,
+          "modifiable": true
+        }
       ]
     },
-    "weightPoints": [
-      {
-        "name": "Grundtomvikt",
-        "arm": 213.5,
-        "value": 667.5,
-        "modifiable": false
+    "SE-KAV": {
+      "maxWeight": 1060,
+      "chart": {
+        "xMin": 60,
+        "xMax": 140,
+        "yMin": 650,
+        "yMax": 1100,
+        "coords": [
+          [ 67, 680 ],
+          [ 93, 970 ],
+          [ 111, 1060 ],
+          [ 127, 1060 ],
+          [ 83, 680 ],
+          [ 67, 680 ]
+        ]
       },
-      {
-        "name": "Framsits",
-        "arm": 204,
-        "value": 150,
-        "modifiable": true
-      },
-      {
-        "name": "Baksits",
-        "arm": 300,
-        "value": 5,
-        "modifiable": true
-      },
-      {
-        "name": "Bagage",
-        "arm": 363,
-        "value": 0,
-        "modifiable": true
-      },
-      {
-        "name": "Bränsle",
-        "arm": 241,
-        "value": 91,
-        "modifiable": true
-      }
-    ]
-  },
-  "SE-KAV": {
-    "maxWeight": 1060,
-    "chart": {
-      "xMin": 60,
-      "xMax": 140,
-      "yMin": 650,
-      "yMax": 1100,
-      "coords": [
-        [ 67, 680 ],
-        [ 93, 970 ],
-        [ 111, 1060 ],
-        [ 127, 1060 ],
-        [ 83, 680 ],
-        [ 67, 680 ]
+      "weightPoints": [
+        {
+          "name": "Grundtomvikt",
+          "arm": 97.6,
+          "value": 681,
+          "modifiable": false
+        },
+        {
+          "name": "Framsits",
+          "arm": 115.3,
+          "value": 160,
+          "modifiable": true
+        },
+        {
+          "name": "Baksits",
+          "arm": 203.4,
+          "value": 5,
+          "modifiable": true,
+          "note": "Max 150 kg"
+        },
+        {
+          "name": "Bagage",
+          "arm": 259.8,
+          "value": 0,
+          "modifiable": true
+        },
+        {
+          "name": "Bränsle",
+          "arm": 107.4,
+          "value": 100,
+          "modifiable": true
+        }
       ]
     },
-    "weightPoints": [
-      {
-        "name": "Grundtomvikt",
-        "arm": 97.6,
-        "value": 681,
-        "modifiable": false
+    "SE-IDG": {
+      "maxWeight": 1055,
+      "chart": {
+        "xMin": 200,
+        "xMax": 250,
+        "yMin": 667,
+        "yMax": 1100,
+        "coords": [
+          [ 211, 667 ],
+          [ 211, 883 ],
+          [ 221, 1055 ],
+          [ 236, 1055 ],
+          [ 236, 667 ],
+          [ 211, 667 ]
+        ]
       },
-      {
-        "name": "Framsits",
-        "arm": 115.3,
-        "value": 160,
-        "modifiable": true
-      },
-      {
-        "name": "Baksits",
-        "arm": 203.4,
-        "value": 5,
-        "modifiable": true,
-        "note": "Max 150 kg"
-      },
-      {
-        "name": "Bagage",
-        "arm": 259.8,
-        "value": 0,
-        "modifiable": true
-      },
-      {
-        "name": "Bränsle",
-        "arm": 107.4,
-        "value": 100,
-        "modifiable": true
-      }
-    ]
-  },
-  "SE-IDG": {
-    "maxWeight": 1055,
-    "chart": {
-      "xMin": 200,
-      "xMax": 250,
-      "yMin": 667,
-      "yMax": 1100,
-      "coords": [
-        [ 211, 667 ],
-        [ 211, 883 ],
-        [ 221, 1055 ],
-        [ 236, 1055 ],
-        [ 236, 667 ],
-        [ 211, 667 ]
+      "weightPoints": [
+        {
+          "name": "Grundtomvikt",
+          "arm": 213.5,
+          "value": 667.5,
+          "modifiable": false
+        },
+        {
+          "name": "Framsits",
+          "arm": 204,
+          "value": 150,
+          "modifiable": true
+        },
+        {
+          "name": "Baksits",
+          "arm": 300,
+          "value": 5,
+          "modifiable": true
+        },
+        {
+          "name": "Bagage",
+          "arm": 363,
+          "value": 0,
+          "modifiable": true
+        },
+        {
+          "name": "Bränsle",
+          "arm": 241,
+          "value": 91,
+          "modifiable": true
+        }
       ]
-    },
-    "weightPoints": [
-      {
-        "name": "Grundtomvikt",
-        "arm": 213.5,
-        "value": 667.5,
-        "modifiable": false
-      },
-      {
-        "name": "Framsits",
-        "arm": 204,
-        "value": 150,
-        "modifiable": true
-      },
-      {
-        "name": "Baksits",
-        "arm": 300,
-        "value": 5,
-        "modifiable": true
-      },
-      {
-        "name": "Bagage",
-        "arm": 363,
-        "value": 0,
-        "modifiable": true
-      },
-      {
-        "name": "Bränsle",
-        "arm": 241,
-        "value": 91,
-        "modifiable": true
-      }
-    ]
+    }
   }
 }
