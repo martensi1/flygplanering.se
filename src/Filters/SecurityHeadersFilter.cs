@@ -29,6 +29,9 @@ namespace FlightPlanner.Service.Filters
 
             AddStrictTransportSecurityHeader(response);
             AddPermissionsPolicyHeader(response);
+            AddXXSSProtectionHeader(response);
+            AddContentTypeOptions(response);
+            AddFrameOptions(response);
 
             await next.Invoke();
         }
@@ -38,6 +41,24 @@ namespace FlightPlanner.Service.Filters
         {
             string headerValue = "max-age=63072000; includeSubDomains; preload";
             response.Headers[HeaderNames.StrictTransportSecurity] = headerValue;
+        }
+
+        private void AddXXSSProtectionHeader(HttpResponse response)
+        {
+            string headerValue = "X-XSS-Protection: 1; mode=block";
+            response.Headers[HeaderNames.XXSSProtection] = headerValue;
+        }
+
+        private void AddContentTypeOptions(HttpResponse response)
+        {
+            string headerValue = "nosniff";
+            response.Headers[HeaderNames.XContentTypeOptions] = headerValue;
+        }
+
+        private void AddFrameOptions(HttpResponse response)
+        {
+            string headerValue = "DENY";
+            response.Headers[HeaderNames.XFrameOptions] = headerValue;
         }
 
         private void AddPermissionsPolicyHeader(HttpResponse response)
