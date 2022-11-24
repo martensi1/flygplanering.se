@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Net.Http.Headers;
 using System.Collections.Generic;
@@ -5,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FlightPlanner.Service.Filters
 {
-    public class PermissionsPolicyFilter : IAsyncAlwaysRunResultFilter
+    public class SecurityHeadersFilter : IAsyncAlwaysRunResultFilter
     {
         private readonly List<string> _disabledFeatures;
 
 
-        public PermissionsPolicyFilter()
+        public SecurityHeadersFilter()
         {
             _disabledFeatures = new List<string>() {
                 "microphone",
@@ -25,15 +26,29 @@ namespace FlightPlanner.Service.Filters
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
             var response = context.HttpContext.Response;
-            string policyString = BuildPolicyString();
 
-            response.Headers["Feature-Policy"] = policyString;
-            response.Headers["Permissions-Policy"] = policyString;
+            AddStrictTransportSecurityHeader(response);
+            AddPermissionsPolicyHeader(response);
 
             await next.Invoke();
         }
 
-        private string BuildPolicyString()
+
+        private void AddStrictTransportSecurityHeader(HttpResponse response)
+        {
+            string headerValue = "max-age=63072000; includeSubDomains; preload";
+            response.Headers[HeaderNames.StrictTransportSecurity] = headerValue;
+        }
+
+        private void AddPermissionsPolicyHeader(HttpResponse response)
+        {
+            string headerValue = BuildPermissionsPolicyString();
+
+            response.Headers["Feature-Policy"] = headerValue;
+            response.Headers["Permissions-Policy"] = headerValue;
+        }
+
+        private string BuildPermissionsPolicyString()
         {
             string result = string.Empty;
 
