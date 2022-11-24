@@ -32,7 +32,9 @@ namespace FlightPlanner.Service
             {
                 options.Filters.Add(new RejectFilter());
                 options.Filters.Add(new OrganizationFilter());
+                options.Filters.Add(new NoCacheFilter());
             });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
@@ -66,25 +68,10 @@ namespace FlightPlanner.Service
             app.UseStaticFiles();
 
             app.UseRouting();
-            AddNoCacheHeaders(app);
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
             });
-        }
-
-        private void AddNoCacheHeaders(IApplicationBuilder app)
-        {
-            app.Use(async (context, next) =>
-            {
-                context.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
-                context.Response.Headers[HeaderNames.Expires] = "0";
-                context.Response.Headers[HeaderNames.Pragma] = "no-cache";
-
-                await next.Invoke();
-            }
-            );
         }
     }
 }

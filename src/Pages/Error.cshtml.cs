@@ -6,7 +6,6 @@ using System.Diagnostics;
 
 namespace FlightPlanner.Service.Pages
 {
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class ErrorModel : PageModel
     {
         private readonly ILogger<ErrorModel> _logger;

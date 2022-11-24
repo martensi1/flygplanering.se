@@ -10,7 +10,6 @@ using System.Linq;
 
 namespace FlightPlanner.Service.Pages
 {
-    [ResponseCache(Duration = 120, Location = ResponseCacheLocation.None)]
     public class IndexModel : PageModel
     {
         private readonly IFlightDataRepository _dataRepository;
