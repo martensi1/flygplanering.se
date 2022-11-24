@@ -400,14 +400,14 @@ function createChart() {
 
 /**
  * Creates the chart definition object
- * @param {number} x1 From x
- * @param {number} y1 From y
- * @param {number} x2 To x
- * @param {number} y2 To y
+ * @param {number} startArm Start arm (in cm)
+ * @param {number} startWeight Start weight (in kg)
+ * @param {number} dryArm Dry arm (in cm)
+ * @param {number} dryWeight Dry weight (in kg)
  * @returns {object} Chart definition
  */
-function getChartDefinition(x1, y1, x2, y2) {
-    const chartData = getChartData(x1, y1, x2, y2);
+function getChartDefinition(startArm, startWeight, dryArm, dryWeight) {
+    const chartData = getChartData(startArm, startWeight, dryArm, dryWeight);
 
     const aircraftData = getSelectedAircraftData();
     const aircraftChartData = aircraftData.chart;
@@ -431,34 +431,41 @@ function getChartDefinition(x1, y1, x2, y2) {
                     max: aircraftChartData.yMax
                 }
             },
-            lineCoords: aircraftChartData.coords,
-            pointArrow: {
-                x1: x1,
-                y1: y1,
-                x2: x2,
-                y2: y2,
-                do: -5
-            }
+            drawLines: [
+                {
+                    color: 'rgba(0, 0, 0, 1)',
+                    lineWidth: 2,
+                    points: aircraftChartData.coords
+                },
+                {
+                    color: 'rgba(100, 100, 100, 0.5)',
+                    lineWidth: 2,
+                    points: [
+                        [startArm, startWeight],
+                        [dryArm, dryWeight]
+                    ]
+                }
+            ]
         }
     };
 }
 
 /**
  * Creates the chart data object
- * @param {number} x1 From x
- * @param {number} y1 From y
- * @param {number} x2 To x
- * @param {number} y2 To y
+ * @param {number} startArm Start arm (in cm)
+ * @param {number} startWeight Start weight (in kg)
+ * @param {number} dryArm Dry arm (in cm)
+ * @param {number} dryWeight Dry weight (in kg)
  * @returns {object} Chart data
  */
-function getChartData(x1, y1, x2, y2) {
+function getChartData(startArm, startWeight, dryArm, dryWeight) {
     return {
         datasets: [
             {
                 label: 'Torrvikt',
                 data: [{
-                    x: x2,
-                    y: y2
+                    x: dryArm,
+                    y: dryWeight
                 }],
                 pointRadius: 5,
                 backgroundColor: 'rgb(210, 100, 100)'
@@ -466,8 +473,8 @@ function getChartData(x1, y1, x2, y2) {
             {
                 label: 'Startvikt',
                 data: [{
-                    x: x1,
-                    y: y1
+                    x: startArm,
+                    y: startWeight
                 }],
                 pointRadius: 5,
                 backgroundColor: 'rgb(50, 76, 168)'
@@ -477,128 +484,46 @@ function getChartData(x1, y1, x2, y2) {
 }
 
 /**
- * Register plug-in for drawing the weight balance limit lines
+ * Register plug-in for drawing lines in the chart
  */
 Chart.register({
-    id: 'draw-weight-balance-limits',
+    id: 'draw-lines',
     beforeDraw: function (chartInstance, _) {
-        var coords = chartInstance.options.lineCoords;
-        if (coords == null) {
-            throw 'Line coord options missing in chart options';
+        var optionsArray = chartInstance.options.drawLines;
+        if (optionsArray == null || !Array.isArray(optionsArray)) {
+            return;
         }
 
         var yAxis = chartInstance.scales["y"];
         var xAxis = chartInstance.scales["x"];
         var ctx = chartInstance.ctx;
 
-        ctx.beginPath();
-        ctx.lineWidth = 1;
-        ctx.setLineDash([]);
-        ctx.strokeStyle = "rgba(0, 0, 0, 1)";
+        for (var i = 0; i < optionsArray.length; i++) {
+            var optionsItem = optionsArray[i];
 
-        for (var y = 0; y < (coords.length - 1); y++) {
-            var x1 = xAxis.getPixelForValue(coords[y][0], 0, 0, true);
-            var y1 = yAxis.getPixelForValue(coords[y][1], 0, 0, true);
-            var x2 = xAxis.getPixelForValue(coords[y + 1][0], 0, 0, true);
-            var y2 = yAxis.getPixelForValue(coords[y + 1][1], 0, 0, true);
+            if (optionsItem?.points == null || !Array.isArray(optionsItem.points)) {
+                continue;
+            }
 
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
+            ctx.beginPath();
+            ctx.setLineDash([])
+            ctx.lineWidth = optionsItem?.lineWidth || 1;
+            ctx.strokeStyle = optionsItem?.color || 'black';
+
+            for (var y = 0; y < (optionsItem.points.length - 1); y++) {
+                const points = optionsItem.points;
+
+                var x1 = xAxis.getPixelForValue(points[y][0], 0, 0, true);
+                var y1 = yAxis.getPixelForValue(points[y][1], 0, 0, true);
+                var x2 = xAxis.getPixelForValue(points[y + 1][0], 0, 0, true);
+                var y2 = yAxis.getPixelForValue(points[y + 1][1], 0, 0, true);
+
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+            }
+
+            ctx.closePath();
+            ctx.stroke();
         }
-
-        ctx.closePath();
-        ctx.stroke();
     }
 });
-
-/**
- * Register plug-in for drawing the weight balance arrow between the two points
- */
-Chart.register({
-    id: 'draw-weight-balance-arrow',
-    beforeDraw: function (chartInstance, _) {
-        var arrowData = chartInstance.options.pointArrow;
-        if (arrowData == null) {
-            throw 'Point arrow options missing in chart options';
-        }
-
-        var yAxis = chartInstance.scales["y"];
-        var xAxis = chartInstance.scales["x"];
-
-        var x1 = xAxis.getPixelForValue(arrowData.x1, 0, 0, true);
-        var y1 = yAxis.getPixelForValue(arrowData.y1, 0, 0, true);
-        var x2 = xAxis.getPixelForValue(arrowData.x2, 0, 0, true);
-        var y2 = yAxis.getPixelForValue(arrowData.y2, 0, 0, true);
-
-        var distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        var distanceOffset = arrowData?.do || 0;
-
-        var ctx = chartInstance.ctx;
-        ctx.beginPath();
-
-        ctx.lineWidth = 1;
-        ctx.setLineDash([]);
-        ctx.strokeStyle = "rgba(100, 100, 100, 0.5)";
-
-        console.log(distance)
-
-        if (distance > 25) {
-            drawCanvasArrow(ctx, x1, y1, x2, y2, distanceOffset);
-        }
-        else {
-            drawCanvasLine(ctx, x1, y1, x2, y2);
-        }
-
-        ctx.closePath();
-        ctx.stroke();
-    }
-})
-
-/**
- * Draws an arrow between two points on a 2D canvas
- * @param {CanvasRenderingContext2D} ctx Canvas context
- * @param {number} x1 From x (in pixels)
- * @param {number} y1 From y (in pixels)
- * @param {number} x2 To x (in pixels)
- * @param {number} y2 To y (in pixels)
- * @param {number} distanceOffset The amount of pixels shorter/longer the arrow head should be relative to x2 and y2
- */
-function drawCanvasArrow(ctx, x1, y1, x2, y2, distanceOffset) {
-    const deltaX = x2 - x1;
-    const deltaY = y2 - y1;
-
-    const arrowAngle = Math.atan2(deltaY, deltaX);
-    x2 = x2 + Math.cos(arrowAngle) * distanceOffset;
-    y2 = y2 + Math.sin(arrowAngle) * distanceOffset;
-
-    const headLength = 8;
-    const headAngle = Math.PI / 6;
-
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-
-    ctx.lineTo(
-        x2 - headLength * Math.cos(arrowAngle - headAngle),
-        y2 - headLength * Math.sin(arrowAngle - headAngle)
-    );
-
-    ctx.moveTo(x2, y2);
-
-    ctx.lineTo(
-        x2 - headLength * Math.cos(arrowAngle + headAngle),
-        y2 - headLength * Math.sin(arrowAngle + headAngle)
-    );
-}
-
-/**
- * Draws a line between two points on a 2D canvas
- * @param {CanvasRenderingContext2D} ctx Canvas context
- * @param {number} x1 From x (in pixels)
- * @param {number} y1 From y (in pixels)
- * @param {number} x2 To x (in pixels)
- * @param {number} y2 To y (in pixels)
- */
-function drawCanvasLine(ctx, x1, y1, x2, y2) {
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-}

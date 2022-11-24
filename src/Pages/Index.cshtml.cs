@@ -50,7 +50,7 @@ namespace FlightPlanner.Service.Pages
         {
             SettingsSaved = TempData.Remove("SettingsSaved");
 
-            if (!GetAndFilterData()) 
+            if (!GetAndFilterData())
             {
                 return StatusCode(StatusCodes.Status503ServiceUnavailable);
             }
@@ -66,7 +66,7 @@ namespace FlightPlanner.Service.Pages
             }
 
             var settingsCookie = SettingsCookie.CreateFrom(Request);
-            
+
             Metar = SortOutUnwantedAirports(_dataRepository.CurrentMetar, settingsCookie.MetarAirports);
             Taf = SortOutUnwantedAirports(_dataRepository.CurrentTaf, settingsCookie.TafAirports);
             Notam = SortOutUnwantedAirports(_dataRepository.CurrentNotam, settingsCookie.NotamAirports);
@@ -74,7 +74,7 @@ namespace FlightPlanner.Service.Pages
             settingsCookie.WriteTo(Response);
             return true;
         }
-        
+
         private Dictionary<IcaoCode, TValue> SortOutUnwantedAirports<TValue>(
             Dictionary<IcaoCode, TValue> reportMap, IReadOnlyList<IcaoCode> wantedAirports)
         {
