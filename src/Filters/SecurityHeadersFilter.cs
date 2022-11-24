@@ -26,47 +26,22 @@ namespace FlightPlanner.Service.Filters
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
             var response = context.HttpContext.Response;
-
-            AddStrictTransportSecurityHeader(response);
-            AddPermissionsPolicyHeader(response);
-            AddXXSSProtectionHeader(response);
-            AddContentTypeOptions(response);
-            AddFrameOptions(response);
+            AddSecurityHeaders(response);
 
             await next.Invoke();
         }
 
 
-        private void AddStrictTransportSecurityHeader(HttpResponse response)
+        private void AddSecurityHeaders(HttpResponse response)
         {
-            string headerValue = "max-age=63072000; includeSubDomains; preload";
-            response.Headers[HeaderNames.StrictTransportSecurity] = headerValue;
-        }
+            response.Headers[HeaderNames.StrictTransportSecurity] = "max-age=63072000; includeSubDomains; preload";
+            response.Headers[HeaderNames.XContentTypeOptions] = "nosniff";
+            response.Headers[HeaderNames.XFrameOptions] = "DENY";
+            response.Headers[HeaderNames.XXSSProtection] = "1; mode=block";
 
-        private void AddXXSSProtectionHeader(HttpResponse response)
-        {
-            string headerValue = "X-XSS-Protection: 1; mode=block";
-            response.Headers[HeaderNames.XXSSProtection] = headerValue;
-        }
-
-        private void AddContentTypeOptions(HttpResponse response)
-        {
-            string headerValue = "nosniff";
-            response.Headers[HeaderNames.XContentTypeOptions] = headerValue;
-        }
-
-        private void AddFrameOptions(HttpResponse response)
-        {
-            string headerValue = "DENY";
-            response.Headers[HeaderNames.XFrameOptions] = headerValue;
-        }
-
-        private void AddPermissionsPolicyHeader(HttpResponse response)
-        {
-            string headerValue = BuildPermissionsPolicyString();
-
-            response.Headers["Feature-Policy"] = headerValue;
-            response.Headers["Permissions-Policy"] = headerValue;
+            string policyString = BuildPermissionsPolicyString();
+            response.Headers["Feature-Policy"] = policyString;
+            response.Headers["Permissions-Policy"] = policyString;
         }
 
         private string BuildPermissionsPolicyString()
