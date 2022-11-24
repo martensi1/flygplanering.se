@@ -9,7 +9,7 @@ namespace FlightPlanner.Service.Filters
     {
         private readonly List<string> _bannedUserAgents;
 
-        
+
         public RejectFilter()
         {
             _bannedUserAgents = new List<string>(){
@@ -22,8 +22,8 @@ namespace FlightPlanner.Service.Filters
                 "lua-resty-http"
             };
         }
-        
-        
+
+
         public async Task OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
         {
             await Task.CompletedTask;
@@ -45,8 +45,8 @@ namespace FlightPlanner.Service.Filters
                 await next.Invoke();
             }
         }
-    
-        
+
+
         private bool IsBanned(string userAgent)
         {
             if (string.IsNullOrEmpty(userAgent))
