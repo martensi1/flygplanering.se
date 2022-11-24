@@ -143,15 +143,15 @@ else if (!CookieUtil.IsConsentPending(HttpContext) &&
 
 
     <div class="my-5">
-        <a include-if="Model.ShowWeightBalanceSection" id="button-weight-balance" class="main-button d-print-none" onclick="showWeightBalance()">
+        <button include-if="Model.ShowWeightBalanceSection" id="button-weight-balance" class="cbtn cbtn-secondary mx-5 mt-4 d-print-none" onclick="showWeightBalance()">
             <i class="material-icons">add</i>
             <span>Vikt och Balans</span>
-        </a>
+        </button>
 
-        <a id="button-print-summary" class="main-button d-print-none " onclick="window.print()">
+        <button id="button-print-summary" class="cbtn cbtn-secondary mx-5 mt-4 d-print-none" onclick="window.print()">
             <i class="material-icons">print</i>
             <span>Skriv ut</span>
-        </a>
+        </button>
     </div>
 
 </div>

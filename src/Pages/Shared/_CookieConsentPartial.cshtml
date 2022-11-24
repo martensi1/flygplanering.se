@@ -20,7 +20,7 @@
                     Du kan läsa mer om kakor <a href="@Constants.AboutCookiesUrl" target="_blank">här</a>.
                 </div>
                 <div class="modal-footer">
-                    <button id="consentButton" type="button" class="btn btn-primary" data-cookie-string="@cookieString">Acceptera</button>
+                    <button id="consentButton" type="button" class="cbtn cbtn-primary" data-cookie-string="@cookieString">Acceptera</button>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
 
         (function () {
             var button = document.querySelector("#consentButton");
-            
+
             button.addEventListener("click", function (event) {
                 document.cookie = button.dataset.cookieString;
                 $('#consentModal').modal('hide');

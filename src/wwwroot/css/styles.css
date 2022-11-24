@@ -108,14 +108,12 @@ a {
 /**********************************
     Buttons
 **********************************/
-.main-button {
+.cbtn {
     appearance: none;
-    background-color: #FAFBFC;
     border: 1px solid rgba(27, 31, 35, 0.15);
     border-radius: 6px;
-    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    /*box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;*/
     box-sizing: border-box;
-    color: #24292E;
     cursor: pointer;
     display: inline-block;
     font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
@@ -124,7 +122,6 @@ a {
     height: 34px;
     line-height: 20px;
     list-style: none;
-    margin: 30px 30px 0px 30px;
     padding: 6px 16px;
     position: relative;
     transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
@@ -136,46 +133,78 @@ a {
     word-wrap: break-word;
 }
 
-.main-button:hover {
-    background-color: #F3F4F6;
+.cbtn:hover {
     text-decoration: none;
     transition-duration: 0.1s;
 }
 
-.main-button:disabled {
-    background-color: #FAFBFC;
-    border-color: rgba(27, 31, 35, 0.15);
-    color: #959DA5;
+.cbtn:disabled {
     cursor: default;
 }
 
-.main-button:active {
-    background-color: #EDEFF2;
-    box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+.cbtn:active {
+    /*box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;*/
     transition: none 0s;
 }
 
-.main-button:focus {
+.cbtn:focus {
     outline: 1px transparent;
 }
 
-.main-button:before {
+.cbtn:before {
     display: none;
 }
 
-.main-button:-webkit-details-marker {
+.cbtn:-webkit-details-marker {
     display: none;
 }
 
-.main-button span {
+.cbtn span {
     margin-left: 10px;
     vertical-align: top;
 }
 
-.main-button i {
+.cbtn i {
     line-height: 20px !important;
 }
 
+.cbtn-primary {
+    background-color: #0C84CF !important;
+    color: white !important;
+}
+
+.cbtn-primary:hover {
+    background-color: #0B7ABF !important;
+}
+
+.cbtn-primary:disabled {
+    background-color: #0C84CF;
+    border-color: rgba(27, 31, 35, 0.15);
+    color: #BAC6D1;
+}
+
+.cbtn-primary:active {
+    background-color: #0A6FAD;
+}
+
+.cbtn-secondary {
+    background-color: #FAFBFC !important;
+    color: #24292E !important;
+}
+
+.cbtn-secondary:hover {
+    background-color: #F3F4F6 !important;
+}
+
+.cbtn-secondary:disabled {
+    background-color: #FAFBFC;
+    border-color: rgba(27, 31, 35, 0.15);
+    color: #959DA5;
+}
+
+.cbtn-secondary:active {
+    background-color: #EDEFF2;
+}
 
 
 /**********************************
@@ -237,10 +266,5 @@ td input[type=number] {
     th, td {
         min-width: 10px;
         padding: 5px;
-    }
-
-    td input {
-        /*
-    max-width: 70px;*/
     }
 }
