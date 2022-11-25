@@ -1,4 +1,4 @@
-# JFK Flight Planner
+# flygplanering.se
 ASP.NET Core web application for easy preflight preperations. Intended to be used by JFK pilots in for self-briefing before flight
 
 Visit the live website: https://flygplanering.se
