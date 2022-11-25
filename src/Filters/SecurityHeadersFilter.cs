@@ -9,6 +9,7 @@ namespace FlightPlanner.Service.Filters
     public class SecurityHeadersFilter : IAsyncAlwaysRunResultFilter
     {
         private readonly List<string> _disabledFeatures;
+        private readonly List<string> _contentPolicies;
 
 
         public SecurityHeadersFilter()
@@ -20,6 +21,12 @@ namespace FlightPlanner.Service.Filters
                 "geolocation",
                 "display-capture",
                 "payment"
+            };
+
+            _contentPolicies = new List<string>() {
+                "default-src 'self'",
+                "font-src fonts.gstatic.com;style-src 'self' fonts.googleapis.com",
+                "img-src 'self' aro.lfv.se"
             };
         }
 
@@ -39,9 +46,27 @@ namespace FlightPlanner.Service.Filters
             response.Headers[HeaderNames.XFrameOptions] = "DENY";
             response.Headers[HeaderNames.XXSSProtection] = "1; mode=block";
 
-            string policyString = BuildPermissionsPolicyString();
-            response.Headers["Feature-Policy"] = policyString;
-            response.Headers["Permissions-Policy"] = policyString;
+            string contentPolicy = BuildContentSecurityPolicyString();
+            response.Headers["Content-Security-Policy"] = contentPolicy;
+
+            string permissionPolicy = BuildPermissionsPolicyString();
+            response.Headers["Feature-Policy"] = permissionPolicy;
+            response.Headers["Permissions-Policy"] = permissionPolicy;
+        }
+
+        private string BuildContentSecurityPolicyString()
+        {
+            string result = string.Empty;
+
+            foreach (string contentPolicy in _contentPolicies)
+            {
+                if (result.Length > 0)
+                    result += "; ";
+
+                result += contentPolicy;
+            }
+
+            return result;
         }
 
         private string BuildPermissionsPolicyString()
