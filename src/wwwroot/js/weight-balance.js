@@ -157,7 +157,8 @@ function createTable() {
 function insertInputRow(rowId, insertPosition, nameValue, weightValue, armValue, isModifiable) {
     var weightHtml = isModifiable ?
         `<input type="number" min="0" maxlength="3" inputmode="numeric" pattern="[0-9]*" placeholder="Skriv ett värde..."
-            value="${weightValue}" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninput="onWeightCellChanged(this)" />` : weightValue;
+            value="${weightValue}" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            onclick="this.select()" oninput="onWeightCellChanged(this)" />` : weightValue;
 
     var rowType = isModifiable ? 'input-row' : 'static-row';
     insertTableRow(rowId, rowType, insertPosition, nameValue, weightHtml, armValue);
