@@ -210,43 +210,34 @@ a {
 /**********************************
     Tables
 **********************************/
-table, th, td {
-    border: 1px solid;
-}
-
 table {
-    margin-left: auto;
-    margin-right: auto;
+    border: 2px solid darkgray;
+    color: #313131;
+    max-width: 100%;
+    width: 100%;
 }
 
 th {
-    background-color: lightgray;
-    color: rgb(50, 50, 50);
-    border-color: black;
+    background-color: #e3e0dc;
 }
 
 th, td {
-    padding-left: 15px;
-    padding-right: 15px;
+    border: 1px solid darkgray;
+    font-size: inherit;
+    height: 4em;
+    padding: 0.5rem;
     text-align: center;
-    min-width: 200px;
-    height: 71px;
 }
 
 td input {
-    border: none;
-    background: hsl(0 0% 93%);
-    border-color: darkgray;
+    border: 1px solid darkgray;
+    background: hsl(0 0% 100%);
     border-radius: .25rem;
-    padding: 1rem 1rem;
+    font-size: inherit;
+    height: 100%;
+    padding: 0.1rem;
     text-align: center;
-    height: 40px;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-td input[type=number] {
-    width: 90%;
+    width: 100%;
 }
 
 /* Disable number input spinner */
@@ -261,10 +252,9 @@ td input[type=number] {
     -moz-appearance: textfield;
 }
 
-
-@media only screen and (max-width: 1000px) {
-    th, td {
-        min-width: 10px;
-        padding: 5px;
+@media print {
+    td input {
+        border: none;
+        background: rgba(0, 0, 0, 0);
     }
 }

@@ -84,3 +84,16 @@ p {
         display: block;
     }
 }
+
+
+#weight-balance-wrapper {
+    width: 80%;
+    margin: auto;
+}
+
+@media (max-width: 768px) {
+    #weight-balance-wrapper {
+        width: 100%;
+    }
+}
+

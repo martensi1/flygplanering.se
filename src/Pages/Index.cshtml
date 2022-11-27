@@ -112,10 +112,8 @@ else if (!CookieUtil.IsConsentPending(HttpContext) &&
             <h2>Vikt och Balans</h2>
             <hr />
 
-            <canvas id="weight-balance-chart" class="d-print-none"></canvas>
-
-            <div>
-                <div class="d-print-none">
+            <div id="weight-balance-wrapper">
+                <div class="d-print-none mb-5">
                     <select id="select-weight-balance" onchange="createTable()">
                         <option value="SE-KIK">SE-KIK</option>
                         <option value="SE-KAV">SE-KAV</option>
@@ -124,14 +122,16 @@ else if (!CookieUtil.IsConsentPending(HttpContext) &&
                     </select>
                 </div>
 
-                <div class="auto-overflow-x">
+                <canvas id="weight-balance-chart" class="d-print-none"></canvas>
+
+                <div>
                     <table class="mt-4">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th>Vikt (kg)</th>
-                                <th>Arm (cm)</th>
-                                <th>Massmoment (kgcm)</th>
+                                <th style="width: 25%">Komponent</th>
+                                <th style="width: 35%">Vikt</th>
+                                <th style="width: 25%">Arm</th>
+                                <th style="width: 15%">Moment</th>
                             </tr>
                         </thead>
                         <tbody id="table-weight-balance" />

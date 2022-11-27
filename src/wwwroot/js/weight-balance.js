@@ -199,7 +199,7 @@ function insertTableRow(rowId, rowType, insertPosition, nameHtml, weightHtml, ar
     row.insertCell(MOMENT_CELL_INDEX).innerHTML = 0;
 
     if (thickBorder) {
-        row.style.border = '2px solid';
+        row.style.backgroundColor = '#f2f2f2';
     }
 
     return row;
@@ -254,7 +254,7 @@ function getTableRowData(rowId) {
         type: rowType,
         name: cells.name.innerHTML,
         weight: Number((rowType == 'input-row') ? cells.weight.firstChild.value : cells.weight.innerHTML),
-        arm: Number(cells.arm.innerHTML),
+        arm: Number(cells.arm.innerHTML.replace("CG:", "").trim()),
         moment: Number(cells.moment.innerHTML)
     };
 }
@@ -295,6 +295,10 @@ function updateTableRow(rowData) {
     }
     else {
         cells.weight.innerHTML = rowData.weight;
+    }
+
+    if (rowData.type == 'summarize-row') {
+        cells.arm.innerHTML = "CG: " + cells.arm.innerHTML;
     }
 }
 
@@ -431,15 +435,15 @@ function getChartDefinition(startArm, startWeight, dryArm, dryWeight) {
                     max: aircraftChartData.yMax
                 }
             },
-            drawLines: [
+            drawPolygons: [
                 {
-                    color: 'rgba(0, 0, 0, 1)',
-                    lineWidth: 2,
+                    lineColor: 'rgba(0, 0, 0, 1)',
+                    lineWidth: 1,
                     points: aircraftChartData.coords
                 },
                 {
-                    color: 'rgba(100, 100, 100, 0.5)',
-                    lineWidth: 2,
+                    lineColor: 'rgba(100, 100, 100, 0.5)',
+                    lineWidth: 1,
                     points: [
                         [startArm, startWeight],
                         [dryArm, dryWeight]
@@ -487,9 +491,9 @@ function getChartData(startArm, startWeight, dryArm, dryWeight) {
  * Register plug-in for drawing lines in the chart
  */
 Chart.register({
-    id: 'draw-lines',
+    id: 'draw-polygons',
     beforeDraw: function (chartInstance, _) {
-        var optionsArray = chartInstance.options.drawLines;
+        var optionsArray = chartInstance.options.drawPolygons;
         if (optionsArray == null || !Array.isArray(optionsArray)) {
             return;
         }
@@ -508,7 +512,9 @@ Chart.register({
             ctx.beginPath();
             ctx.setLineDash([])
             ctx.lineWidth = optionsItem?.lineWidth || 1;
-            ctx.strokeStyle = optionsItem?.color || 'black';
+            ctx.strokeStyle = optionsItem?.lineColor || 'black';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0)';
+            ctx.fillStyle = 'rgba(23, 191, 90, 0.1)';
 
             for (var y = 0; y < (optionsItem.points.length - 1); y++) {
                 const points = optionsItem.points;
@@ -518,11 +524,15 @@ Chart.register({
                 var x2 = xAxis.getPixelForValue(points[y + 1][0], 0, 0, true);
                 var y2 = yAxis.getPixelForValue(points[y + 1][1], 0, 0, true);
 
-                ctx.moveTo(x1, y1);
+                if (y == 0) {
+                    ctx.moveTo(x1, y1);
+                }
+
                 ctx.lineTo(x2, y2);
             }
 
             ctx.closePath();
+            ctx.fill();
             ctx.stroke();
         }
     }
