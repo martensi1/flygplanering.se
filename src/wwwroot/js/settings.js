@@ -1,90 +1,74 @@
-﻿/************************************************
- * Flight Planner
- ***********************************************/
-var settings = {};
+﻿/**************************************************
+ * Initialization
+ *************************************************/
 
-
-window.onload = function () {
+/**
+ * Initialization function run at page load
+ */
+window.addEventListener("load", function () {
     loadSettings();
-    fetchAirportsData();
-}
+
+    fetchAirportsData(function () {
+        createSettingsTable();
+    });
+});
 
 
 
-function fetchAirportsData() {
-    fetch('/airports.json')
+/**************************************************
+ * Data Fetch
+ *************************************************/
+var airportsData = {};
+
+/**
+ * Fetches airports data from the server
+ * @param {function} callback Callback function to call when the data is fetched
+ */
+function fetchAirportsData(callback) {
+    var dataUrl = '/airports.json';
+    var fetchPromise = fetch(dataUrl);
+
+    fetchPromise
         .then(response => response.json())
-        .then(json => {
-            createSettingsTable(json);
-        })
         .catch(function (error) {
-            console.log(error);
-            alert('Error!');
+            console.log('Error fetching ' + dataUrl + ': ' + error);
+        })
+        .then(json => {
+            airportsData = json;
+            callback();
         })
 }
 
-function createSettingsTable(airportsData) {
-    var airportList = airportsData.airports;
-    airportList.sort(function (a, b) {
-        return a.name.localeCompare(b.name);
-    })
 
 
-    for (var i = 0; i < airportList.length; i++) {
-        var name = airportList[i].name;
-        var icao = airportList[i].icao;
-
-        var tableElement = document.getElementById('table-airport-selection');
-        var row = tableElement.insertRow(i);
-
-        row.insertCell(0).innerHTML = name + "<br/ >(" + icao + ")";
-        row.insertCell(1).innerHTML = createCheckboxHtml(icao, "METAR");
-        row.insertCell(2).innerHTML = createCheckboxHtml(icao, "TAF");
-        row.insertCell(3).innerHTML = createCheckboxHtml(icao, "NOTAM");
-    }
-}
-
-function createCheckboxHtml(icao, type) {
-    var exists = settings[type].includes(icao);
-    return '<input type="checkbox" ' + (exists ? 'checked="checked"' : '') + ' onclick="onChange(this, \'' + type + '\', \'' + icao + '\')" />';
-}
-
-function onChange(element, type, icao) {
-    if (element.checked) {
-        settings[type].push(icao);
-    }
-    else {
-        settings[type] = settings[type].filter(i => i != icao);
-    }
-}
-
-function removeAirport(type, icao) {
-    settings[type] = settings[type].filter(i => i != icao);
-}
-
+/**************************************************
+ * Settings functions
+ *************************************************/
+var settingsObject = {};
+const SETTINGS_COOKIE_NAME = "fpl-airports";
 
 
 function loadSettings() {
-    var cookieValue = getCookie("fpl-airports");
+    var cookieValue = getCookie(SETTINGS_COOKIE_NAME);
 
     if (cookieValue == null) {
         alert('Något gick fel! Kontakta sidans administratör');
     }
 
     decodedCookieValue = decodeURIComponent(cookieValue);
-    settings = JSON.parse(decodedCookieValue);
+    settingsObject = JSON.parse(decodedCookieValue);
 }
 
 function saveSettings() {
-    if (settings == null) {
+    if (settingsObject == null) {
         return;
     }
 
-    var jsonString = JSON.stringify(settings);
+    var jsonString = JSON.stringify(settingsObject);
     console.log(jsonString);
 
     cookieValue = encodeURIComponent(jsonString);
-    setCookie("fpl-airports", cookieValue, 10);
+    setCookie(SETTINGS_COOKIE_NAME, cookieValue, 10);
 
     document.getElementById("settings-form").submit();
 }
@@ -115,4 +99,44 @@ function getCookie(cookieName) {
     }
 
     return "";
+}
+
+
+
+/**************************************************
+ * Table functions
+ *************************************************/
+function createSettingsTable() {
+    var airportList = airportsData.airports;
+
+    airportList.sort(function (a, b) {
+        return a.name.localeCompare(b.name);
+    })
+
+    for (var i = 0; i < airportList.length; i++) {
+        var name = airportList[i].name;
+        var icao = airportList[i].icao;
+
+        var tableElement = document.getElementById('table-airport-selection');
+        var row = tableElement.insertRow(i);
+
+        row.insertCell(0).innerHTML = name + "<br/ >(" + icao + ")";
+        row.insertCell(1).innerHTML = createCheckboxHtml(icao, "METAR");
+        row.insertCell(2).innerHTML = createCheckboxHtml(icao, "TAF");
+        row.insertCell(3).innerHTML = createCheckboxHtml(icao, "NOTAM");
+    }
+}
+
+function createCheckboxHtml(icao, type) {
+    var exists = settingsObject[type].includes(icao);
+    return '<input type="checkbox" ' + (exists ? 'checked="checked"' : '') + ' onclick="onCheckboxClicked(this, \'' + type + '\', \'' + icao + '\')" />';
+}
+
+function onCheckboxClicked(element, type, icao) {
+    if (element.checked) {
+        settingsObject[type].push(icao);
+    }
+    else {
+        settingsObject[type] = settingsObject[type].filter(i => i != icao);
+    }
 }
