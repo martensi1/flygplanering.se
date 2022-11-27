@@ -14,12 +14,12 @@ namespace FlightPlanner.Service.Filters
         public SecurityHeadersFilter()
         {
             _disabledFeatures = new List<string>() {
-                "microphone",
-                "speaker",
                 "camera",
-                "geolocation",
                 "display-capture",
-                "payment"
+                "geolocation",
+                "microphone",
+                "payment",
+                "usb"
             };
         }
 
