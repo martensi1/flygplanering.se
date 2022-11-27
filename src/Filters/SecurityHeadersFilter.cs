@@ -39,12 +39,11 @@ namespace FlightPlanner.Service.Filters
             response.Headers[HeaderNames.XFrameOptions] = "DENY";
             response.Headers[HeaderNames.XXSSProtection] = "1; mode=block";
 
-            string permissionPolicy = BuildPermissionsPolicyString();
-            response.Headers["Feature-Policy"] = permissionPolicy;
-            response.Headers["Permissions-Policy"] = permissionPolicy;
+            response.Headers["Feature-Policy"] = BuildFeaturePolicyString();
+            response.Headers["Permissions-Policy"] = BuildPermissionsPolicyString(); ;
         }
 
-        private string BuildPermissionsPolicyString()
+        private string BuildFeaturePolicyString()
         {
             string result = string.Empty;
 
@@ -54,6 +53,21 @@ namespace FlightPlanner.Service.Filters
                     result += "; ";
 
                 result += $"{disabledFeature} 'none'";
+            }
+
+            return result;
+        }
+
+        private string BuildPermissionsPolicyString()
+        {
+            string result = string.Empty;
+
+            foreach (string disabledFeature in _disabledFeatures)
+            {
+                if (result.Length > 0)
+                    result += ", ";
+
+                result += $"{disabledFeature}=()";
             }
 
             return result;
