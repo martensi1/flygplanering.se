@@ -46,7 +46,7 @@ function createSettingsTable(airportsData) {
 
 function createCheckboxHtml(icao, type) {
     var exists = settings[type].includes(icao);
-    return '<div><input type="checkbox" ' + (exists ? 'checked="checked"' : '') + ' onclick="onChange(this, \'' + type + '\', \'' + icao + '\')" /></div>';
+    return '<input type="checkbox" ' + (exists ? 'checked="checked"' : '') + ' onclick="onChange(this, \'' + type + '\', \'' + icao + '\')" />';
 }
 
 function onChange(element, type, icao) {
@@ -66,7 +66,7 @@ function removeAirport(type, icao) {
 
 function loadSettings() {
     var cookieValue = getCookie("fpl-airports");
-    
+
     if (cookieValue == null) {
         alert('Något gick fel! Kontakta sidans administratör');
     }

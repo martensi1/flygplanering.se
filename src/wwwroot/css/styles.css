@@ -240,6 +240,10 @@ td input {
     width: 100%;
 }
 
+input[type=checkbox] {
+    max-width: 15px;
+}
+
 /* Disable number input spinner */
 td input::-webkit-outer-spin-button,
 td input::-webkit-inner-spin-button {
