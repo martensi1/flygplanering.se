@@ -11,6 +11,10 @@
 {
     @await Html.PartialAsync("_AlertPartial", new AlertPartialModel("success", "Dina inställningar sparades!"));
 }
+else if (Model.ShowWeightBalanceSection)
+{
+    @await Html.PartialAsync("_AlertPartial", new AlertPartialModel("warning", "Använd inte denna hemsida som din enda informationskälla. Som pilot in command, är det ditt ansvar att kontrollera att ditt flygplan är korrekt lastad och balanserad före flygning."));
+}
 else if (Model.ShowTipsAndTricks)
 {
     @await Html.PartialAsync("_AlertPartial", new AlertPartialModel("info", Model.TipsAndTricksMessage));

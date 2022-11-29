@@ -9,7 +9,8 @@ namespace FlightPlanner.Service.Pages
         private readonly IReadOnlyDictionary<string, string>
             _alertClassLookup = new Dictionary<string, string>() {
             { "info", "alert-info" },
-            { "success", "alert-success" }
+            { "success", "alert-success" },
+            { "warning", "alert-warning" }
         };
 
 
