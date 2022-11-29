@@ -89,7 +89,6 @@ namespace FlightPlanner.Service.Pages
             Taf = SortOutUnwantedAirports(_dataRepository.CurrentTaf, settingsCookie.TafAirports);
             Notam = SortOutUnwantedAirports(_dataRepository.CurrentNotam, settingsCookie.NotamAirports);
 
-            settingsCookie.WriteTo(Response);
             return true;
         }
 

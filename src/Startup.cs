@@ -32,6 +32,7 @@ namespace FlightPlanner.Service
             {
                 options.Filters.Add(new RejectFilter());
                 options.Filters.Add(new OrganizationFilter());
+                options.Filters.Add(new EssentialCookieFilter());
                 options.Filters.Add(new NoCacheFilter());
                 options.Filters.Add(new SecurityHeadersFilter());
             });
