@@ -1,4 +1,4 @@
-﻿@using FlightPlanner.Service.Config
+﻿@using FlightPlanner.Service.Common
 
 
 <!DOCTYPE html>
@@ -71,7 +71,8 @@
     </header>
 
     <div id="content" class="container">
-        <partial name="_CookieConsentPartial" />
+        @await Html.PartialAsync("_CookieConsentPartial")
+
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

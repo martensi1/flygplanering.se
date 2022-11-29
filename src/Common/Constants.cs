@@ -1,6 +1,6 @@
 using System;
 
-namespace FlightPlanner.Service.Config
+namespace FlightPlanner.Service.Common
 {
     public class Constants
     {

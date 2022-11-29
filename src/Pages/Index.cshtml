@@ -1,5 +1,5 @@
 ﻿@page
-@using FlightPlanner.Service.Config
+@using FlightPlanner.Service.Common
 @model IndexModel
 @{
     ViewData["Title"] = "Flygplanering.se - Briefingtjänst";
@@ -9,14 +9,12 @@
 
 @if (Model.SettingsSaved)
 {
-    <partial name="_AlertPartial"
-             model='new AlertModel("Dina inställningar sparades!", AlertType.Success)' />
+    @await Html.PartialAsync("_AlertPartial", new AlertPartialModel("success", "Dina inställningar sparades!"));
 }
 else if (!CookieUtil.IsConsentPending(HttpContext) &&
     !SessionUtil.GetFlag(HttpContext, SeassionFlag.TipsAndTrickShowed))
 {
-    <partial name="_AlertPartial"
-             model='new AlertModel("Saknas du vissa flygplatser? Gå till <a href=\"/Settings\">dina inställningar</a> för att ändra vilka du kan se!", AlertType.Info)' />
+    @await Html.PartialAsync("_AlertPartial", new AlertPartialModel("info", "Saknar du vissa flygplatser? Gå till <a href=\"/Settings\">dina inställningar</a> för att ändra vilka du kan se!"));
     SessionUtil.SetFlag(HttpContext, SeassionFlag.TipsAndTrickShowed);
 }
 

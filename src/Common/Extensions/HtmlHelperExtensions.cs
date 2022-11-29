@@ -1,20 +1,14 @@
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore;
 using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace FlightPlanner.Service.Pages
+namespace FlightPlanner.Service.Extensions
 {
-    public static class PageUtil
+    public static class HtmlHelperExtensions
     {
-        public static string GetCrsfToken(HttpContext context)
-        {
-            var antiforgery = (IAntiforgery)context.RequestServices
-                .GetService(typeof(IAntiforgery));
-
-            return antiforgery.GetAndStoreTokens(context).RequestToken;
-        }
-
-        public static string GenerateRandomElementId()
+        public static string GenerateRandomId(this IHtmlHelper _)
         {
             var guid = Guid.NewGuid();
             guid = EnsureStartsWithLetter(guid);

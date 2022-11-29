@@ -65,7 +65,7 @@ namespace FlightPlanner.Service
                 return new SettingsCookie();
             }
         }
-   
+
         public void WriteTo(HttpResponse httpResponse)
         {
             var options = new JsonSerializerOptions();
@@ -78,7 +78,7 @@ namespace FlightPlanner.Service
             });
         }
 
-        
+
         private class IcaoCodeListConverter : JsonConverter<List<IcaoCode>>
         {
             public override List<IcaoCode> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

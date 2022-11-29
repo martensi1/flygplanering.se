@@ -1,6 +1,7 @@
 ﻿@model AlertModel
+@using FlightPlanner.Service.Extensions
 @{
-    string elementId = PageUtil.GenerateRandomElementId();
+    string elementId = Html.GenerateRandomId();
 }
 
 <div id="@elementId" class="alert @Model.AlertClass alert-dismissible fade show d-print-none" role="alert">

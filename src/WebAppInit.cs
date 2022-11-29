@@ -1,3 +1,4 @@
+using FlightPlanner.Service.Common;
 using FlightPlanner.Service.Config;
 using FlightPlanner.Service.Repositories;
 using FlightPlanner.Service.Tasks;
@@ -31,15 +32,15 @@ namespace FlightPlanner.Service
 
 
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
-        {            
-            ScheduleTasks();        
+        {
+            ScheduleTasks();
             return next;
         }
 
         private void ScheduleTasks()
         {
             var supportedAirports = LoadAirportConfig();
-            
+
 
             _taskScheduler.Schedule(new FetchMetar(supportedAirports),
                 Constants.MetarFetchIntervalSeconds);
@@ -55,7 +56,7 @@ namespace FlightPlanner.Service
         {
             var supportedAirports = AirportConfig.ReadToList();
 
-            _logger.LogInformation("Airport config loaded, airports: {0}", 
+            _logger.LogInformation("Airport config loaded, airports: {0}",
                 string.Join(", ", supportedAirports.Select(i => i.ToString()).ToArray()));
 
             return supportedAirports;

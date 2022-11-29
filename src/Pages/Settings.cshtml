@@ -30,7 +30,7 @@
 
     <div class="my-5">
         <form id="settings-form" action="/settings" method="post">
-            <input type="hidden" name="__RequestVerificationToken" value="@PageUtil.GetCrsfToken(HttpContext)" />
+            <input asp-crsf-token />
 
             <button id="button-save-settings" class="cbtn cbtn-secondary mx-5 mt-4" onclick="saveSettings()">
                 <i class="material-icons">lock</i>

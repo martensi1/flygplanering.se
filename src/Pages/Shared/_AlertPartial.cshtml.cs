@@ -1,26 +1,38 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
 
 namespace FlightPlanner.Service.Pages
 {
-    public class AlertModel : PageModel
+    public class AlertPartialModel : PageModel
     {
-        private readonly IReadOnlyDictionary<AlertType, string> 
-            _alertClassLookup = new Dictionary<AlertType, string>() {
-            { AlertType.Info, "alert-info" },
-            { AlertType.Success, "alert-success" }
+        private readonly IReadOnlyDictionary<string, string>
+            _alertClassLookup = new Dictionary<string, string>() {
+            { "info", "alert-info" },
+            { "success", "alert-success" }
         };
 
 
-        public string HtmlContent { get; private set; }
 
         public string AlertClass { get; private set; }
 
+        public string HtmlContent { get; private set; }
 
-        public AlertModel(string htmlContent, AlertType alertType)
+
+        public AlertPartialModel(string alertType, string htmlContent)
         {
-            HtmlContent = htmlContent;
+            if (alertType == null)
+            {
+                throw new ArgumentNullException(nameof(alertType));
+            }
+
+            if (!_alertClassLookup.ContainsKey(alertType))
+            {
+                throw new ArgumentException("Invalid alert type");
+            }
+
             AlertClass = _alertClassLookup[alertType];
+            HtmlContent = htmlContent;
         }
     }
 }
