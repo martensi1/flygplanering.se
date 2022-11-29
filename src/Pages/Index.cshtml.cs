@@ -1,4 +1,5 @@
-﻿using FlightPlanner.Service.Repositories;
+﻿using FlightPlanner.Service.Extensions;
+using FlightPlanner.Service.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,11 +14,16 @@ namespace FlightPlanner.Service.Pages
     public class IndexModel : PageModel
     {
         private readonly IFlightDataRepository _dataRepository;
+        private readonly INotificationRepository _notificationRepository;
 
 
-        public IndexModel(IFlightDataRepository dataRepository)
+        public IndexModel(
+            IFlightDataRepository dataRepository,
+            INotificationRepository notificationRepository
+            )
         {
             _dataRepository = dataRepository;
+            _notificationRepository = notificationRepository;
         }
 
 
@@ -26,6 +32,16 @@ namespace FlightPlanner.Service.Pages
             get {
                 return DateTime.Now.ToUniversalTime()
                 .ToString("HH:mm (UTC), dd-MM-yyyy");
+            }
+        }
+
+        public bool ShowTipsAndTricks
+        {
+            get {
+                var shouldShow = !HttpContext.Session.GetBool("TipsAndTricksShown");
+                HttpContext.Session.SetBool("TipsAndTricksShown", true);
+
+                return shouldShow;
             }
         }
 
@@ -39,6 +55,8 @@ namespace FlightPlanner.Service.Pages
 
         public bool SettingsSaved { get; private set; }
 
+        public string TipsAndTricksMessage { get; private set; }
+
         public Dictionary<IcaoCode, string> Metar { get; private set; }
         public Dictionary<IcaoCode, string> Taf { get; private set; }
         public Dictionary<IcaoCode, List<NotamRecord>> Notam { get; private set; }
@@ -48,6 +66,7 @@ namespace FlightPlanner.Service.Pages
         public IActionResult OnGet()
         {
             SettingsSaved = TempData.Remove("SettingsSaved");
+            TipsAndTricksMessage = _notificationRepository.GetRandomNotification();
 
             if (!GetAndFilterData())
             {

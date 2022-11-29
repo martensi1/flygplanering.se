@@ -22,7 +22,7 @@ namespace FlightPlanner.Service.Pages
             var consentFeature = context.Features.Get<ITrackingConsentFeature>();
             return consentFeature?.HasConsent ?? false;
         }
-        
+
         public static void GrantConsent(HttpContext context)
         {
             var consentFeature = context.Features.Get<ITrackingConsentFeature>();

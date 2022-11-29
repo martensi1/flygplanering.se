@@ -45,6 +45,7 @@ namespace FlightPlanner.Service
             // Initialization code
             services.AddSingleton<ITaskScheduler, TaskScheduler>();
             services.AddSingleton<IFlightDataRepository, FlightDataRepository>();
+            services.AddSingleton<INotificationRepository, NotificationRepository>();
             services.AddTransient<IStartupFilter, WebAppInit>();
         }
 

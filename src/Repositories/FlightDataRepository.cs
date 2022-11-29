@@ -10,6 +10,7 @@ namespace FlightPlanner.Service.Repositories
 {
     public interface IFlightDataRepository
     {
+        public void StartSubscriptions();
         public bool WaitForData(short timeoutMs, short retryTimeMs);
 
         public Dictionary<IcaoCode, string>  CurrentMetar { get; }
@@ -25,11 +26,11 @@ namespace FlightPlanner.Service.Repositories
         private readonly ILogger<FlightDataRepository> _logger;
         private readonly ITaskScheduler _taskScheduler;
 
-        
+
         public Dictionary<IcaoCode, string>  CurrentMetar { get; private set; }
         public Dictionary<IcaoCode, string>  CurrentTaf { get; private set; }
         public Dictionary<IcaoCode, List<NotamRecord>>  CurrentNotam { get; private set; }
-        
+
 
         public FlightDataRepository(
             ILogger<FlightDataRepository> logger,
@@ -38,30 +39,20 @@ namespace FlightPlanner.Service.Repositories
         {
             _logger = logger;
             _taskScheduler = taskScheduler;
-            
+
             CurrentMetar = null;
             CurrentTaf = null;
             CurrentNotam = null;
-
-            _taskScheduler.SubscribeTo<FetchMetar>(this);
-            _taskScheduler.SubscribeTo<FetchTaf>(this);
-            _taskScheduler.SubscribeTo<FetchNotam>(this);
         }
 
 
-        public bool WaitForData(short timeoutMs, short retryTimeMs)
+        public void StartSubscriptions()
         {
-            for (int i = 0; i < (timeoutMs / retryTimeMs); i++)
-            {
-                if (IsAllDataAvailable())
-                {
-                    return true;
-                }
+            _taskScheduler.SubscribeTo<FetchMetar>(this);
+            _taskScheduler.SubscribeTo<FetchTaf>(this);
+            _taskScheduler.SubscribeTo<FetchNotam>(this);
 
-                Thread.Sleep(retryTimeMs);
-            }
-
-            return false;
+            _logger.LogInformation("Data repository subscribed to fetch tasks");
         }
 
         public void OnTaskFinished(TaskResult result)
@@ -81,7 +72,22 @@ namespace FlightPlanner.Service.Repositories
             }
         }
 
-        
+        public bool WaitForData(short timeoutMs, short retryTimeMs)
+        {
+            for (int i = 0; i < (timeoutMs / retryTimeMs); i++)
+            {
+                if (IsAllDataAvailable())
+                {
+                    return true;
+                }
+
+                Thread.Sleep(retryTimeMs);
+            }
+
+            return false;
+        }
+
+
         private bool IsAllDataAvailable()
         {
             return

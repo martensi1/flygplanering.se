@@ -33,12 +33,13 @@ namespace FlightPlanner.Service
 
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
-            ScheduleTasks();
+            StartDataFetch();
             return next;
         }
 
-        private void ScheduleTasks()
+        private void StartDataFetch()
         {
+            _dataRepository.StartSubscriptions();
             var supportedAirports = LoadAirportConfig();
 
 
