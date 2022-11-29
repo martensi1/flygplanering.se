@@ -52,7 +52,7 @@ namespace FlightPlanner.Service.Common
         // <summary>
         // URL for the project
         // </summary>
-        internal const string ProjectUrl = "https://gitlab.com/martensi1/jfk-flight-planner";
+        internal const string ProjectUrl = "https://gitlab.com/martensi1/flygplanering-se";
 
         // <summary>
         // URL for the NSWC image
