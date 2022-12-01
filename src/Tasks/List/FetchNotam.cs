@@ -10,17 +10,17 @@ namespace FlightPlanner.Service.Tasks
         private readonly IReadOnlyList<IcaoCode> _airports;
 
 
-        public FetchNotam(IReadOnlyList<IcaoCode> airports) 
+        public FetchNotam(IReadOnlyList<IcaoCode> airports)
             : base("NOTAM fetch")
         {
             _airports = airports;
         }
 
 
-        protected sealed override object Run()
+        public sealed override object Run()
         {
             string[] icaoCodes = _airports.Select(i => i.ToString()).ToArray();
-            
+
             try
             {
                 return FetchNotams(icaoCodes);
@@ -31,7 +31,7 @@ namespace FlightPlanner.Service.Tasks
                 throw ex;
             }
         }
-        
+
         private Dictionary<IcaoCode, List<NotamRecord>> FetchNotams(string[] icaoCodes)
         {
             var result = new Dictionary<IcaoCode, List<NotamRecord>>();

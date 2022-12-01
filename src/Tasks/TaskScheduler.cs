@@ -1,31 +1,25 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
 
 namespace FlightPlanner.Service.Tasks
 {
     public interface ITaskScheduler
     {
         public void Schedule(TaskBase task, int intervalSeconds);
-        public void SubscribeTo<T>(ITaskSubscriber observer);
+
+        public event TaskExecutedEventHandler OnTaskExecuted;
     }
 
 
     public sealed class TaskScheduler :
-        ITaskScheduler
+        ITaskScheduler,
+        IDisposable
     {
         private readonly ILogger<TaskScheduler> _logger;
+        private readonly List<ScheduledTask> _taskList;
 
-        private struct ScheduledTask
-        {
-            public TaskBase Task;
-            public Timer Timer;
-        }
-        private readonly Dictionary<Type, ScheduledTask> _tasks;
-        private readonly Dictionary<Type, List<ITaskSubscriber>> _observers;
+        public event TaskExecutedEventHandler OnTaskExecuted;
 
 
         public TaskScheduler(
@@ -33,86 +27,36 @@ namespace FlightPlanner.Service.Tasks
             )
         {
             _logger = logger;
-            _tasks = new Dictionary<Type, ScheduledTask>();
-            _observers = new Dictionary<Type, List<ITaskSubscriber>>();
+            _taskList = new List<ScheduledTask>();
         }
 
-        ~TaskScheduler()
+        public void Dispose()
         {
-            _tasks.Select(kvp => kvp.Value).ToList()
-                .ForEach(t => t.Timer.Dispose());
+            _taskList.ForEach(t => t.Dispose());
+            _taskList.Clear();
         }
 
 
         public void Schedule(TaskBase task, int intervalSeconds)
         {
-            Type type = task.GetType();
+            var scheduledTask = new ScheduledTask(task, intervalSeconds);
+            scheduledTask.OnExecuted += OnScheduledTaskExecuted;
 
-            if (_tasks.ContainsKey(type))
-                throw new ArgumentException("Task has already been scheduled");
-
-            _tasks.Add(type, new ScheduledTask {
-                Task = task,
-                Timer = CreateTimer(task, intervalSeconds)
-            });
-
+            _taskList.Add(scheduledTask);
             _logger.LogInformation("Task scheduled, name: {0}, interval: {1} s", task.Name, intervalSeconds);
         }
 
-        public void SubscribeTo<TTask>(ITaskSubscriber observer)
+
+        private void OnScheduledTaskExecuted(object sender, TaskExecutedEventArgs e)
         {
-            Type type = typeof(TTask);
-
-            if (!type.IsSubclassOf(typeof(TaskBase)))
-                throw new ArgumentException("Type is not a valid task");
-
-            if (!_observers.ContainsKey(type))
-                _observers.Add(type, new List<ITaskSubscriber>());
-            
-            _observers[type].Add(observer);
-        }
-
-
-        private Timer CreateTimer(TaskBase task, int intervalSeconds)
-        {
-            TimerCallback callback = CreateTimerCallback(task);
-            int intervalMilliseconds = intervalSeconds * 1000;
-            
-            return new Timer(callback, null, 0, intervalMilliseconds);
-        }
-
-        private void NotifyObservers(Type type, TaskResult result)
-        {
-            if (_observers.ContainsKey(type))
+            if (e.ThrownException != null)
             {
-                foreach (var observer in _observers[type])
-                {
-                    observer.OnTaskFinished(result);
-                }
+                _logger.LogError(e.ThrownException, "Task execution failed, name: {0}", e.TaskName);
+                return;
             }
-        }
 
-        private TimerCallback CreateTimerCallback(TaskBase task)
-        {
-            var callback = new TimerCallback(state =>
-            {
-                try
-                {
-                    var watch = Stopwatch.StartNew();
-                    TaskResult result = task.Execute();
-
-                    watch.Stop();
-                    _logger.LogInformation("Task finished, name: {0}, duration: {1} ms", task.Name, watch.ElapsedMilliseconds);
-
-                    NotifyObservers(task.GetType(), result);    
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Task execution failed, name: {0}", task.Name);
-                }
-            });
-
-            return callback;
+            _logger.LogInformation("Task finished, name: {0}, duration: {1} ms", e.TaskName, e.DurationMilliseconds);
+            OnTaskExecuted?.Invoke(this, e);
         }
     }
 }

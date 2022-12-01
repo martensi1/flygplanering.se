@@ -4,34 +4,24 @@ namespace FlightPlanner.Service.Tasks
 {
     public abstract class TaskBase
     {
-        public TaskBase(string name)
-        {
-            if (name.Trim().Length == 0) 
-                throw new ArgumentException("Invalid task name, must not be empty");
-
-            Name = name;
-        }
-
         public string Name { get; private set; }
 
+        public abstract object Run();
 
-        public TaskResult Execute()
+
+        public TaskBase(string name)
         {
-            object data = Run();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Task name cannot be empty");
+            }
 
-            TaskResult result;
-            result.TaskType = this.GetType();
-            result.Data = data as object;
-
-            return result;
+            Name = name;
         }
 
         public override string ToString()
         {
             return Name;
         }
-
-
-        protected abstract object Run();
     }
 }

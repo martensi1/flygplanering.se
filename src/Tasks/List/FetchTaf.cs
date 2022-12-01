@@ -10,14 +10,14 @@ namespace FlightPlanner.Service.Tasks
         private readonly IReadOnlyList<IcaoCode> _airports;
 
 
-        public FetchTaf(IReadOnlyList<IcaoCode> airports) 
+        public FetchTaf(IReadOnlyList<IcaoCode> airports)
             : base("TAF fetch")
         {
             _airports = airports;
         }
 
 
-        protected sealed override object Run()
+        public sealed override object Run()
         {
             var result = new Dictionary<IcaoCode, string> ();
 

@@ -20,8 +20,7 @@ namespace FlightPlanner.Service.Repositories
 
 
     public class FlightDataRepository :
-        IFlightDataRepository,
-        ITaskSubscriber
+        IFlightDataRepository
     {
         private readonly ILogger<FlightDataRepository> _logger;
         private readonly ITaskScheduler _taskScheduler;
@@ -48,23 +47,19 @@ namespace FlightPlanner.Service.Repositories
 
         public void StartSubscriptions()
         {
-            _taskScheduler.SubscribeTo<FetchMetar>(this);
-            _taskScheduler.SubscribeTo<FetchTaf>(this);
-            _taskScheduler.SubscribeTo<FetchNotam>(this);
-
-            _logger.LogInformation("Data repository subscribed to fetch tasks");
+            _taskScheduler.OnTaskExecuted += OnTaskFinished;
         }
 
-        public void OnTaskFinished(TaskResult result)
+        public void OnTaskFinished(object sender, TaskExecutedEventArgs e)
         {
             try
             {
-                if (result.TaskType == typeof(FetchMetar))
-                    CurrentMetar = result.Data as Dictionary<IcaoCode, string>;
-                if (result.TaskType == typeof(FetchTaf))
-                    CurrentTaf = result.Data as Dictionary<IcaoCode, string>;
-                if (result.TaskType == typeof(FetchNotam))
-                    CurrentNotam = result.Data as Dictionary<IcaoCode, List<NotamRecord>>;
+                if (e.TaskType == typeof(FetchMetar))
+                    CurrentMetar = e.Result as Dictionary<IcaoCode, string>;
+                if (e.TaskType == typeof(FetchTaf))
+                    CurrentTaf = e.Result as Dictionary<IcaoCode, string>;
+                if (e.TaskType == typeof(FetchNotam))
+                    CurrentNotam = e.Result as Dictionary<IcaoCode, List<NotamRecord>>;
             }
             catch (Exception ex)
             {
