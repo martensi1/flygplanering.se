@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Service.Tasks;
+using System;
 
 namespace FlightPlanner.Service
 {
@@ -43,9 +44,12 @@ namespace FlightPlanner.Service
                 options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
             });
 
+            // Health checks and error reporting
+            string instrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY");
+
             services.AddHealthChecks()
                 .AddCheck<TaskHealthCheck>("TaskHealthCheck")
-                .AddApplicationInsightsPublisher();
+                .AddApplicationInsightsPublisher(instrumentationKey: instrumentationKey);
 
             // Initialization code
             services.AddSingleton<ITaskScheduler, TaskScheduler>();
@@ -78,7 +82,7 @@ namespace FlightPlanner.Service
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapHealthChecks("/healthz");
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
