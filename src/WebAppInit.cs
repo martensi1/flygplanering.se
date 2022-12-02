@@ -39,7 +39,7 @@ namespace FlightPlanner.Service
 
         private void StartDataFetch()
         {
-            _dataRepository.StartSubscriptions();
+            _dataRepository.Initialize();
             var supportedAirports = LoadAirportConfig();
 
 

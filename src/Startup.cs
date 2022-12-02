@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Net.Http.Headers;
+using Service.Tasks;
 
 namespace FlightPlanner.Service
 {
@@ -23,7 +23,7 @@ namespace FlightPlanner.Service
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // For temp data
+            // For session temp data
             services.AddMvc().AddSessionStateTempDataProvider();
             services.AddSession();
 
@@ -42,6 +42,10 @@ namespace FlightPlanner.Service
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
             });
+
+            services.AddHealthChecks()
+                .AddCheck<TaskHealthCheck>("TaskHealthCheck")
+                .AddApplicationInsightsPublisher();
 
             // Initialization code
             services.AddSingleton<ITaskScheduler, TaskScheduler>();
@@ -74,6 +78,7 @@ namespace FlightPlanner.Service
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapHealthChecks("/healthz");
             });
         }
     }

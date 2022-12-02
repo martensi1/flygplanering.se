@@ -8,6 +8,8 @@ namespace FlightPlanner.Service.Tasks
     {
         public void Schedule(TaskBase task, int intervalSeconds);
 
+        public bool AreAllTasksHealthy();
+
         public event TaskExecutedEventHandler OnTaskExecuted;
     }
 
@@ -44,6 +46,11 @@ namespace FlightPlanner.Service.Tasks
 
             _taskList.Add(scheduledTask);
             _logger.LogInformation("Task scheduled, name: {0}, interval: {1} s", task.Name, intervalSeconds);
+        }
+
+        public bool AreAllTasksHealthy()
+        {
+            return _taskList.TrueForAll(t => t.Status);
         }
 
 

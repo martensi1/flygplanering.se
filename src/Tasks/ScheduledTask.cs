@@ -8,15 +8,15 @@ namespace FlightPlanner.Service.Tasks
     {
         private readonly Timer _timer;
 
+        public bool Status { get; private set; }
+
         public event TaskExecutedEventHandler OnExecuted;
 
 
         public ScheduledTask(TaskBase task, int intervalSeconds)
         {
-            var callback = CreateTimerCallback(task);
             int intervalMilliseconds = intervalSeconds * 1000;
-
-            _timer = new Timer(callback, null, 0, intervalMilliseconds);
+            _timer = CreateTimer(task, intervalMilliseconds);
         }
 
         public void Dispose()
@@ -25,7 +25,7 @@ namespace FlightPlanner.Service.Tasks
         }
 
 
-        private TimerCallback CreateTimerCallback(TaskBase task)
+        private Timer CreateTimer(TaskBase task, int intervalMilliseconds)
         {
             var callback = new TimerCallback(state =>
             {
@@ -39,10 +39,12 @@ namespace FlightPlanner.Service.Tasks
                 try
                 {
                     eventArguments.Result = task.Run();
+                    Status = true;
                 }
                 catch (Exception ex)
                 {
                     eventArguments.ThrownException = ex;
+                    Status = false;
                 }
 
                 watch.Stop();
@@ -51,7 +53,7 @@ namespace FlightPlanner.Service.Tasks
                 OnExecuted?.Invoke(this, eventArguments);
             });
 
-            return callback;
+            return new Timer(callback, null, 0, intervalMilliseconds);
         }
     }
 }

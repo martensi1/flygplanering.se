@@ -10,7 +10,7 @@ namespace FlightPlanner.Service.Repositories
 {
     public interface IFlightDataRepository
     {
-        public void StartSubscriptions();
+        public void Initialize();
         public bool WaitForData(short timeoutMs, short retryTimeMs);
 
         public Dictionary<IcaoCode, string>  CurrentMetar { get; }
@@ -45,7 +45,7 @@ namespace FlightPlanner.Service.Repositories
         }
 
 
-        public void StartSubscriptions()
+        public void Initialize()
         {
             _taskScheduler.OnTaskExecuted += OnTaskFinished;
         }
