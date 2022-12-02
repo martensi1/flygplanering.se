@@ -41,7 +41,9 @@ namespace FlightPlanner.Service.Tasks
 
         public void Schedule(TaskBase task, int intervalSeconds)
         {
-            var scheduledTask = new ScheduledTask(task, intervalSeconds);
+            int intervalMilliseconds = intervalSeconds * 1000;
+            var scheduledTask = new ScheduledTask(task, intervalMilliseconds);
+
             scheduledTask.OnExecuted += OnScheduledTaskExecuted;
 
             _taskList.Add(scheduledTask);

@@ -13,9 +13,9 @@ namespace FlightPlanner.Service.Tasks
         public event TaskExecutedEventHandler OnExecuted;
 
 
-        public ScheduledTask(TaskBase task, int intervalSeconds)
+        public ScheduledTask(TaskBase task, int intervalMilliseconds)
         {
-            int intervalMilliseconds = intervalSeconds * 1000;
+            Status = true;
             _timer = CreateTimer(task, intervalMilliseconds);
         }
 
