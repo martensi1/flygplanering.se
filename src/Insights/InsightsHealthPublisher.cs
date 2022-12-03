@@ -46,11 +46,11 @@ namespace Service.Insights
             {
                 string healthCheckName = entry.Key;
                 string healthCheckStatus = entry.Value.Status.ToString();
+                double healthCheckStatusCode = entry.Value.Status == HealthStatus.Healthy ? 0 : 1;
                 double healthCheckDuration = entry.Value.Duration.TotalMilliseconds;
 
                 string machineName = Environment.MachineName;
                 string assemblyName = Assembly.GetEntryAssembly()?.GetName().Name;
-
 
                 _client.TrackEvent($"HealthCheckAlert:{healthCheckName}",
                     properties: new Dictionary<string, string>()
@@ -61,6 +61,7 @@ namespace Service.Insights
                     },
                     metrics: new Dictionary<string, double>()
                     {
+                        { "Health status code", healthCheckStatusCode },
                         { "Health check duration (ms)", healthCheckDuration }
                     });
             }
