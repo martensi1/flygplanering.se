@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace FlightPlanner.Service.Config
+namespace Service.Common
 {
     public static class AirportConfig
     {

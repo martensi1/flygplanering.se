@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Service.Common.Cookies;
 using System.Threading.Tasks;
 
 namespace FlightPlanner.Service.Filters

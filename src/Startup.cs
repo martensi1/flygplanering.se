@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Service.Insights;
 using Service.Tasks;
 using System;
 
@@ -45,11 +46,9 @@ namespace FlightPlanner.Service
             });
 
             // Health checks and error reporting
-            string instrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY");
-
+            services.AddApplicationInsights();
             services.AddHealthChecks()
-                .AddCheck<TaskHealthCheck>("TaskHealthCheck")
-                .AddApplicationInsightsPublisher(instrumentationKey: instrumentationKey);
+                .AddCheck<TaskHealthCheck>("TaskHealthCheck");
 
             // Initialization code
             services.AddSingleton<ITaskScheduler, TaskScheduler>();

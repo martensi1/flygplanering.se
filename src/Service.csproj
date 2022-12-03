@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.Publisher.ApplicationInsights" Version="6.0.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
     <PackageReference Include="PilotAppLibs.Clients.FaaNotamSearch" Version="3.0.1" />
     <PackageReference Include="PilotAppLibs.Clients.MetNorway" Version="1.0.1" />
     <PackageReference Include="PilotAppLibs.Common" Version="1.0.0" />

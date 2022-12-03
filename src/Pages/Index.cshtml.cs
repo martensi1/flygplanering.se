@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PilotAppLib.Clients.NotamSearch;
 using PilotAppLib.Common;
+using Service.Common.Cookies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
