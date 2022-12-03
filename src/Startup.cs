@@ -14,13 +14,18 @@ namespace FlightPlanner.Service
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(
+            IConfiguration configuration,
+            IWebHostEnvironment environment
+            )
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get;  }
 
 
         public void ConfigureServices(IServiceCollection services)
@@ -46,7 +51,11 @@ namespace FlightPlanner.Service
             });
 
             // Health checks and error reporting
-            services.AddApplicationInsights();
+            if (Environment.IsProduction())
+            {
+                services.AddApplicationInsights();
+            }
+
             services.AddHealthChecks()
                 .AddCheck<TaskHealthCheck>("TaskHealthCheck");
 
