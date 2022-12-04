@@ -18,23 +18,23 @@
     },
     {
       "icao": "ESSV",
-      "name": "Visby"
+      "name": "Visby Airport"
     },
     {
       "icao": "ESMT",
-      "name": "Halmstad"
+      "name": "Halmstad City Airport"
     },
     {
       "icao": "ESGJ",
-      "name": "Jönköping"
+      "name": "Jönköping Airport"
     },
     {
       "icao": "ESMQ",
-      "name": "Kalmar"
+      "name": "Kalmar Öland Airport"
     },
     {
       "icao": "ESOK",
-      "name": "Karlstad"
+      "name": "Karlstad Airport"
     },
     {
       "icao": "ESSL",
@@ -62,19 +62,35 @@
     },
     {
       "icao": "ESGR",
-      "name": "Skövde"
+      "name": "Skövde Airport"
     },
     {
       "icao": "ESMY",
-      "name": "Smålandsstenar"
+      "name": "Smålandsstenar Flygplats"
     },
     {
       "icao": "ESMB",
-      "name": "Borglanda"
+      "name": "Borglanda Flygfält"
     },
     {
       "icao": "ESGP",
-      "name": "Göteborg City Airport (Säve)"
+      "name": "Säve Flygplats"
+    },
+    {
+      "icao": "ESOE",
+      "name": "Örebro Airport"
+    },
+    {
+      "icao": "ESNN",
+      "name": "Sundsvall-Timrå Airport"
+    },
+    {
+      "icao": "ESPA",
+      "name": "Luleå Airport"
+    },
+    {
+      "icao": "ESTA",
+      "name": "Ängelholm-Helsingborg Airport"
     }
   ]
 }
