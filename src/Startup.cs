@@ -1,4 +1,5 @@
 using FlightPlanner.Service.Filters;
+using FlightPlanner.Service.Middlewares;
 using FlightPlanner.Service.Repositories;
 using FlightPlanner.Service.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Service.Insights;
+using Service.Middlewares;
 using Service.Tasks;
 using System;
 
@@ -37,11 +39,8 @@ namespace FlightPlanner.Service
             // Razor pages initialization
             services.AddRazorPages().AddMvcOptions(options =>
             {
-                options.Filters.Add(new RejectFilter());
                 options.Filters.Add(new OrganizationFilter());
                 options.Filters.Add(new EssentialCookieFilter());
-                options.Filters.Add(new NoCacheFilter());
-                options.Filters.Add(new SecurityHeadersFilter());
             });
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -81,7 +80,9 @@ namespace FlightPlanner.Service
                 app.UseHsts();
             }
 
-            app.UseCookiePolicy();
+            app.UseSecurityHeaders();
+            app.UseNoResponseCaching();
+            app.UseScriptBlocking();
             app.UseHttpsRedirection();
             app.UseSession();
             app.UseStaticFiles();

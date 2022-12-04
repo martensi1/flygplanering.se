@@ -1,18 +1,21 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Net.Http.Headers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FlightPlanner.Service.Filters
+
+namespace FlightPlanner.Service.Middlewares
 {
-    public class SecurityHeadersFilter : IAsyncAlwaysRunResultFilter
+    public class SecurityHeadersMiddleware
     {
-        private readonly List<string> _disabledFeatures;
+        private readonly RequestDelegate _next;
+        private readonly IReadOnlyList<string> _disabledFeatures;
 
 
-        public SecurityHeadersFilter()
+        public SecurityHeadersMiddleware(RequestDelegate next)
         {
+            _next = next;
             _disabledFeatures = new List<string>() {
                 "camera",
                 "display-capture",
@@ -23,12 +26,13 @@ namespace FlightPlanner.Service.Filters
             };
         }
 
-        public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
+
+        public async Task InvokeAsync(HttpContext context)
         {
-            var response = context.HttpContext.Response;
+            var response = context.Response;
             AddSecurityHeaders(response);
 
-            await next.Invoke();
+            await _next.Invoke(context);
         }
 
 
@@ -71,6 +75,15 @@ namespace FlightPlanner.Service.Filters
             }
 
             return result;
+        }
+    }
+
+    public static class SecurityHeadersMiddlewareExtensions
+    {
+        public static IApplicationBuilder UseSecurityHeaders(
+            this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<SecurityHeadersMiddleware>();
         }
     }
 }

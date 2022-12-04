@@ -1,17 +1,21 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Net.Http.Headers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FlightPlanner.Service.Filters
+namespace Service.Middlewares
 {
-    public class RejectFilter : IAsyncPageFilter
+    public class BlockScriptsMiddleware
     {
+        private readonly RequestDelegate _next;
         private readonly List<string> _bannedUserAgents;
 
 
-        public RejectFilter()
+        public BlockScriptsMiddleware(RequestDelegate next)
         {
+            _next = next;
             _bannedUserAgents = new List<string>(){
                 "python",
                 "Scrapy",
@@ -24,25 +28,19 @@ namespace FlightPlanner.Service.Filters
         }
 
 
-        public async Task OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
+        public async Task InvokeAsync(HttpContext context)
         {
-            await Task.CompletedTask;
-        }
-
-        public async Task OnPageHandlerExecutionAsync(
-            PageHandlerExecutingContext context,
-            PageHandlerExecutionDelegate next)
-        {
-            var request = context.HttpContext.Request;
+            var request = context.Request;
             string userAgent = request.Headers["User-Agent"];
 
             if (IsBanned(userAgent))
             {
-                context.Result = new NotFoundResult();
+                context.Response.StatusCode = 404;
+                return;
             }
             else
             {
-                await next.Invoke();
+                await _next.Invoke(context);
             }
         }
 
@@ -61,6 +59,15 @@ namespace FlightPlanner.Service.Filters
             }
 
             return false;
+        }
+    }
+
+    public static class NoCacheMiddlewareExtensions
+    {
+        public static IApplicationBuilder UseScriptBlocking(
+            this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<BlockScriptsMiddleware>();
         }
     }
 }
