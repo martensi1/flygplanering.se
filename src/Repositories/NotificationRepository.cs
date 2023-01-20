@@ -38,7 +38,7 @@ namespace FlightPlanner.Service.Repositories
         {
             _notifications = new List<string>() {
                 "Saknar du vissa flygplatser? Gå till <a href=\"/Settings\">dina inställningar</a> för att ändra vilka du kan se!",
-                "Är du medlem i Jönköpings Flygklubb? Gå till <a href=\"https://jfk.flygplanering.se\">jfk.flygplanering.se</a> för att även kunna räkna ut vikt och balans på klubbens plan!"
+                //"Är du medlem i Jönköpings Flygklubb? Gå till <a href=\"https://jfk.flygplanering.se\">jfk.flygplanering.se</a> för att även kunna räkna ut vikt och balans på klubbens plan!"
             };
 
             _logger.LogInformation("Registered {0} notifications", _notifications.Count);
