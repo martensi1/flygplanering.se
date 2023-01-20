@@ -80,6 +80,7 @@ namespace FlightPlanner.Service
                 app.UseHsts();
             }
 
+            app.UseCookiePolicy();
             app.UseSecurityHeaders();
             app.UseNoResponseCaching();
             app.UseScriptBlocking();
