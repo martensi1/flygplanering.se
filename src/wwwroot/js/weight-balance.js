@@ -7,6 +7,7 @@
  */
 window.addEventListener("load", function () {
     fetchAircraftsData("JFK", function () {
+        populateSelectElement()
         createTable();
     });
 });
@@ -107,6 +108,25 @@ function getSelectedAircraftData() {
     }
     else {
         throw `Aircraft ${selectValue} not found in aircraft data`;
+    }
+}
+
+/**
+ * Populates the aircraft select element with the fetched
+ * aircrafts data
+ * */
+function populateSelectElement(aircraftNames) {
+    var selectElement = document.getElementById('select-weight-balance');
+    var aircraftNames = Object.keys(aircraftsData);
+
+    for (var i = 0; i < aircraftNames.length; i++) {
+        var option = document.createElement('option');
+        var name = aircraftNames[i];
+
+        option.value = name;
+        option.text = name;
+
+        selectElement.appendChild(option);
     }
 }
 

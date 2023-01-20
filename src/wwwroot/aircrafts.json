@@ -1,53 +1,5 @@
 {
   "JFK": {
-    "SE-VPO": {
-      "maxWeight": 450,
-      "chart": {
-        "xMin": 20,
-        "xMax": 40,
-        "yMin": 275,
-        "yMax": 475,
-        "coords": [
-          [ 23.7, 275 ],
-          [ 23.7, 450 ],
-          [ 35.55, 450 ],
-          [ 35.55, 275 ]
-        ]
-      },
-      "weightPoints": [
-        {
-          "name": "Grundtomvikt",
-          "arm": 12.6,
-          "value": 275,
-          "modifiable": false
-        },
-        {
-          "name": "Förare",
-          "arm": 64.3,
-          "value": 75,
-          "modifiable": true
-        },
-        {
-          "name": "Pax",
-          "arm": 64.3,
-          "value": 75,
-          "modifiable": true
-        },
-        {
-          "name": "Bagage",
-          "arm": 102.3,
-          "value": 5,
-          "modifiable": true,
-          "note": "Max 10 kg"
-        },
-        {
-          "name": "Bränsle",
-          "arm": 16.3,
-          "value": 15,
-          "modifiable": true
-        }
-      ]
-    },
     "SE-KIK": {
       "maxWeight": 1055,
       "chart": {
@@ -141,6 +93,54 @@
           "name": "Bränsle",
           "arm": 107.4,
           "value": 100,
+          "modifiable": true
+        }
+      ]
+    },
+    "SE-VPO": {
+      "maxWeight": 450,
+      "chart": {
+        "xMin": 20,
+        "xMax": 40,
+        "yMin": 275,
+        "yMax": 475,
+        "coords": [
+          [ 23.7, 275 ],
+          [ 23.7, 450 ],
+          [ 35.55, 450 ],
+          [ 35.55, 275 ]
+        ]
+      },
+      "weightPoints": [
+        {
+          "name": "Grundtomvikt",
+          "arm": 12.6,
+          "value": 275,
+          "modifiable": false
+        },
+        {
+          "name": "Förare",
+          "arm": 64.3,
+          "value": 75,
+          "modifiable": true
+        },
+        {
+          "name": "Pax",
+          "arm": 64.3,
+          "value": 75,
+          "modifiable": true
+        },
+        {
+          "name": "Bagage",
+          "arm": 102.3,
+          "value": 5,
+          "modifiable": true,
+          "note": "Max 10 kg"
+        },
+        {
+          "name": "Bränsle",
+          "arm": 16.3,
+          "value": 15,
           "modifiable": true
         }
       ]
