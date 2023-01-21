@@ -23,7 +23,7 @@ namespace FlightPlanner.Service.Tasks
         private readonly ILogger<TaskScheduler> _logger;
         private readonly List<ScheduledTask> _taskList;
 
-        public event TaskExecutedEventHandler OnTaskExecuted;
+        public event TaskExecutedEventHandler OnTaskSuccess;
         public event TaskExecutedEventHandler OnTaskFailure;
 
 
@@ -69,7 +69,7 @@ namespace FlightPlanner.Service.Tasks
             }
 
             _logger.LogInformation("Task finished, name: {0}, duration: {1} ms", e.TaskName, e.DurationMilliseconds);
-            OnTaskExecuted?.Invoke(this, e);
+            OnTaskSuccess?.Invoke(this, e);
         }
     }
 }

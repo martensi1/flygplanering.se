@@ -48,6 +48,7 @@ namespace FlightPlanner.Service.Repositories
         public void Initialize()
         {
             _taskScheduler.OnTaskSuccess += OnTaskFinished;
+            _taskScheduler.OnTaskFailure += OnTaskFailed;
         }
 
         public void OnTaskFinished(object sender, TaskExecutedEventArgs e)
