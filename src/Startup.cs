@@ -10,7 +10,6 @@ using Microsoft.Extensions.Hosting;
 using Service.Insights;
 using Service.Middlewares;
 using Service.Tasks;
-using System;
 
 namespace FlightPlanner.Service
 {
