@@ -47,7 +47,7 @@ namespace FlightPlanner.Service.Repositories
 
         public void Initialize()
         {
-            _taskScheduler.OnTaskExecuted += OnTaskFinished;
+            _taskScheduler.OnTaskSuccess += OnTaskFinished;
         }
 
         public void OnTaskFinished(object sender, TaskExecutedEventArgs e)
@@ -64,6 +64,16 @@ namespace FlightPlanner.Service.Repositories
             catch (Exception ex)
             {
                 _logger.LogTrace(ex, "Failed to process task result");
+            }
+        }
+
+        public void OnTaskFailed(object sender, TaskExecutedEventArgs e)
+        {
+            if (e.TaskType == typeof(FetchNotam))
+            {
+                // Because the corectness of NOTAM is highly safety critical, clear the
+                // old NOTAM data on failed fetch
+                CurrentNotam.Clear();
             }
         }
 

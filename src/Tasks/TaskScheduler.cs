@@ -10,7 +10,9 @@ namespace FlightPlanner.Service.Tasks
 
         public bool AreAllTasksHealthy();
 
-        public event TaskExecutedEventHandler OnTaskExecuted;
+        public event TaskExecutedEventHandler OnTaskSuccess;
+
+        public event TaskExecutedEventHandler OnTaskFailure;
     }
 
 
@@ -22,6 +24,7 @@ namespace FlightPlanner.Service.Tasks
         private readonly List<ScheduledTask> _taskList;
 
         public event TaskExecutedEventHandler OnTaskExecuted;
+        public event TaskExecutedEventHandler OnTaskFailure;
 
 
         public TaskScheduler(
@@ -61,6 +64,7 @@ namespace FlightPlanner.Service.Tasks
             if (e.ThrownException != null)
             {
                 _logger.LogError(e.ThrownException, "Task execution failed, name: {0}", e.TaskName);
+                OnTaskFailure?.Invoke(this, e);
                 return;
             }
 
