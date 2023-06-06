@@ -47,7 +47,7 @@ namespace FlightPlanner.Service.Common
         // <summary>
         // URL for learning more about cookies
         // </summary>
-        internal const string AboutCookiesUrl = "https://www.pts.se/cookies";
+        internal const string AboutCookiesUrl = "https://internetstiftelsen.se/om-webbplatsen/om-kakor/";
 
         // <summary>
         // URL for the project
