@@ -7,22 +7,21 @@
 }
 
 
-@if (CookieUtil.IsConsentPending(HttpContext))
-{
-    @await Html.PartialAsync("_AlertPartial", new AlertPartialModel("info", "Väderrapporter och data på denna sida är hämtad från tredjepart och flygplanering.se kan därför inte garantera att informationen är fullständig, heltäckande eller korrekt. Som pilot in command, basera alltid viktiga beslut på officiella väderprognoser och varningar."))
-}
-else if (Model.SettingsSaved)
+@if (Model.SettingsSaved)
 {
     @await Html.PartialAsync("_AlertPartial", new AlertPartialModel("success", "Dina inställningar sparades!"));
 }
-else if (Model.ShowWeightBalanceSection)
+else
 {
-    @await Html.PartialAsync("_AlertPartial", new AlertPartialModel("warning", "Använd inte denna hemsida som din enda informationskälla. Som pilot in command är det ditt ansvar att kontrollera att ditt flygplan är korrekt lastad och balanserad före flygning."));
+    @await Html.PartialAsync("_AlertPartial", new AlertPartialModel("info", "Väderrapporter och data på denna sida är hämtad från tredjepart och flygplanering.se kan därför inte garantera att informationen är fullständig, heltäckande eller korrekt. Som pilot in command, basera alltid viktiga beslut på officiella väderprognoser och varningar."))
 }
+
+<!--
 else if (Model.ShowTipsAndTricks)
 {
-    @await Html.PartialAsync("_AlertPartial", new AlertPartialModel("info", Model.TipsAndTricksMessage));
+@await Html.PartialAsync("_AlertPartial", new AlertPartialModel("info", Model.TipsAndTricksMessage));
 }
+-->
 
 
 <div class="container text-center">
