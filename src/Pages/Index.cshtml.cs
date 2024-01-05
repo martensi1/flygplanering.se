@@ -32,7 +32,7 @@ namespace FlightPlanner.Service.Pages
         {
             get {
                 return DateTime.Now.ToUniversalTime()
-                .ToString("HH:mm (UTC), dd-MM-yyyy");
+                .ToString("yyyy-MM-dd, HH:mm (UTC)");
             }
         }
 
