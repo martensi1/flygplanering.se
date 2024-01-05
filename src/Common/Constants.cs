@@ -60,9 +60,9 @@ namespace FlightPlanner.Service.Common
         internal const string NswcUrl = "https://aro.lfv.se/tor/nswc2aro.gif";
 
         // <summary>
-        // URL for the NorthAviMet low level forecase
+        // URL for the NorthAviMet low level forecast
         // </summary>
-        internal const string NorthAviMetUrl = "https://www.northavimet.com/low-level-forecast/denmarksweden";
+        internal const string NorthAviMetUrl = "https://www.northavimet.com/low-level-forecast/llf-sweden-denmark-finland";
 
         // <summary>
         // URL for the CC BY 4.0 license
