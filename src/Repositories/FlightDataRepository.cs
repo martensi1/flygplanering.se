@@ -72,7 +72,7 @@ namespace FlightPlanner.Service.Repositories
         {
             if (e.TaskType == typeof(FetchNotam))
             {
-                // Because the corectness of NOTAM is highly safety critical, clear the
+                // Because the correctness of NOTAM is highly safety critical, clear the
                 // old NOTAM data on failed fetch
                 CurrentNotam.Clear();
             }
