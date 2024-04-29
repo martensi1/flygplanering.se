@@ -6,7 +6,11 @@
  * Initialization function run at page load
  */
 window.addEventListener("load", function () {
-    fetchAircraftsData("JFK", function () {
+    if (organization == null) {
+        return;
+    }
+
+    fetchAircraftsData(organization, function () {
         populateSelectElement()
         createTable();
     });

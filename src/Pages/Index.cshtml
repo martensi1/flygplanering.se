@@ -156,5 +156,9 @@ else if (Model.ShowTipsAndTricks)
 
 </div>
 
+<script>
+    const organization = "@Model.Organization";
+</script>
+
 <script include-if="Model.ShowWeightBalanceSection" src="~/lib/chartjs/dist/chart.js"></script>
 <script include-if="Model.ShowWeightBalanceSection" src="~/js/weight-balance.js" asp-append-version="true"></script>

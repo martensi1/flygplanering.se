@@ -23,6 +23,10 @@ namespace FlightPlanner.Service.Filters
             {
                 context.HttpContext.Items.Add("Organization", "JFK");
             }
+            else if (HasSubdomain(displayUrl, "lfk"))
+            {
+                context.HttpContext.Items.Add("Organization", "LFK");
+            }
 
             await next.Invoke();
         }
