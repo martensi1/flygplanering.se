@@ -17,7 +17,7 @@ namespace FlightPlanner.Service.Common
         // <summary>
         // Website Author
         // </summary>
-        internal const string WebsiteAuthor = "Simon Mårtensson";
+        internal const string WebsiteAuthor = "Simon Alm-Mårtensson";
 
         // <summary>
         // Configured website URL

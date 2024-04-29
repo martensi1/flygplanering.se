@@ -1,0 +1,63 @@
+﻿@page "/rules"
+@using FlightPlanner.Service.Common
+@model SettingsModel
+
+@{
+    ViewData["Title"] = "Regler";
+    ViewData["Description"] = "Ändra vilka flygplatser du vill ska synas.";
+}
+
+
+<div class="mt-4 text-center">
+    <h1>Regler</h1>
+
+    <div class="mt-4" style="color: gray">
+        <p>
+            Här kommer en sammanfattning av de viktigaste planeringsreglerna för VFR-flygning i Sverige.
+        </p>
+
+        <div>
+            <table class="mt-4">
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Höjd</th>
+                        <th style="width: 15%">Luftrumsklass</th>
+                        <th style="width: 25%">Siktkrav</th>
+                        <th style="width: 30%">Molnavstånd</th>
+                    </tr>
+                </thead>
+                <tbody id="table-weight-balance">
+                    <tr>
+                        <td>Ovanför 10 000 ft MSL / FL100</td>
+                        <td>C G</td>
+                        <td>8 km</td>
+                        <td>1000 ft vertikalt och 1500 m horisontellt</td>
+                    </tr>
+                    <tr>
+                        <td>Under 10 000 ft MSL / FL100</td>
+                        <td>C G</td>
+                        <td>5 km</td>
+                        <td>1000 fot vertikalt och 1500 m horisontellt</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="4">På eller under den högsta av 3000 ft MSL eller 1000 ft AGL</td>
+                        <td rowspan="1">C</td>
+                        <td>5 km</td>
+                        <td>1000 fot vertikalt och 1500 m horisontellt</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">G</td>
+                        <td>5 km</td>
+                        <td rowspan="3">Fritt från moln och med sikt till marken eller vattnet</td>
+                    </tr>
+                    <tr>
+                        <td>IAS 140 eller mindre: 3 km</td>
+                    </tr>
+                    <tr>
+                        <td>IAS 140 eller mindre och i trafikvarv med flygpalts i sikte: 1.5 km</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
